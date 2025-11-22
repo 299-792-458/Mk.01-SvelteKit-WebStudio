@@ -1,0 +1,35 @@
+{
+	"slug": "neon-metropolis",
+	"title": "Neon Metropolis Launchverse",
+	"summary": "Immersive launch experience blending WebGL atmospherics with interactive storytelling chapters.",
+	"year": "2024",
+	"industry": "Entertainment",
+	"tags": ["WebGL", "Motion", "Narrative UX"],
+	"hero": {
+		"headline": "A futuristic cityscape that responds to every interaction.",
+		"subheadline": "Mk.01 crafted the reveal for the Neon Metropolis platform, turning the browser into an experiential stage.",
+		"video": "/video/neon-metropolis-teaser.mp4"
+	},
+	"outcomes": [
+		"Launch day retention +38% compared to prior releases.",
+		"Global press coverage from 15 media outlets.",
+		"High net promoter score (92) from launch attendees."
+	],
+	"chapters": [
+		{
+			"id": "strategy",
+			"title": "Strategy & Narrative Blueprint",
+			"description": "We mapped the city districts to user funnels, aligning each to a storytelling beat and key business metric."
+		},
+		{
+			"id": "experience",
+			"title": "Experience Design",
+			"description": "Procedural skyline built with Three.js, volumetric shaders, and reactive audio; scroll timeline orchestrated via GSAP."
+		},
+		{
+			"id": "delivery",
+			"title": "Delivery & Optimization",
+			"description": "Implemented intelligent asset streaming, edge caching, and progressive loading cues reaching 92 Lighthouse performance."
+		}
+	]
+}

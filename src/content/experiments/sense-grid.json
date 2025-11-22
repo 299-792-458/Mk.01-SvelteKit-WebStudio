@@ -1,0 +1,11 @@
+{
+	"slug": "sense-grid",
+	"title": "Sense Grid",
+	"summary": "Collaborative story tapestry blending CRDTs with fluid motion systems.",
+	"tech": ["Yjs", "WebRTC", "Svelte"],
+	"status": "prototype",
+	"links": {
+		"demo": "https://mk1.dev/experiments/sense-grid",
+		"source": "https://github.com/your-handle/sense-grid"
+	}
+}

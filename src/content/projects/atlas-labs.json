@@ -1,0 +1,34 @@
+{
+	"slug": "atlas-labs",
+	"title": "Atlas Labs System",
+	"summary": "A design-engineering operating system enabling rapid experimentation across a global innovation team.",
+	"year": "2023",
+	"industry": "Enterprise",
+	"tags": ["Design System", "Tooling", "Accessibility"],
+	"hero": {
+		"headline": "A design system built to fuel weekly product launches.",
+		"subheadline": "Mk.01 partnered with Atlas Labs to craft a robust, accessible component library that unifies designers and engineers across six time zones."
+	},
+	"outcomes": [
+		"Component adoption across 12 product squads in three months.",
+		"60% reduction in handoff QA time.",
+		"Introduced accessibility governance resulting in WCAG 2.1 AA compliance."
+	],
+	"chapters": [
+		{
+			"id": "discovery",
+			"title": "Discovery & Inventory",
+			"description": "Facilitated cross-team audits, taxonomy workshops, and measurement frameworks to align goals."
+		},
+		{
+			"id": "system",
+			"title": "System Architecture",
+			"description": "Implemented token-driven architecture with theorem docs, Figma libraries, and storybook coverage."
+		},
+		{
+			"id": "scale",
+			"title": "Scaling & Enablement",
+			"description": "Hosted enablement sessions, built governance dashboards, and shipped automation to flag regressions."
+		}
+	]
+}

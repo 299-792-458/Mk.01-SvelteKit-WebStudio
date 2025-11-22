@@ -1,0 +1,40 @@
+---
+title: 'Building a Cinematic Launch Playbook'
+excerpt: 'The Mk.01 framework for orchestrating motion, content, and engineering during high-stakes launches.'
+date: 2024-01-22
+readingTime: '6 min'
+tags:
+  - Launch
+  - Strategy
+  - Motion
+coverImage: '/images/blog/launch-playbook-cover.jpg'
+---
+
+Launching is choreography. Every step—from early prototypes to final QA—must be intentional so the audience feels the magic without sensing the chaos behind the scenes.
+
+## Pillars
+
+- **Narrative first** — Align story arcs, voice, and CTA orchestration with business goals.
+- **Motion as language** — Document entrance timings, state changes, and progressive disclosure.
+- **Resilience** — Build fallback experiences and automate regression checks for every route.
+
+### Motion Timeline
+
+```ts
+const heroReveal = timeline([
+	['.hero-headline', { opacity: [0, 1], y: [30, 0] }, { duration: 0.6, ease: 'easeOutCubic' }],
+	[
+		'.hero-media',
+		{ scale: [0.92, 1], filter: ['blur(12px)', 'blur(0px)'] },
+		{ at: '<', duration: 1.2 }
+	]
+]);
+```
+
+## QA Rituals
+
+1. Automated visual regression with multiple theme snapshots.
+2. Performance budgets enforced via Lighthouse CI.
+3. Manual run-through with screen readers and reduced-motion settings.
+
+The deliverable? A reusable launch playbook that meets marketing, product, and engineering expectations while delighting users.

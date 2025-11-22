@@ -1,0 +1,48 @@
+<script lang="ts">
+	import '../app.css';
+	import AppShell from '$lib/components/layout/AppShell.svelte';
+	import { siteConfig } from '$lib/config/site';
+	import { buildSeo, type SeoResult } from '$lib/utils/seo';
+	import { page } from '$app/stores';
+
+	export let data: {
+		seo?: SeoResult;
+	};
+
+	function serializeJsonLd(payload: Record<string, unknown> | null) {
+		if (!payload) return '';
+		return JSON.stringify(payload).replace(/</g, '\\u003C');
+	}
+
+	$: currentSeo = data?.seo ?? buildSeo({ path: $page.url.pathname });
+	$: jsonLdMarkup =
+		currentSeo?.jsonLd != null
+			? /* eslint-disable-next-line no-useless-escape */
+				`<script type="application/ld+json">${serializeJsonLd(currentSeo.jsonLd)}<\/script>`
+			: '';
+</script>
+
+<svelte:head>
+	<title>{currentSeo.title}</title>
+	<meta name="description" content={currentSeo.description} />
+	<link rel="canonical" href={currentSeo.canonical} />
+	{#if currentSeo.robots}
+		<meta name="robots" content={currentSeo.robots} />
+	{/if}
+	<meta name="author" content={siteConfig.name} />
+	{#each currentSeo.meta as meta}
+		<meta name={meta.name} content={meta.content} />
+	{/each}
+	{#each currentSeo.openGraph as og}
+		<meta property={og.property} content={og.content} />
+	{/each}
+	{#each currentSeo.twitter as twitter}
+		<meta name={twitter.name} content={twitter.content} />
+	{/each}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html jsonLdMarkup}
+</svelte:head>
+
+<AppShell>
+	<slot />
+</AppShell>

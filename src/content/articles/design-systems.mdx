@@ -1,0 +1,44 @@
+---
+title: 'Design Systems for High-Velocity Teams'
+excerpt: 'Lessons from scaling a design-engineering system across 12 product squads without losing soul.'
+date: 2023-12-10
+readingTime: '7 min'
+tags:
+  - Design Systems
+  - Tooling
+  - Accessibility
+coverImage: '/images/blog/design-systems-cover.jpg'
+---
+
+Design systems are not just component libraries—they are cultural agreements that let teams move faster without sacrificing craft.
+
+## Foundations
+
+- **Tokens first** to unify spacing, typography, and motion semantically.
+- **Accessibility baked in** with linting pipelines and governance dashboards.
+- **Composable documentation** using MDX, Storybook, and interactive playgrounds.
+
+### Governance Snapshot
+
+```json
+{
+	"component": "Button",
+	"a11y": {
+		"aria": true,
+		"contrast": true,
+		"focusRing": true
+	},
+	"usage": {
+		"productTeams": 8,
+		"marketingTeams": 3
+	}
+}
+```
+
+## Enablement
+
+1. Weekly crits to review patterns and exceptions.
+2. Async office hours for engineers to request component enhancements.
+3. Quarterly audits mapping design debt and measuring adoption.
+
+Systems thrive when they empower teams to bend rules responsibly, not when they enforce rigid templates.
