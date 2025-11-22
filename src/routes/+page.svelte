@@ -246,6 +246,28 @@
 	</div>
 </PageSection>
 
+<PageSection id="signature-moves" tone="default">
+	<div class="mx-auto max-w-3xl text-center space-y-3">
+		<span class="eyebrow">Signature moves</span>
+		<h2 class="text-3xl font-semibold sm:text-4xl">
+			Every build follows a cinematic arc—signal, intrigue, decision.
+		</h2>
+		<p class="text-base text-base-content/70 sm:text-lg">
+			We choreograph story beats across scroll, interactions, and content to keep people engaged and
+			confident.
+		</p>
+	</div>
+
+	<div class="grid gap-6 lg:grid-cols-3">
+		{#each signatureMoves as move}
+			<div class="surface-panel h-full border border-base-200/80">
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/80">{move.title}</p>
+				<p class="mt-3 text-sm text-base-content/70">{move.description}</p>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+
 <PageSection id="services" tone="subtle">
 	<div class="mx-auto max-w-3xl text-center space-y-4">
 		<span class="eyebrow">Service tracks</span>
