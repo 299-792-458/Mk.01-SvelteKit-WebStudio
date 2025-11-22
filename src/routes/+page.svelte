@@ -336,6 +336,50 @@
 	</div>
 </PageSection>
 
+<PageSection id="toolkit" tone="subtle">
+	<div class="grid gap-10 lg:grid-cols-[1.15fr_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Toolkit</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Design, build, and measure in one stack.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				We ship with modern primitives—typed code, structured content, and instrumented experiments—so
+				you keep learning after launch.
+			</p>
+			<div class="grid gap-4 sm:grid-cols-2">
+				{#each capabilityToolkit as capability}
+					<div class="surface-card h-full">
+						<p class="text-xs uppercase tracking-[0.28em] text-primary/80">{capability.title}</p>
+						<ul class="mt-3 space-y-2 text-sm text-base-content/70">
+							{#each capability.items as item}
+								<li class="flex items-start gap-2">
+									<span class="mt-[6px] block h-1.5 w-1.5 rounded-full bg-primary/70" />
+									<span>{item}</span>
+								</li>
+							{/each}
+						</ul>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<div class="surface-panel border-primary/10 bg-gradient-to-br from-base-100 via-base-200/60 to-primary/5">
+			<h3 class="text-xl font-semibold text-base-content">Engineered for the modern web</h3>
+			<p class="mt-3 text-sm text-base-content/70">
+				Opinionated stack choices keep performance high and maintenance low. We also adapt to your
+				team’s existing toolkit when needed.
+			</p>
+			<div class="mt-4 grid gap-3 sm:grid-cols-2">
+				{#each stackHighlights as stack}
+					<div class="rounded-2xl border border-base-200/80 bg-base-100/80 p-4">
+						<p class="text-sm font-semibold text-base-content">{stack.name}</p>
+						<p class="mt-2 text-xs text-base-content/70">{stack.note}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="latest" tone="subtle">
 	<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 		<div class="space-y-3">
