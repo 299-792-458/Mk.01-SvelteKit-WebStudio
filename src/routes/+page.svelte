@@ -195,6 +195,8 @@
 		'Design-to-code handoff'
 	];
 
+	let openFaq = 0;
+
 	const quickActions = [
 		{
 			title: 'Book a chemistry call',
@@ -445,6 +447,30 @@
 				</div>
 			</div>
 		{/each}
+	</div>
+</PageSection>
+
+<PageSection id="industries" tone="default" padding="compact">
+	<div class="grid gap-6 lg:grid-cols-[1fr_minmax(0,1.15fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Focus areas</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">
+				Universal craft tuned for your sector.
+			</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				We translate complex products into clear story arcs—whether you ship AI copilots, dev tools,
+				fintech dashboards, or culture-forward drops.
+			</p>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-2">
+			{#each industryFocus as focus}
+				<div class="surface-card h-full border-base-300/70">
+					<p class="text-sm font-semibold text-base-content">{focus.title}</p>
+					<p class="mt-2 text-sm text-base-content/70">{focus.description}</p>
+				</div>
+			{/each}
+		</div>
 	</div>
 </PageSection>
 
