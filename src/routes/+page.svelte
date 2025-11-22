@@ -46,6 +46,33 @@
 		}
 	];
 
+	const immersionSlices = [
+		{
+			badge: 'Launch',
+			title: 'Dynamic hero systems',
+			description: 'Modular hero compositions with motion-safe defaults and A/B-ready variants.',
+			accent: 'linear-gradient(135deg, rgba(99,102,241,0.28), rgba(244,114,182,0.18))'
+		},
+		{
+			badge: 'Storytelling',
+			title: 'Guided scrollytelling',
+			description: 'Narrative beats that pair copy, media, and micro-interactions into a clear arc.',
+			accent: 'linear-gradient(135deg, rgba(14,165,233,0.26), rgba(59,130,246,0.24))'
+		},
+		{
+			badge: 'Product',
+			title: 'Interactive demos',
+			description: 'Live-feel product tours that stay performant and accessible across devices.',
+			accent: 'linear-gradient(135deg, rgba(74,222,128,0.22), rgba(34,197,94,0.22))'
+		},
+		{
+			badge: 'Labs',
+			title: 'Speculative experiments',
+			description: 'Playable prototypes, WebGL stingers, and creative-tech spikes for labs and pitches.',
+			accent: 'linear-gradient(135deg, rgba(248,113,113,0.22), rgba(234,179,8,0.2))'
+		}
+	];
+
 	const capabilityToolkit = [
 		{
 			title: 'Design',
