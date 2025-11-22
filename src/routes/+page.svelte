@@ -1,4 +1,5 @@
 <script>
+	import { onDestroy, onMount } from 'svelte';
 	import { appConfig } from '$config/app.config';
 	import HeroSequencer from '$components/experience/HeroSequencer.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
@@ -9,6 +10,8 @@
 
 	const identity = data.identity ?? appConfig.identity;
 	const metrics = data.metrics ?? appConfig.metrics;
+	let liveSignalIndex = 0;
+	let liveSignalTimer: ReturnType<typeof setInterval> | undefined;
 
 	const studioPillars = [
 		{
@@ -241,6 +244,46 @@
 		}
 	];
 
+	const liveSignals = [
+		'Edge-ready builds',
+		'Motion with performance budgets',
+		'Design + engineering in one lane',
+		'Localization hooks baked in',
+		'Analytics + SEO from day one',
+		'Ship fast without chaos'
+	];
+
+	const microFeatures = [
+		{
+			title: 'Adaptive theming',
+			description: 'Light/dark/aurora themes tuned for contrast and brand accenting.'
+		},
+		{
+			title: 'Structured content',
+			description: 'Content-layered pages so marketing teams can update without dev help.'
+		},
+		{
+			title: 'Performance-first motion',
+			description: 'GPU-friendly animations and scroll choreography that respect FPS.'
+		},
+		{
+			title: 'Zero-downtime deploys',
+			description: 'Preview URLs for every PR, rollout plans for every launch.'
+		}
+	];
+
+	onMount(() => {
+		liveSignalTimer = setInterval(() => {
+			liveSignalIndex = (liveSignalIndex + 1) % liveSignals.length;
+		}, 3200);
+	});
+
+	onDestroy(() => {
+		if (liveSignalTimer) {
+			clearInterval(liveSignalTimer);
+		}
+	});
+
 	const collaborationModes = [
 		{
 			title: 'Embedded partner',
@@ -366,6 +409,29 @@
 	</div>
 </PageSection>
 
+<PageSection id="signal-reel" tone="default" padding="compact">
+	<div class="grid gap-6 lg:grid-cols-[1fr_minmax(0,1.1fr)] lg:items-center">
+		<div class="space-y-3">
+			<span class="eyebrow text-secondary/80">Live signal</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">A studio tuned for expressive, durable web.</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				The ticker below cycles through how we build. Every message is a promise we deliver on.
+			</p>
+		</div>
+
+		<div class="signal-reel">
+			<div class="reel-track" style={`--active-index:${liveSignalIndex}`}>
+				{#each liveSignals as signal, idx}
+					<div class={`reel-item ${liveSignalIndex === idx ? 'active' : ''}`}>
+						<span class="spark" aria-hidden="true" />
+						{signal}
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="signature-moves" tone="default">
 	<div class="mx-auto max-w-3xl text-center space-y-3">
 		<span class="eyebrow">Signature moves</span>
@@ -445,6 +511,26 @@
 						</span>
 					{/each}
 				</div>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+
+<PageSection id="micro-features" tone="subtle">
+	<div class="mx-auto max-w-3xl text-center space-y-3">
+		<span class="eyebrow">Feature kit</span>
+		<h2 class="text-3xl font-semibold sm:text-4xl">Small touches that make the whole feel premium.</h2>
+		<p class="text-base text-base-content/70 sm:text-lg">
+			Reusable micro-features that ship with every engagement, ready to adapt to your brand system.
+		</p>
+	</div>
+
+	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		{#each microFeatures as feature}
+			<div class="micro-card">
+				<div class="micro-glow" aria-hidden="true" />
+				<p class="text-sm font-semibold text-base-content">{feature.title}</p>
+				<p class="mt-2 text-xs text-base-content/70">{feature.description}</p>
 			</div>
 		{/each}
 	</div>
@@ -934,6 +1020,103 @@
 	.delivery-content {
 		position: relative;
 		padding: 1rem 1.1rem;
+	}
+
+	.signal-reel {
+		position: relative;
+		overflow: hidden;
+		border-radius: 1.5rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(14, 165, 233, 0.08));
+		box-shadow: 0 14px 36px -24px rgba(15, 23, 42, 0.5);
+	}
+
+	.reel-track {
+		display: grid;
+		grid-auto-rows: 1fr;
+		padding: 1rem 1.2rem;
+	}
+
+	.reel-item {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem 0.6rem;
+		border-radius: 1rem;
+		color: rgba(15, 23, 42, 0.65);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		transition:
+			transform 260ms ease,
+			color 260ms ease,
+			background 260ms ease,
+			box-shadow 260ms ease;
+	}
+
+	.reel-item.active {
+		background: rgba(255, 255, 255, 0.9);
+		color: rgba(15, 23, 42, 0.92);
+		transform: translateX(4px);
+		box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.4);
+	}
+
+	.spark {
+		width: 0.65rem;
+		height: 0.65rem;
+		border-radius: 999px;
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.9));
+		box-shadow:
+			0 0 0 6px rgba(99, 102, 241, 0.15),
+			0 0 0 12px rgba(14, 165, 233, 0.08);
+		animation: pulse-spark 2.4s ease-in-out infinite;
+	}
+
+	@keyframes pulse-spark {
+		0%,
+		100% {
+			transform: scale(1);
+			box-shadow:
+				0 0 0 6px rgba(99, 102, 241, 0.18),
+				0 0 0 12px rgba(14, 165, 233, 0.12);
+		}
+
+		50% {
+			transform: scale(1.08);
+			box-shadow:
+				0 0 0 9px rgba(99, 102, 241, 0.24),
+				0 0 0 16px rgba(14, 165, 233, 0.18);
+		}
+	}
+
+	.micro-card {
+		position: relative;
+		overflow: hidden;
+		border-radius: 1.1rem;
+		padding: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.86);
+		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.4);
+		transition:
+			transform 200ms ease,
+			box-shadow 200ms ease,
+			border-color 200ms ease;
+	}
+
+	.micro-card:hover,
+	.micro-card:focus-within {
+		transform: translateY(-3px);
+		border-color: rgba(99, 102, 241, 0.25);
+		box-shadow: 0 16px 38px -22px rgba(15, 23, 42, 0.5);
+	}
+
+	.micro-glow {
+		position: absolute;
+		inset: -20% 5% 60% 5%;
+		background: radial-gradient(circle at center, rgba(99, 102, 241, 0.2), transparent 55%);
+		filter: blur(18px);
+		opacity: 0.9;
 	}
 
 	.action-tile {
