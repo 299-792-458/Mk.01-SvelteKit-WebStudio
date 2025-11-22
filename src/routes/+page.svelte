@@ -148,6 +148,34 @@
 		}
 	];
 
+	const deliveryBeats = [
+		{
+			title: 'Signal',
+			description: 'Research spikes, competitive sweeps, and storyframes to align on what matters most.'
+		},
+		{
+			title: 'Shape',
+			description: 'Prototype, art direction, and systemization. Tight loops with stakeholders every few days.'
+		},
+		{
+			title: 'Ship',
+			description: 'Production builds, QA, and launch checklists. Experiments instrumented for fast learnings.'
+		},
+		{
+			title: 'Evolve',
+			description: 'Post-launch tweaks, localization, performance passes, and ongoing optimization.'
+		}
+	];
+
+	const credibility = [
+		'Launch-grade motion',
+		'WCAG-conscious builds',
+		'Multi-locale ready',
+		'Edge + static hosting',
+		'Analytics + SEO wired',
+		'Design-to-code handoff'
+	];
+
 	const collaborationModes = [
 		{
 			title: 'Embedded partner',
