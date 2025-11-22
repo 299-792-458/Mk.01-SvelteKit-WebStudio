@@ -484,7 +484,7 @@
 				<div class="delivery-row">
 					<div class="delivery-dot" aria-hidden="true" />
 					<div class="delivery-rail" aria-hidden="true" />
-					<div class="delivery-content">
+					<div class="delivery-content surface-card">
 						<p class="text-xs uppercase tracking-[0.28em] text-primary/80">{idx + 1}. {beat.title}</p>
 						<p class="mt-2 text-sm text-base-content/70">{beat.description}</p>
 					</div>
@@ -778,10 +778,7 @@
 	}
 
 	.delivery-content {
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 1rem;
+		position: relative;
 		padding: 1rem 1.1rem;
-		backdrop-filter: blur(8px);
 	}
 </style>
