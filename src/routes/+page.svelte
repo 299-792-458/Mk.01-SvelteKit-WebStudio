@@ -583,6 +583,35 @@
 	</div>
 </PageSection>
 
+<PageSection id="actions" tone="contrast" padding="compact">
+	<div class="surface-panel mx-auto max-w-5xl bg-base-100/80">
+		<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+			<div class="space-y-2">
+				<span class="eyebrow text-secondary/80">Start a move</span>
+				<h2 class="text-2xl font-semibold text-base-content sm:text-3xl">
+					Pick the next step—we’ll respond within a day.
+				</h2>
+				<p class="text-sm text-base-content/70 sm:text-base">
+					Whether you need a chemistry call, a prototype sprint, or a deck to share internally, we
+					have a fast path.
+				</p>
+			</div>
+
+			<div class="grid w-full gap-3 sm:grid-cols-2 lg:w-auto">
+				{#each quickActions as action}
+					<a
+						href={action.href}
+						class={`action-tile ${action.style}`}
+					>
+						<p class="text-sm font-semibold">{action.title}</p>
+						<p class="text-xs text-base-content/70">{action.description}</p>
+					</a>
+				{/each}
+			</div>
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="latest" tone="subtle">
 	<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 		<div class="space-y-3">
