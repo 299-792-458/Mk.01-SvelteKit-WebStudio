@@ -133,6 +133,25 @@
 		}
 	];
 
+	const industryFocus = [
+		{
+			title: 'AI & productivity',
+			description: 'Product tours, onboarding, and launch stories for AI copilots and tools.'
+		},
+		{
+			title: 'Developer platforms',
+			description: 'Docs-inspired storytelling, interactive demos, and componentized UI kits.'
+		},
+		{
+			title: 'Fintech & ops',
+			description: 'High-trust flows, data visual narratives, and multi-locale readiness.'
+		},
+		{
+			title: 'Consumer & culture',
+			description: 'Immersive drops, editorial vibes, and commerce-friendly performance.'
+		}
+	];
+
 	const operatingCadence = [
 		{
 			title: 'Signal → Shape → Ship',
@@ -174,6 +193,50 @@
 		'Edge + static hosting',
 		'Analytics + SEO wired',
 		'Design-to-code handoff'
+	];
+
+	const quickActions = [
+		{
+			title: 'Book a chemistry call',
+			description: '30-minute fit check to map goals, timeline, and the first sprint.',
+			href: 'mailto:studio@mk1.dev?subject=Chemistry%20Call%20with%20Mk01',
+			style: 'primary'
+		},
+		{
+			title: 'Download the studio deck',
+			description: 'Capabilities, process, and sample outputs in one PDF.',
+			href: '/docs/mk01-studio-deck.pdf',
+			style: 'secondary'
+		},
+		{
+			title: 'Request a prototype sprint',
+			description: 'Two-week design-engineering spike to de-risk your idea.',
+			href: 'mailto:studio@mk1.dev?subject=Prototype%20Sprint%20Request',
+			style: 'outline'
+		}
+	];
+
+	const faqItems = [
+		{
+			question: 'Do you work with existing design systems?',
+			answer:
+				'Yes. We audit tokens, component coverage, and accessibility, then build within your system or extend it with new primitives.'
+		},
+		{
+			question: 'Can you join mid-sprint?',
+			answer:
+				'We regularly embed into active squads. We’ll align on rituals, repos, and approvals, then start shipping in the first week.'
+		},
+		{
+			question: 'What does “inclusive by default” mean?',
+			answer:
+				'We bake WCAG, localization hooks, and performance budgets into the plan. Checklists and automated checks gate our releases.'
+		},
+		{
+			question: 'How do handoffs work?',
+			answer:
+				'Everything ships in code: repos, component libraries, and documentation. If you need Figma + code parity, we do that too.'
+		}
 	];
 
 	const collaborationModes = [
