@@ -36,9 +36,9 @@ export interface AppConfig {
 export const appConfig: AppConfig = {
 	identity: {
 		name: 'Mk.01 SvelteKit Studio',
-		tagline: 'Designing purposeful web experiences that feel like creative playgrounds.',
+		tagline: 'Universal web experiences that launch, convert, and linger in memory.',
 		description:
-			"Mk.01 stitches together strategy, design systems, and expressive engineering to deliver delightful, resilient digital products. It's the flagship playground for Korea's #3 web maestro.",
+			'Mk.01 is a strategy-led design engineering studio crafting digital flagships, campaign landers, and speculative labs. We fuse narrative, performance, and inclusive craft to ship experiences people remember.',
 		primaryLocale: 'en',
 		locales: ['en', 'ko'],
 		contactEmail: 'studio@mk1.dev',

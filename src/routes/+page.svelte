@@ -12,19 +12,112 @@
 
 	const studioPillars = [
 		{
-			title: 'Strategy-first craft',
+			title: 'Strategy, then spectacle',
 			description:
-				'Clarity and intent guide every concept. We map goals, audiences, and success metrics before the first pixel ships.'
+				'Workshops, competitive sweeps, and a crisp success map before pushing a single pixel. We align the story before turning on the spotlight.'
 		},
 		{
-			title: 'Web as a playground',
+			title: 'Web as a stage',
 			description:
-				'We embrace motion, storytelling, and modern web APIs to deliver experiences that feel alive and memorable.'
+				'Motion, narrative beats, and modern web APIs help the experience breathe. We design memorable pacing, not just screens.'
 		},
 		{
 			title: 'Inclusive by default',
 			description:
-				'Accessibility, performance, and localization are treated as core features, not afterthoughts.'
+				'Accessibility, performance, and localization are non-negotiable. We test them the way others test CTAs.'
+		}
+	];
+
+	const signatureMoves = [
+		{
+			title: 'Launch storyworlds',
+			description:
+				'Campaign landers, interactive walkthroughs, and cinematic scroll that guide people to your reveal.'
+		},
+		{
+			title: 'Product-grade polish',
+			description:
+				'Componentized design systems, UX refactors, and measured microcopy that fit real product roadmaps.'
+		},
+		{
+			title: 'Narrative prototyping',
+			description:
+				'Clickable concepts, coded demos, and pitch-ready decks that get stakeholders saying yes faster.'
+		}
+	];
+
+	const capabilityToolkit = [
+		{
+			title: 'Design',
+			items: ['Narrative architecture', 'Design systems', 'Responsive campaigns', 'Motion direction']
+		},
+		{
+			title: 'Engineering',
+			items: ['SvelteKit & Vite', 'Headless CMS', 'Edge + static hosting', 'Web animations & WebGL']
+		},
+		{
+			title: 'Growth',
+			items: ['A/B experiments', 'Analytics wiring', 'SEO + structured data', 'Localization + a11y']
+		}
+	];
+
+	const stackHighlights = [
+		{
+			name: 'SvelteKit',
+			note: 'Fast-by-default SSR and SPA blends with first-class animations.'
+		},
+		{
+			name: 'TypeScript',
+			note: 'Typed surfaces and contracts for safer, faster iteration.'
+		},
+		{
+			name: 'Tailwind + daisyUI',
+			note: 'Tokenized theming with a dash of expressive gradients.'
+		},
+		{
+			name: 'Contentlayer',
+			note: 'Structured content that stays friendly to writers and localization.'
+		},
+		{
+			name: 'Cloudflare/Netlify',
+			note: 'Edge-first delivery, instant previews, zero-drama deploys.'
+		},
+		{
+			name: 'Playwright',
+			note: 'Visual and interaction checks so immersive experiences stay stable.'
+		}
+	];
+
+	const serviceTracks = [
+		{
+			title: 'Launch OS',
+			description: 'Signature landing systems for product launches, announcements, and rebrands.',
+			outcomes: ['Narrative architecture', 'Design-to-code system', 'Conversion experiments']
+		},
+		{
+			title: 'Product pulse',
+			description: 'Embedded design-engineering inside your sprints to ship quality at pace.',
+			outcomes: ['Weekly ship room', 'Component builds', 'UX refactors']
+		},
+		{
+			title: 'Exploration lab',
+			description: 'Speculative prototypes, demos, and interactive decks that make ideas tangible.',
+			outcomes: ['Rapid protos', 'Creative tech spikes', 'Storytelling decks']
+		}
+	];
+
+	const operatingCadence = [
+		{
+			title: 'Signal → Shape → Ship',
+			description: 'A three-beat loop where research fuels direction, direction fuels prototypes, prototypes fuel releases.'
+		},
+		{
+			title: 'Hybrid rituals',
+			description: 'Async loom reviews meet live crits. We keep stakeholders in the loop without clogging their calendar.'
+		},
+		{
+			title: 'Quality gates',
+			description: 'Inclusive checklists for performance, accessibility, and localization baked into our delivery pipeline.'
 		}
 	];
 
@@ -66,17 +159,75 @@
 
 <HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
 
+<PageSection id="signal" tone="subtle" padding="compact">
+	<div class="surface-panel">
+		<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+			<div class="max-w-3xl space-y-4">
+				<span class="eyebrow text-secondary/80">Studio signal</span>
+				<h2 class="text-3xl font-semibold sm:text-4xl">
+					A universal web studio for bold founders, product crews, and curious labs.
+				</h2>
+				<p class="text-base text-base-content/70 sm:text-lg">
+					We choreograph brand, product, and engineering into one expressive surface. Strategy is our
+					guardrail, experimentation is our tempo.
+				</p>
+			</div>
+			<div class="signal-marquee" aria-hidden="true">
+				<div class="marquee-track">
+					{#each Array(2) as _}
+						<span>Launch builds</span>
+						<span>Design engineering</span>
+						<span>Interactive stories</span>
+						<span>Inclusive by default</span>
+						<span>Prototype to production</span>
+					{/each}
+				</div>
+			</div>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			<div class="surface-card">
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Experiments shipped</p>
+				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.experimentsShipped}</p>
+				<p class="mt-2 text-sm text-base-content/70">
+					Launches, interactive demos, and product refreshes that made it to customers.
+				</p>
+			</div>
+			<div class="surface-card">
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Global collaborators</p>
+				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.activeCollaborators}</p>
+				<p class="mt-2 text-sm text-base-content/70">
+					Teams we have plugged into across timezones, industries, and internal stacks.
+				</p>
+			</div>
+			<div class="surface-card">
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Sprint rhythm</p>
+				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.averageSprintLength}</p>
+				<p class="mt-2 text-sm text-base-content/70">
+					Delivery cadence tuned for fast iteration without sacrificing craft.
+				</p>
+			</div>
+			<div class="surface-card">
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Response time</p>
+				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.responseTime}</p>
+				<p class="mt-2 text-sm text-base-content/70">
+					Direct access to the studio—no layers of account management slowing you down.
+				</p>
+			</div>
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="manifesto" tone="contrast">
 	<div class="grid gap-10 lg:grid-cols-[1.25fr_minmax(0,1fr)] lg:items-start">
 		<div class="space-y-6">
 			<span class="eyebrow text-secondary/80">Manifesto</span>
 			<h2 class="text-3xl font-semibold sm:text-4xl">
-				Where clarity, experimentation, and inclusivity converge.
+				We build digital flagships that feel inevitable.
 			</h2>
 			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				Every engagement starts with rigorous discovery and evolves into playful iteration. We
-				choreograph the dance between product goals and expressive storytelling so experiences
-				resonate, perform, and scale.
+				Elegant strategy, expressive design, and durable engineering arrive as one package. Every
+				project ships with clarity, performance, and the cinematic polish users remember.
 			</p>
 		</div>
 
@@ -95,12 +246,42 @@
 	</div>
 </PageSection>
 
+<PageSection id="services" tone="subtle">
+	<div class="mx-auto max-w-3xl text-center space-y-4">
+		<span class="eyebrow">Service tracks</span>
+		<h2 class="text-3xl font-semibold sm:text-4xl">Choose the lane that matches your momentum.</h2>
+		<p class="text-base text-base-content/70 sm:text-lg">
+			Each track blends research, design, and engineering so you can move from storyboard to shipped
+			in weeks—not quarters.
+		</p>
+	</div>
+
+	<div class="grid gap-6 lg:grid-cols-3">
+		{#each serviceTracks as track}
+			<div class="surface-panel h-full border-primary/20 bg-gradient-to-br from-base-100 to-base-200/70">
+				<h3 class="text-xl font-semibold text-base-content">{track.title}</h3>
+				<p class="mt-3 text-sm text-base-content/70">{track.description}</p>
+				<div class="mt-6 flex flex-wrap gap-2">
+					{#each track.outcomes as outcome}
+						<span
+							class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
+						>
+							{outcome}
+						</span>
+					{/each}
+				</div>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+
 <PageSection id="featured-work">
 	<div class="mx-auto max-w-3xl text-center space-y-4">
 		<span class="eyebrow">Featured Work</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">A selection of our favorite projects.</h2>
+		<h2 class="text-3xl font-semibold sm:text-4xl">A selection of recent flagship builds.</h2>
 		<p class="text-base text-base-content/70 sm:text-lg">
-			We take pride in our work. Here are a few of our favorite projects.
+			From launch campaigns to product refactors, each project is engineered to perform and feel
+			memorable.
 		</p>
 	</div>
 
@@ -215,6 +396,32 @@
 	</div>
 </PageSection>
 
+<PageSection id="cadence" tone="contrast">
+	<div class="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)] lg:items-center">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Operating cadence</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">
+				We move with purpose—measured, transparent, and ready to ship.
+			</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				Expect thoughtful kickoff, tight feedback loops, and a calm hand at launch. We map every
+				sprint so you know exactly what is landing.
+			</p>
+		</div>
+
+		<div class="grid gap-4">
+			{#each operatingCadence as item}
+				<div class="rounded-2xl border border-base-200/80 bg-base-100/70 p-6 shadow-lg">
+					<p class="text-xs font-semibold uppercase tracking-[0.28em] text-primary/80">
+						{item.title}
+					</p>
+					<p class="mt-3 text-sm text-base-content/70">{item.description}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="connect" tone="contrast" padding="compact">
 	<div class="surface-panel mx-auto max-w-4xl bg-base-100/80 text-center">
 		<span class="eyebrow text-secondary/80">Let’s build together</span>
@@ -231,3 +438,43 @@
 		</div>
 	</div>
 </PageSection>
+
+<style>
+	.signal-marquee {
+		min-width: 260px;
+		max-width: 360px;
+		overflow: hidden;
+		border-radius: 9999px;
+		border: 1px solid rgba(99, 102, 241, 0.2);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+		box-shadow: 0 14px 35px -18px rgba(15, 23, 42, 0.35);
+		color: inherit;
+	}
+
+	.marquee-track {
+		display: inline-flex;
+		align-items: center;
+		gap: 2rem;
+		padding: 0.85rem 1.5rem;
+		animation: marquee-slide 18s linear infinite;
+		min-width: max-content;
+	}
+
+	.signal-marquee span {
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+		opacity: 0.7;
+	}
+
+	@keyframes marquee-slide {
+		0% {
+			transform: translateX(0);
+		}
+
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+</style>
