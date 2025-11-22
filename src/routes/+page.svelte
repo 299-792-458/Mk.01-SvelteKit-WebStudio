@@ -323,6 +323,39 @@
 	</div>
 </PageSection>
 
+<PageSection id="immersion" tone="contrast">
+	<div class="grid gap-8 lg:grid-cols-[1.1fr_minmax(0,0.9fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Immersion lab</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Motion, story, and product in one reel.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				We ship experiences that feel alive without sacrificing performance. Each slice below is a
+				module we can dial up or down for your brand.
+			</p>
+			<div class="flex flex-wrap gap-2">
+				{#each credibility as cred}
+					<span
+						class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
+					>
+						{cred}
+					</span>
+				{/each}
+			</div>
+		</div>
+
+		<div class="immersion-grid">
+			{#each immersionSlices as slice, index}
+				<article class="immersive-card" style={`--accent:${slice.accent}; --index:${index}`}>
+					<div class="beam" aria-hidden="true" />
+					<div class="badge">{slice.badge}</div>
+					<h3>{slice.title}</h3>
+					<p>{slice.description}</p>
+				</article>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="services" tone="subtle">
 	<div class="mx-auto max-w-3xl text-center space-y-4">
 		<span class="eyebrow">Service tracks</span>
