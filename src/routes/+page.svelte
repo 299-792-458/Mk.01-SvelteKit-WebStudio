@@ -720,6 +720,42 @@
 	</div>
 </PageSection>
 
+<PageSection id="faq" tone="default" padding="compact">
+	<div class="grid gap-8 lg:grid-cols-[1fr_minmax(0,1.1fr)] lg:items-start">
+		<div class="space-y-3">
+			<span class="eyebrow">FAQ</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Answers to common collab questions.</h2>
+			<p class="max-w-2xl text-sm text-base-content/70 sm:text-base">
+				More questions? Email <a href="mailto:studio@mk1.dev" class="link-cta">studio@mk1.dev</a>
+				and we’ll reply quickly.
+			</p>
+		</div>
+
+		<div class="space-y-3">
+			{#each faqItems as item, index}
+				<button
+					type="button"
+					class="faq-row"
+					on:click={() => (openFaq = openFaq === index ? -1 : index)}
+					aria-expanded={openFaq === index}
+				>
+					<div class="flex items-center justify-between gap-4">
+						<p class="text-left text-sm font-semibold text-base-content sm:text-base">
+							{item.question}
+						</p>
+						<span class="faq-icon" aria-hidden="true">{openFaq === index ? '−' : '+'}</span>
+					</div>
+					{#if openFaq === index}
+						<p class="faq-answer">
+							{item.answer}
+						</p>
+					{/if}
+				</button>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+
 <PageSection id="connect" tone="contrast" padding="compact">
 	<div class="surface-panel mx-auto max-w-4xl bg-base-100/80 text-center">
 		<span class="eyebrow text-secondary/80">Let’s build together</span>
@@ -898,5 +934,80 @@
 	.delivery-content {
 		position: relative;
 		padding: 1rem 1.1rem;
+	}
+
+	.action-tile {
+		display: block;
+		padding: 0.9rem 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(226, 232, 240, 0.92));
+		box-shadow: 0 12px 32px -24px rgba(15, 23, 42, 0.5);
+		text-align: left;
+		transition:
+			transform 180ms ease,
+			box-shadow 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.action-tile.primary {
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(14, 165, 233, 0.16));
+		border-color: rgba(99, 102, 241, 0.3);
+	}
+
+	.action-tile.secondary {
+		background: linear-gradient(135deg, rgba(14, 165, 233, 0.14), rgba(56, 189, 248, 0.12));
+		border-color: rgba(56, 189, 248, 0.24);
+	}
+
+	.action-tile.outline {
+		background: rgba(255, 255, 255, 0.78);
+		border-color: rgba(15, 23, 42, 0.16);
+	}
+
+	.action-tile:hover,
+	.action-tile:focus-visible {
+		transform: translateY(-3px);
+		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.55);
+		border-color: rgba(99, 102, 241, 0.35);
+	}
+
+	.faq-row {
+		width: 100%;
+		text-align: left;
+		padding: 1rem 1.1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.82);
+		box-shadow: 0 12px 32px -24px rgba(15, 23, 42, 0.3);
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease,
+			border-color 160ms ease;
+	}
+
+	.faq-row:hover,
+	.faq-row:focus-visible {
+		transform: translateY(-2px);
+		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.4);
+		border-color: rgba(99, 102, 241, 0.28);
+	}
+
+	.faq-answer {
+		margin-top: 0.5rem;
+		color: rgba(15, 23, 42, 0.72);
+		font-size: 0.95rem;
+	}
+
+	.faq-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.8rem;
+		height: 1.8rem;
+		border-radius: 999px;
+		background: rgba(99, 102, 241, 0.12);
+		color: rgba(15, 23, 42, 0.8);
+		font-weight: 700;
 	}
 </style>
