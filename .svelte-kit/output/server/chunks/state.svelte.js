@@ -1,5 +1,5 @@
 import "clsx";
-import { Y as noop } from "./context.js";
+import { Z as noop } from "./context.js";
 import "@sveltejs/kit/internal/server";
 const is_legacy = noop.toString().includes("$$") || /function \w+\(\) \{\}/.test(noop.toString());
 if (is_legacy) {

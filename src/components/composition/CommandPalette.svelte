@@ -50,20 +50,29 @@
 		}
 	}
 
+	let focusFrame: number | null = null;
+
 	onMount(() => {
 		window.addEventListener('keydown', handleKeydown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeydown);
+			if (focusFrame !== null) {
+				cancelAnimationFrame(focusFrame);
+				focusFrame = null;
+			}
+		};
 	});
 
-	onDestroy(() => {
-		window.removeEventListener('keydown', handleKeydown);
-	});
-
-	$: if ($isOpen && inputElement) {
-		const frame = requestAnimationFrame(() => {
-			inputElement?.focus();
-		});
-
-		onDestroy(() => cancelAnimationFrame(frame));
+	$: {
+		if ($isOpen && inputElement) {
+			focusFrame = requestAnimationFrame(() => {
+				inputElement?.focus();
+			});
+		} else if (focusFrame !== null) {
+			cancelAnimationFrame(focusFrame);
+			focusFrame = null;
+		}
 	}
 </script>
 

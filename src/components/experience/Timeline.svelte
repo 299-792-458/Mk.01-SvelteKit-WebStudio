@@ -9,16 +9,16 @@
 </script>
 
 <ol class="timeline">
-	{#each items as item}
-		<li class="timeline-item">
-			<div class="marker" aria-hidden="true">
-				<span />
-				<span />
-			</div>
-			<div class="body">
-				<p class="year">{item.year}</p>
-				<h3>{item.title}</h3>
-				<p class="description">{item.description}</p>
+{#each items as item}
+	<li class="timeline-item">
+		<div class="marker" aria-hidden="true">
+			<span></span>
+			<span></span>
+		</div>
+		<div class="body">
+			<p class="year">{item.year}</p>
+			<h3>{item.title}</h3>
+			<p class="description">{item.description}</p>
 			</div>
 		</li>
 	{/each}

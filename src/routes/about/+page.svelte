@@ -59,26 +59,26 @@
 			</div>
 		</div>
 
-		<div class="surface-panel space-y-4 bg-base-100/80">
-			<h2 class="text-lg font-semibold text-base-content">Studio DNA</h2>
-			<ul class="space-y-3 text-sm text-base-content/70">
-				<li class="flex items-start gap-3">
-					<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80" />
-					<span>Distributed team across Seoul, Busan, Tokyo, and global collaborators.</span>
-				</li>
-				<li class="flex items-start gap-3">
-					<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80" />
-					<span
-						>Launch runway playbook covering pre-visualization, motion specs, and QA rituals.</span
-					>
-				</li>
-				<li class="flex items-start gap-3">
-					<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80" />
-					<span>Labs program shipping open-source experiments and R&D prototypes quarterly.</span>
-				</li>
-			</ul>
+				<div class="surface-panel space-y-4 bg-base-100/80">
+				<h2 class="text-lg font-semibold text-base-content">Studio DNA</h2>
+				<ul class="space-y-3 text-sm text-base-content/70">
+					<li class="flex items-start gap-3">
+						<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80"></span>
+						<span>Distributed team across Seoul, Busan, Tokyo, and global collaborators.</span>
+					</li>
+					<li class="flex items-start gap-3">
+						<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80"></span>
+						<span
+							>Launch runway playbook covering pre-visualization, motion specs, and QA rituals.</span
+						>
+					</li>
+					<li class="flex items-start gap-3">
+						<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80"></span>
+						<span>Labs program shipping open-source experiments and R&D prototypes quarterly.</span>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
 </PageSection>
 
 <PageSection id="values">

@@ -1,7 +1,6 @@
 import { g as element, f as slot, j as attr_style, b as bind_props, e as ensure_array_like, a as attr, c as attr_class, s as stringify } from "../../chunks/index.js";
-import { o as onDestroy } from "../../chunks/index-server.js";
 import { a as appConfig } from "../../chunks/app.config.js";
-import { V as fallback, X as escape_html } from "../../chunks/context.js";
+import { W as fallback, Y as escape_html } from "../../chunks/context.js";
 import { S as Surface } from "../../chunks/Surface.js";
 import { P as PageSection } from "../../chunks/PageSection.js";
 import "clsx";
@@ -131,8 +130,6 @@ function _page($$renderer, $$props) {
         style: "outline"
       }
     ];
-    onDestroy(() => {
-    });
     Scene($$renderer2);
     $$renderer2.push(`<!----> `);
     Reveal($$renderer2, {

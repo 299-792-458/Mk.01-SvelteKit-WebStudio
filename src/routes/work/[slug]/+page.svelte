@@ -63,17 +63,17 @@
 
 <PageSection id="project-outcomes">
 	<div class="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-		<Surface variant="panel" padding="md" as="section">
-			<h2 class="text-2xl font-semibold text-base-content">Outcomes</h2>
-			<ul class="mt-4 space-y-3 text-sm text-base-content/70">
-				{#each projectContent.outcomes as outcome}
-					<li class="flex gap-3">
-						<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80" />
-						<span>{outcome}</span>
-					</li>
-				{/each}
-			</ul>
-		</Surface>
+			<Surface variant="panel" padding="md" as="section">
+				<h2 class="text-2xl font-semibold text-base-content">Outcomes</h2>
+				<ul class="mt-4 space-y-3 text-sm text-base-content/70">
+					{#each projectContent.outcomes as outcome}
+						<li class="flex gap-3">
+							<span class="mt-1 inline-flex h-2 w-2 rounded-full bg-primary/80"></span>
+							<span>{outcome}</span>
+						</li>
+					{/each}
+				</ul>
+			</Surface>
 
 		<Surface variant="glass" padding="md" as="section">
 			<h2 class="text-2xl font-semibold text-base-content">Services</h2>

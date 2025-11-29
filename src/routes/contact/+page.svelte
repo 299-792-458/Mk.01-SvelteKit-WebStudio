@@ -50,15 +50,15 @@
 				</select>
 			</label>
 
-			<label class="form-control">
-				<span class="label-text uppercase tracking-[0.28em] text-xs text-base-content/60">
-					Project brief
-				</span>
-				<textarea
-					class="textarea textarea-bordered min-h-[180px]"
-					placeholder="Tell us about the opportunity…"
-				/>
-			</label>
+				<label class="form-control">
+					<span class="label-text uppercase tracking-[0.28em] text-xs text-base-content/60">
+						Project brief
+					</span>
+					<textarea
+						class="textarea textarea-bordered min-h-[180px]"
+						placeholder="Tell us about the opportunity…"
+					></textarea>
+				</label>
 
 			<button type="submit" class="btn btn-primary btn-lg">Send introduction</button>
 		</form>

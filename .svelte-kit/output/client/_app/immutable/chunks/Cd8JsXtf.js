@@ -1,1 +1,0 @@
-import{s as o,l as t}from"./Dm0tW47e.js";import{n as s}from"./Cek28Tn4.js";function r(n){o.r.on_destroy(n)}function e(){return s}function f(){t("fork")}async function i(){}async function u(){}export{e as c,f,r as o,u as s,i as t};

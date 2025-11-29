@@ -1,14 +1,17 @@
 import { b as bind_props, e as ensure_array_like, a as attr, c as attr_class, s as stringify, d as store_get, u as unsubscribe_stores, f as slot, h as head } from "../../chunks/index.js";
-import { V as fallback, W as getContext, X as escape_html } from "../../chunks/context.js";
+import { V as ssr_context, W as fallback, X as getContext, Y as escape_html } from "../../chunks/context.js";
 import "clsx";
 import "@sveltejs/kit/internal";
 import { w as writable, i as derived } from "../../chunks/exports.js";
 import "../../chunks/utils.js";
 import "@sveltejs/kit/internal/server";
 import "../../chunks/state.svelte.js";
-import { o as onDestroy } from "../../chunks/index-server.js";
 import { b as buildSeo, s as siteConfig } from "../../chunks/seo.js";
 import { h as html } from "../../chunks/html.js";
+function onDestroy(fn) {
+  /** @type {SSRContext} */
+  ssr_context.r.on_destroy(fn);
+}
 function ThemeToggle($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let theme = fallback($$props["theme"], "studio-light");
@@ -77,7 +80,7 @@ function GlobalNav($$renderer, $$props) {
     }
     $$renderer2.push(`<!--]--></div> <div class="flex items-center gap-2 pl-2"><a href="/contact" class="btn btn-ghost btn-circle btn-sm hidden sm:flex" aria-label="Contact"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"></path></svg></a> `);
     ThemeToggle($$renderer2, { theme });
-    $$renderer2.push(`<!----> <button class="btn btn-ghost btn-circle btn-sm md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></nav></div> `);
+    $$renderer2.push(`<!----> <button class="btn btn-ghost btn-circle btn-sm md:hidden" aria-label="Toggle menu"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></nav></div> `);
     {
       $$renderer2.push("<!--[!-->");
     }
@@ -153,35 +156,13 @@ function CommandPalette($$renderer, $$props) {
     let inputElement = null;
     const isOpen = derived(experienceStore, ($experience) => $experience.isCommandPaletteOpen);
     const allActions = sections.flatMap((section) => section.actions.map((action) => ({ section: section.title, ...action })));
-    function closePalette() {
-      experienceStore.closeCommandPalette();
-      query = "";
-    }
-    function handleKeydown(event) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        if (event.shiftKey) {
-          experienceStore.toggleTheme();
-          return;
-        }
-        if (event.altKey) {
-          experienceStore.toggleAmbientAudio();
-          return;
-        }
-        experienceStore.openCommandPalette();
-      }
-      if (event.key === "Escape") {
-        closePalette();
-      }
-    }
-    onDestroy(() => {
-      window.removeEventListener("keydown", handleKeydown);
-    });
     filteredActions = query.trim().length === 0 ? allActions : allActions.filter((action) => {
       const haystack = `${action.label} ${action.description ?? ""}`.toLowerCase();
       return haystack.includes(query.trim().toLowerCase());
     });
-    if (store_get($$store_subs ??= {}, "$isOpen", isOpen) && inputElement) ;
+    {
+      if (store_get($$store_subs ??= {}, "$isOpen", isOpen) && inputElement) ;
+    }
     if (store_get($$store_subs ??= {}, "$isOpen", isOpen)) {
       $$renderer2.push("<!--[-->");
       $$renderer2.push(`<div class="palette-overlay svelte-1vklsmh" role="dialog" aria-modal="true"><button type="button" class="backdrop svelte-1vklsmh" aria-label="Close palette"></button> <div class="palette svelte-1vklsmh"><header class="svelte-1vklsmh"><input type="text" placeholder="Search actions, pages, or ideas…"${attr("value", query)} class="svelte-1vklsmh"/> <button type="button" class="close svelte-1vklsmh" aria-label="Close palette">×</button></header> <section class="svelte-1vklsmh">`);

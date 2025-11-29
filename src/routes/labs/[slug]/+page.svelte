@@ -44,12 +44,12 @@
 					</a>
 				{/if}
 			</div>
-		</div>
-		<div class="media">
-			<div class="glow" />
-			<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
-		</div>
 	</div>
+	<div class="media">
+		<div class="glow"></div>
+		<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
+	</div>
+</div>
 </PageSection>
 
 <PageSection id="experiment-detail">

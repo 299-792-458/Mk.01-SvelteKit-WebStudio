@@ -1,5 +1,5 @@
 import { e as ensure_array_like, j as attr_style, a as attr, b as bind_props } from "../../../chunks/index.js";
-import { V as fallback, X as escape_html } from "../../../chunks/context.js";
+import { W as fallback, Y as escape_html } from "../../../chunks/context.js";
 import { P as PageSection } from "../../../chunks/PageSection.js";
 function TeamConstellation($$renderer, $$props) {
   let members = fallback($$props["members"], () => [], true);

@@ -13,7 +13,7 @@
 	const identity = data.identity ?? appConfig.identity;
 	const metrics = data.metrics ?? appConfig.metrics;
 	let liveSignalIndex = 0;
-	let liveSignalTimer;
+	let liveSignalTimer: ReturnType<typeof setInterval> | null = null;
 
 	const studioPillars = [
 		{
@@ -278,12 +278,13 @@
 		liveSignalTimer = setInterval(() => {
 			liveSignalIndex = (liveSignalIndex + 1) % liveSignals.length;
 		}, 3200);
-	});
 
-	onDestroy(() => {
-		if (liveSignalTimer) {
-			clearInterval(liveSignalTimer);
-		}
+		return () => {
+			if (liveSignalTimer !== null) {
+				clearInterval(liveSignalTimer);
+				liveSignalTimer = null;
+			}
+		};
 	});
 
 	const collaborationModes = [

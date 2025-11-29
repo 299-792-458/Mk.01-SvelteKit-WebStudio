@@ -29,7 +29,7 @@ async function resolveModules(modules, extension) {
       const mod = await resolver();
       const { metadata, default: component } = mod;
       const slug = path.split("/").pop()?.replace(extension, "") ?? "";
-      const rendered = component?.render ? component.render() : { html: "" };
+      const rendered = renderContent(mod);
       const { minutes, words } = deriveReadingStats(rendered.html ?? "");
       const isoDate = metadata?.date ? normalizeDate(metadata.date) : null;
       const typedMetadata = metadata;
@@ -66,7 +66,7 @@ async function getPostBySlug(slug) {
   }
   const mod = await resolver();
   const { metadata, default: component } = mod;
-  const rendered = component?.render ? component.render() : { html: "" };
+  const rendered = renderContent(mod);
   const { minutes, words } = deriveReadingStats(rendered.html ?? "");
   const isoDate = metadata?.date ? normalizeDate(metadata.date) : null;
   const typedMetadata = metadata;
@@ -81,6 +81,10 @@ async function getPostBySlug(slug) {
     category: typedMetadata.category ?? "Uncategorized",
     author: typedMetadata.author ?? "Mk.01 Studio"
   };
+}
+function renderContent(mod) {
+  const renderFn = typeof mod.render === "function" ? mod.render : typeof mod.default === "object" && mod.default && "render" in mod.default ? mod.default.render : void 0;
+  return renderFn ? renderFn() : { html: "" };
 }
 export {
   getAllPosts as a,

@@ -32,12 +32,12 @@
 
 <PageSection id="labs-grid">
 	<div class="grid gap-8 lg:grid-cols-3">
-		{#each experiments as experiment}
-			<article class="lab-card">
-				<div class="media">
-					<div class="glow" />
-					<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
-				</div>
+			{#each experiments as experiment}
+				<article class="lab-card">
+					<div class="media">
+						<div class="glow"></div>
+						<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
+					</div>
 				<div class="body">
 					<span class={`badge ${statusBadge[experiment.status].tone}`}>
 						{statusBadge[experiment.status].label}
