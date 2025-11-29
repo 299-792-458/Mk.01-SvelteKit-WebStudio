@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	// import Navigation from '$components/composition/Navigation.svelte';
-	// import GlobalNav from '$lib/components/layout/GlobalNav.svelte';
+	import GlobalNav from '$lib/components/layout/GlobalNav.svelte';
 	import CommandPalette from '$components/composition/CommandPalette.svelte';
 	import AmbientAudio from '$components/experience/AmbientAudio.svelte';
 	import { experienceStore } from '$services/experience';
@@ -83,7 +83,7 @@
 <div data-theme={activeTheme} class="min-h-screen bg-base-100 text-base-content transition-colors">
 	<a href="#page-content" class="skip-link">Skip to content</a>
 	<div class="flex min-h-screen flex-col">
-		<!-- <GlobalNav /> -->
+		<GlobalNav />
 
 		<main id="page-content" tabindex="-1" class="flex-1 focus:outline-none">
 			<slot />
@@ -93,5 +93,5 @@
 	</div>
 
 	<CommandPalette />
-	<!-- <AmbientAudio /> -->
+	<AmbientAudio />
 </div>

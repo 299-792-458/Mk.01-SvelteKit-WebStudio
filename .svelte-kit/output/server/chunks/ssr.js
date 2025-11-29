@@ -32,6 +32,9 @@ function subscribe(store, ...callbacks) {
 function null_to_empty(value) {
   return value == null ? "" : value;
 }
+function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
+  return new CustomEvent(type, { detail, bubbles, cancelable });
+}
 let current_component;
 function set_current_component(component) {
   current_component = component;
@@ -42,6 +45,25 @@ function get_current_component() {
 }
 function onDestroy(fn) {
   get_current_component().$$.on_destroy.push(fn);
+}
+function createEventDispatcher() {
+  const component = get_current_component();
+  return (type, detail, { cancelable = false } = {}) => {
+    const callbacks = component.$$.callbacks[type];
+    if (callbacks) {
+      const event = custom_event(
+        /** @type {string} */
+        type,
+        detail,
+        { cancelable }
+      );
+      callbacks.slice().forEach((fn) => {
+        fn.call(component, event);
+      });
+      return !event.defaultPrevented;
+    }
+    return true;
+  };
 }
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
@@ -132,16 +154,17 @@ function add_attribute(name, value, boolean) {
   return ` ${name}${assignment}`;
 }
 export {
-  subscribe as a,
-  add_attribute as b,
+  createEventDispatcher as a,
+  subscribe as b,
   create_ssr_component as c,
-  escape as d,
+  add_attribute as d,
   each as e,
-  noop as f,
-  safe_not_equal as g,
-  getContext as h,
+  escape as f,
+  noop as g,
+  safe_not_equal as h,
   is_function as i,
-  is_promise as j,
+  getContext as j,
+  is_promise as k,
   missing_component as m,
   null_to_empty as n,
   onDestroy as o,

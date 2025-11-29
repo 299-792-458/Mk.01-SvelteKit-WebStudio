@@ -1,4 +1,4 @@
-import { c as create_ssr_component, b as add_attribute } from "./ssr.js";
+import { c as create_ssr_component, d as add_attribute } from "./ssr.js";
 const PageSection = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let sectionClasses;
   let { id = void 0 } = $$props;

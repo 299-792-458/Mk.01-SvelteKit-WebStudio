@@ -4,7 +4,7 @@
 	import HeroSequencer from '$components/experience/HeroSequencer.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
 	import Scene from '$lib/components/3d/Scene.svelte';
-	// import Reveal from '$lib/components/motion/Reveal.svelte';
+	import Reveal from '$lib/components/motion/Reveal.svelte';
 
 	import type { PageData } from './$types';
 
@@ -324,70 +324,72 @@
 
 <Scene />
 
-<!-- Hero -->
-<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
+<Reveal type="fade" delay={0.2}>
+	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
+</Reveal>
 
-<!-- Signal -->
-<PageSection id="signal" tone="subtle" padding="compact">
-	<div class="surface-panel">
-		<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-			<div class="max-w-3xl space-y-4">
-				<span class="eyebrow text-secondary/80">Studio signal</span>
-				<h2 class="text-3xl font-semibold sm:text-4xl">
-					A universal web studio for bold founders, product crews, and curious labs.
-				</h2>
-				<p class="text-base text-base-content/70 sm:text-lg">
-					We choreograph brand, product, and engineering into one expressive surface. Strategy is our
-					guardrail, experimentation is our tempo.
-				</p>
+<Reveal type="slide" delay={0.4}>
+	<PageSection id="signal" tone="subtle" padding="compact">
+		<div class="surface-panel">
+			<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+				<div class="max-w-3xl space-y-4">
+					<span class="eyebrow text-secondary/80">Studio signal</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">
+						A universal web studio for bold founders, product crews, and curious labs.
+					</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						We choreograph brand, product, and engineering into one expressive surface. Strategy is our
+						guardrail, experimentation is our tempo.
+					</p>
+				</div>
+				<div class="signal-marquee" aria-hidden="true">
+					<div class="marquee-track">
+						{#each Array(2) as _}
+							<span>Launch builds</span>
+							<span>Design engineering</span>
+							<span>Interactive stories</span>
+							<span>Inclusive by default</span>
+							<span>Prototype to production</span>
+						{/each}
+					</div>
+				</div>
 			</div>
-			<div class="signal-marquee" aria-hidden="true">
-				<div class="marquee-track">
-					{#each Array(2) as _}
-						<span>Launch builds</span>
-						<span>Design engineering</span>
-						<span>Interactive stories</span>
-						<span>Inclusive by default</span>
-						<span>Prototype to production</span>
-					{/each}
+
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Experiments shipped</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.experimentsShipped}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Launches, interactive demos, and product refreshes that made it to customers.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Global collaborators</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.activeCollaborators}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Teams we have plugged into across timezones, industries, and internal stacks.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Sprint rhythm</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.averageSprintLength}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Delivery cadence tuned for fast iteration without sacrificing craft.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Response time</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.responseTime}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Direct access to the studio—no layers of account management slowing you down.
+					</p>
 				</div>
 			</div>
 		</div>
+	</PageSection>
+</Reveal>
 
-		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Experiments shipped</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.experimentsShipped}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Launches, interactive demos, and product refreshes that made it to customers.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Global collaborators</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.activeCollaborators}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Teams we have plugged into across timezones, industries, and internal stacks.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Sprint rhythm</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.averageSprintLength}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Delivery cadence tuned for fast iteration without sacrificing craft.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Response time</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.responseTime}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Direct access to the studio—no layers of account management slowing you down.
-				</p>
-			</div>
-		</div>
-	</div>
-</PageSection>
-
-<!-- Manifesto -->
+<Reveal delay={0.2}>
 <PageSection id="manifesto" tone="contrast">
 	<div class="grid gap-10 lg:grid-cols-[1.25fr_minmax(0,1fr)] lg:items-start">
 		<div class="space-y-6">
@@ -415,8 +417,9 @@
 		</div>
 	</div>
 </PageSection>
+</Reveal>
 
-<!-- Featured Work (Bento) -->
+<Reveal type="slide" delay={0.2}>
 <PageSection id="featured-work">
 	<div class="mx-auto max-w-3xl text-center space-y-4 mb-12">
 		<span class="eyebrow">Featured Work</span>
@@ -468,8 +471,9 @@
 		<a href="/work" class="btn btn-primary btn-lg">View all work</a>
 	</div>
 </PageSection>
+</Reveal>
 
-<!-- Actions -->
+<Reveal delay={0.2}>
 <PageSection id="actions" tone="contrast" padding="compact">
 	<div class="surface-panel mx-auto max-w-5xl bg-base-100/80">
 		<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -498,6 +502,7 @@
 		</div>
 	</div>
 </PageSection>
+</Reveal>
 
 <style>
     /* ... existing styles ... */

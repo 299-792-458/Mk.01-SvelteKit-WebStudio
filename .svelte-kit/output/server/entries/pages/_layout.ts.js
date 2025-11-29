@@ -1,4 +1,6 @@
-const prerender = true;
+const prerender = false;
+const ssr = false;
 export {
-  prerender
+  prerender,
+  ssr
 };

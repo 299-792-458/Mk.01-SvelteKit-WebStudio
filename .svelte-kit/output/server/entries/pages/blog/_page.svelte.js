@@ -1,4 +1,4 @@
-import { c as create_ssr_component, v as validate_component, b as add_attribute, e as each, d as escape } from "../../../chunks/ssr.js";
+import { c as create_ssr_component, v as validate_component, d as add_attribute, e as each, f as escape } from "../../../chunks/ssr.js";
 import { P as PageSection } from "../../../chunks/PageSection.js";
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { data } = $$props;

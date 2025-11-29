@@ -18,8 +18,7 @@
 	$: currentSeo = data?.seo ?? buildSeo({ path: $page.url.pathname });
 	$: jsonLdMarkup =
 		currentSeo?.jsonLd != null
-			? /* eslint-disable-next-line no-useless-escape */
-				`<script type="application/ld+json">${serializeJsonLd(currentSeo.jsonLd)}<\/script>`
+			? `<script type="application/ld+json">${serializeJsonLd(currentSeo.jsonLd)}<\/script>`
 			: '';
 </script>
 
