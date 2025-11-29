@@ -2,7 +2,6 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { page } from '$app/stores';
-	import { animate } from 'motion';
 	import { fly, fade } from 'svelte/transition';
 
 	export let theme: 'studio-light' | 'studio-dark' = 'studio-light';
@@ -22,8 +21,9 @@
 		mobileOpen = false;
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		if (navElement) {
+			const { animate } = await import('motion');
 			animate(
 				navElement,
 				{ y: [-50, 0], opacity: [0, 1], scale: [0.9, 1] },

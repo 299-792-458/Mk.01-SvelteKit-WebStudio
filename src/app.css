@@ -68,7 +68,7 @@
 	}
 
 	.surface-glass {
-		@apply rounded-3xl border border-primary border-opacity-10 bg-base-100/10 p-8 shadow-[0_20px_45px_-25px_rgba(47,93,255,0.45)] backdrop-blur-2xl;
+		@apply rounded-3xl border border-primary border-opacity-10 bg-base-100 bg-opacity-10 p-8 shadow-[0_20px_45px_-25px_rgba(47,93,255,0.45)] backdrop-blur-2xl;
 	}
 
 	.link-cta {

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { animate, inView } from 'motion';
 
 	export let type: 'fade' | 'slide' | 'blur' | 'scale' = 'fade';
 	export let delay = 0;
@@ -10,8 +9,10 @@
 
 	let element: HTMLElement;
 
-	onMount(() => {
+	onMount(async () => {
 		if (!element) return;
+
+		const { animate, inView } = await import('motion');
 
 		const options = {
 			delay,
