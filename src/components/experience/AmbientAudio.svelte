@@ -3,43 +3,48 @@
 	import { experienceStore } from '$services/experience';
 	import { derived } from 'svelte/store';
 
-	const isPlaying = derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
+const isPlayingStore = derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
 
-	let audioElement: HTMLAudioElement | null = null;
+let isPlaying = false;
+let audioElement: HTMLAudioElement | null = null;
 
 	const ambienceSrc =
 		'https://cdn.pixabay.com/download/audio/2023/11/06/audio_3a1babf1d8.mp3?filename=cyberpunk-city-ambient-175576.mp3';
 
-	function toggle() {
-		experienceStore.toggleAmbientAudio();
-	}
+function toggle() {
+	experienceStore.toggleAmbientAudio();
+}
 
-	$: {
-		if (audioElement) {
-			if ($isPlaying) {
-				audioElement.play().catch(() => {
-					experienceStore.toggleAmbientAudio();
-				});
-			} else {
-				audioElement.pause();
-			}
-		}
-	}
+onMount(() => {
+	const unsubscribe = isPlayingStore.subscribe((value) => {
+		isPlaying = value;
 
-	onMount(() => {
 		if (!audioElement) return;
+
+		if (value) {
+			audioElement
+				.play()
+				.catch(() => experienceStore.toggleAmbientAudio());
+		} else {
+			audioElement.pause();
+		}
+	});
+
+	if (audioElement) {
 		audioElement.volume = 0.35;
 		audioElement.loop = true;
-	});
+	}
 
-	onDestroy(() => {
+	return () => {
+		unsubscribe();
 		audioElement?.pause();
-	});
+	};
+});
 </script>
 
 <button class="ambient-toggle" type="button" on:click={toggle}>
 	<span class="pulse" aria-hidden="true"></span>
-	{#if $isPlaying}
+	{#if isPlaying}
 		<span class="label">Ambient on</span>
 	{:else}
 		<span class="label">Ambient off</span>

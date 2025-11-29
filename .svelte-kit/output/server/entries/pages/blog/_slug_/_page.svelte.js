@@ -1,6 +1,6 @@
 import { b as bind_props, a as attr, e as ensure_array_like, k as await_block } from "../../../../chunks/index.js";
 import { P as PageSection } from "../../../../chunks/PageSection.js";
-import { Y as escape_html } from "../../../../chunks/context.js";
+import { X as escape_html } from "../../../../chunks/context.js";
 const __variableDynamicImportRuntimeHelper = (glob$1, path$13, segs) => {
   const v = glob$1[path$13];
   if (v) return typeof v === "function" ? v() : Promise.resolve(v);

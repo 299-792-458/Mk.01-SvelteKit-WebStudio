@@ -1,4 +1,4 @@
-import { Z as noop, _ as safe_not_equal, $ as subscribe_to_store, a0 as run_all } from "./context.js";
+import { Y as noop, Z as safe_not_equal, _ as subscribe_to_store, $ as run_all } from "./context.js";
 const SCHEME = /^[a-z][a-z\d+\-.]+:/i;
 const internal = new URL("sveltekit-internal://");
 function resolve(base, path) {

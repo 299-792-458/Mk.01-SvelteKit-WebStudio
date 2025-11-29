@@ -1,5 +1,5 @@
 import { a as attr, c as attr_class, f as slot, b as bind_props } from "./index.js";
-import { W as fallback } from "./context.js";
+import { V as fallback } from "./context.js";
 function PageSection($$renderer, $$props) {
   let sectionClasses;
   let id = fallback($$props["id"], void 0);

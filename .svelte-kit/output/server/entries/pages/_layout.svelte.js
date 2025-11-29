@@ -1,5 +1,5 @@
 import { b as bind_props, e as ensure_array_like, a as attr, c as attr_class, s as stringify, d as store_get, u as unsubscribe_stores, f as slot, h as head } from "../../chunks/index.js";
-import { V as ssr_context, W as fallback, X as getContext, Y as escape_html } from "../../chunks/context.js";
+import { V as fallback, W as getContext, X as escape_html } from "../../chunks/context.js";
 import "clsx";
 import "@sveltejs/kit/internal";
 import { w as writable, i as derived } from "../../chunks/exports.js";
@@ -8,10 +8,6 @@ import "@sveltejs/kit/internal/server";
 import "../../chunks/state.svelte.js";
 import { b as buildSeo, s as siteConfig } from "../../chunks/seo.js";
 import { h as html } from "../../chunks/html.js";
-function onDestroy(fn) {
-  /** @type {SSRContext} */
-  ssr_context.r.on_destroy(fn);
-}
 function ThemeToggle($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let theme = fallback($$props["theme"], "studio-light");
@@ -203,21 +199,14 @@ function CommandPalette($$renderer, $$props) {
 }
 function AmbientAudio($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
-    var $$store_subs;
-    const isPlaying = derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
+    derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
     const ambienceSrc = "https://cdn.pixabay.com/download/audio/2023/11/06/audio_3a1babf1d8.mp3?filename=cyberpunk-city-ambient-175576.mp3";
-    onDestroy(() => {
-    });
     $$renderer2.push(`<button class="ambient-toggle svelte-50870b" type="button"><span class="pulse svelte-50870b" aria-hidden="true"></span> `);
-    if (store_get($$store_subs ??= {}, "$isPlaying", isPlaying)) {
-      $$renderer2.push("<!--[-->");
-      $$renderer2.push(`<span class="label svelte-50870b">Ambient on</span>`);
-    } else {
+    {
       $$renderer2.push("<!--[!-->");
       $$renderer2.push(`<span class="label svelte-50870b">Ambient off</span>`);
     }
     $$renderer2.push(`<!--]--></button> <audio${attr("src", ambienceSrc)} preload="auto" class="svelte-50870b"></audio>`);
-    if ($$store_subs) unsubscribe_stores($$store_subs);
   });
 }
 function SiteFooter($$renderer, $$props) {

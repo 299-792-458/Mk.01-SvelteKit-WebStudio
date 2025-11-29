@@ -1,5 +1,5 @@
 import { g as element, b as bind_props, f as slot, c as attr_class } from "./index.js";
-import { W as fallback } from "./context.js";
+import { V as fallback } from "./context.js";
 function Surface($$renderer, $$props) {
   let variant = fallback($$props["variant"], "card");
   let padding = fallback($$props["padding"], "md");

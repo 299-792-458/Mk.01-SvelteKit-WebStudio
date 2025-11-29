@@ -1,6 +1,6 @@
 import { b as bind_props, e as ensure_array_like, a as attr, c as attr_class } from "../../../chunks/index.js";
 import { P as PageSection } from "../../../chunks/PageSection.js";
-import { Y as escape_html } from "../../../chunks/context.js";
+import { X as escape_html } from "../../../chunks/context.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let data = $$props["data"];
