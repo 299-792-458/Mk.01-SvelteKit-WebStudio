@@ -8,15 +8,6 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true,
-		"paths": {
-			"$components/*": ["./src/components/*"],
-			"$modules/*": ["./src/modules/*"],
-			"$config/*": ["./src/config/*"],
-			"$content/*": ["./src/content/*"],
-			"$services/*": ["./src/services/*"],
-			"$styles/*": ["./src/styles/*"],
-			"$tokens/*": ["./src/styles/tokens/*"]
-		}
+		"strict": true
 	}
 }

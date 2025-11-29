@@ -38,7 +38,7 @@
 </script>
 
 <button class="ambient-toggle" type="button" on:click={toggle}>
-	<span class="pulse" aria-hidden="true" />
+	<span class="pulse" aria-hidden="true"></span>
 	{#if $isPlaying}
 		<span class="label">Ambient on</span>
 	{:else}
@@ -46,7 +46,7 @@
 	{/if}
 </button>
 
-<audio bind:this={audioElement} src={ambienceSrc} preload="auto" />
+<audio bind:this={audioElement} src={ambienceSrc} preload="auto"></audio>
 
 <style>
 	.ambient-toggle {

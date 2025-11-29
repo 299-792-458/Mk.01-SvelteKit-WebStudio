@@ -68,7 +68,7 @@ async function resolveModules(
 			const { metadata, default: component } = mod;
 
 			const slug = path.split('/').pop()?.replace(extension, '') ?? '';
-			const rendered = component?.render ? component.render() : { html: '' };
+			const rendered = renderContent(mod);
 			const { minutes, words } = deriveReadingStats(rendered.html ?? '');
 			const isoDate = metadata?.date ? normalizeDate(metadata.date) : null;
 
@@ -120,7 +120,7 @@ export async function getPostBySlug(
 	const mod = await resolver();
 	const { metadata, default: component } = mod;
 
-	const rendered = component?.render ? component.render() : { html: '' };
+	const rendered = renderContent(mod);
 	const { minutes, words } = deriveReadingStats(rendered.html ?? '');
 	const isoDate = metadata?.date ? normalizeDate(metadata.date) : null;
 	const typedMetadata = metadata as PostMetadata;
@@ -141,9 +141,23 @@ export async function getPostBySlug(
 
 type PostModule = {
 	metadata: PostMetadata;
-	default: {
-		render: () => {
+	default?: {
+		render?: () => {
 			html: string;
 		};
 	};
+	render?: () => {
+		html: string;
+	};
 } & Record<string, unknown>;
+
+function renderContent(mod: PostModule) {
+	const renderFn =
+		typeof mod.render === 'function'
+			? mod.render
+			: typeof mod.default === 'object' && mod.default && 'render' in mod.default
+				? (mod.default.render as (() => { html: string }) | undefined)
+				: undefined;
+
+	return renderFn ? renderFn() : { html: '' };
+}

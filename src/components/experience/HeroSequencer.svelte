@@ -12,13 +12,13 @@
 	const heroMotion = motionScale.find((preset) => preset.id === 'cinematic-enter');
 </script>
 
-<section class="hero-stage">
-	<div class="nebula" aria-hidden="true">
-		<div class="orb orb-a" />
-		<div class="orb orb-b" />
-		<div class="orb orb-c" />
-		<div class="gridlines" />
-	</div>
+	<section class="hero-stage">
+		<div class="nebula" aria-hidden="true">
+			<div class="orb orb-a"></div>
+			<div class="orb orb-b"></div>
+			<div class="orb orb-c"></div>
+			<div class="gridlines"></div>
+		</div>
 
 	<div class="content">
 		<div class="intro">

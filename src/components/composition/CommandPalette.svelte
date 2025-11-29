@@ -67,9 +67,9 @@
 	}
 </script>
 
-{#if $isOpen}
-	<div class="palette-overlay" role="dialog" aria-modal="true">
-		<button type="button" class="backdrop" on:click={closePalette} aria-label="Close palette" />
+	{#if $isOpen}
+		<div class="palette-overlay" role="dialog" aria-modal="true">
+			<button type="button" class="backdrop" on:click={closePalette} aria-label="Close palette"></button>
 		<div class="palette">
 			<header>
 				<input
