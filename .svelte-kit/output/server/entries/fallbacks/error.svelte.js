@@ -1,11 +1,43 @@
-import { c as create_ssr_component, b as subscribe, f as escape } from "../../chunks/ssr.js";
-import { p as page } from "../../chunks/stores.js";
-const Error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $page, $$unsubscribe_page;
-  $$unsubscribe_page = subscribe(page, (value) => $page = value);
-  $$unsubscribe_page();
-  return `<h1>${escape($page.status)}</h1> <p>${escape($page.error?.message)}</p>`;
+import { W as getContext, X as escape_html } from "../../chunks/context.js";
+import "clsx";
+import "../../chunks/state.svelte.js";
+import "@sveltejs/kit/internal";
+import { w as writable } from "../../chunks/exports.js";
+import "../../chunks/utils.js";
+import "@sveltejs/kit/internal/server";
+function create_updated_store() {
+  const { set, subscribe } = writable(false);
+  {
+    return {
+      subscribe,
+      // eslint-disable-next-line @typescript-eslint/require-await
+      check: async () => false
+    };
+  }
+}
+const stores = {
+  updated: /* @__PURE__ */ create_updated_store()
+};
+({
+  check: stores.updated.check
 });
+function context() {
+  return getContext("__request__");
+}
+const page$1 = {
+  get error() {
+    return context().page.error;
+  },
+  get status() {
+    return context().page.status;
+  }
+};
+const page = page$1;
+function Error$1($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    $$renderer2.push(`<h1>${escape_html(page.status)}</h1> <p>${escape_html(page.error?.message)}</p>`);
+  });
+}
 export {
-  Error as default
+  Error$1 as default
 };

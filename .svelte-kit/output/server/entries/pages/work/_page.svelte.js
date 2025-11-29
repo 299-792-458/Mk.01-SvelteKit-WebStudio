@@ -1,63 +1,120 @@
-import { c as create_ssr_component, v as validate_component, e as each, d as add_attribute, f as escape } from "../../../chunks/ssr.js";
+import { b as bind_props, e as ensure_array_like, a as attr } from "../../../chunks/index.js";
 import { P as PageSection } from "../../../chunks/PageSection.js";
-const css = {
-  code: ".work-card.svelte-frbe2z.svelte-frbe2z{display:grid;gap:1.25rem;border-radius:1.6rem;overflow:hidden;border:1px solid rgba(255, 255, 255, 0.08);background:linear-gradient(150deg, rgba(9, 13, 31, 0.92), rgba(47, 93, 255, 0.18));box-shadow:0 25px 60px rgba(5, 11, 28, 0.35)}.media.svelte-frbe2z.svelte-frbe2z{position:relative;overflow:hidden;border-radius:1.4rem 1.4rem 0 0}.media.svelte-frbe2z img.svelte-frbe2z{width:100%;height:100%;-o-object-fit:cover;object-fit:cover;display:block;transition:transform 400ms ease,\n			filter 400ms ease}.work-card.svelte-frbe2z:hover .media img.svelte-frbe2z{transform:scale(1.05);filter:saturate(130%)}.body.svelte-frbe2z.svelte-frbe2z{display:grid;gap:0.7rem;padding:0 1.6rem 1.6rem;color:rgba(226, 232, 255, 0.92)}.chips.svelte-frbe2z.svelte-frbe2z{display:flex;gap:0.5rem;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.22em;color:rgba(226, 232, 255, 0.6)}h2.svelte-frbe2z.svelte-frbe2z{font-size:1.4rem;font-weight:600}p.svelte-frbe2z.svelte-frbe2z{font-size:0.95rem;color:rgba(226, 232, 255, 0.72)}.tags.svelte-frbe2z.svelte-frbe2z{display:flex;flex-wrap:wrap;gap:0.4rem;font-size:0.75rem;color:rgba(226, 232, 255, 0.65)}.filter.svelte-frbe2z.svelte-frbe2z{display:grid;gap:0.4rem}.filter-label.svelte-frbe2z.svelte-frbe2z{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.28em;color:rgba(15, 18, 40, 0.58)}.filter.svelte-frbe2z .select.svelte-frbe2z{margin:0}",
-  map: '{"version":3,"file":"+page.svelte","sources":["+page.svelte"],"sourcesContent":["<script lang=\\"ts\\">import PageSection from \\"$lib/components/ui/PageSection.svelte\\";\\nexport let data;\\nconst projects = data.projects ?? [];\\nconst labs = data.labs ?? [];\\nconst industries = [\\"All\\", ...new Set(projects.map((project) => project.industry))];\\nconst years = [\\"All\\", ...new Set(projects.map((project) => project.year))];\\nlet selectedIndustry = \\"All\\";\\nlet selectedYear = \\"All\\";\\n$: filteredProjects = projects.filter((project) => {\\n  const industryMatch = selectedIndustry === \\"All\\" || project.industry === selectedIndustry;\\n  const yearMatch = selectedYear === \\"All\\" || project.year === selectedYear;\\n  return industryMatch && yearMatch;\\n});\\n<\/script>\\n\\n<PageSection id=\\"work-hero\\" tone=\\"contrast\\" padding=\\"xl\\">\\n\\t<div class=\\"space-y-6\\">\\n\\t\\t<span class=\\"eyebrow text-secondary/80\\">Case studies</span>\\n\\t\\t<h1 class=\\"text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl\\">\\n\\t\\t\\tLaunch systems, product platforms, and narrative websites crafted by Mk.01.\\n\\t\\t</h1>\\n\\t\\t<p class=\\"max-w-3xl text-base text-base-content/70 sm:text-lg\\">\\n\\t\\t\\tEvery case study represents a blend of strategy, design systems, and expressive engineering.\\n\\t\\t\\tSelect filters to explore by industry or release year.\\n\\t\\t</p>\\n\\t</div>\\n\\n\\t<div class=\\"grid gap-4 md:grid-cols-2 lg:grid-cols-3\\">\\n\\t\\t<div class=\\"rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg\\">\\n\\t\\t\\t<p class=\\"text-4xl font-semibold text-base-content\\">17+</p>\\n\\t\\t\\t<p class=\\"mt-1 text-xs uppercase tracking-widest text-base-content/60\\">\\n\\t\\t\\t\\tGlobal collaborators\\n\\t\\t\\t</p>\\n\\t\\t</div>\\n\\t\\t<div class=\\"rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg\\">\\n\\t\\t\\t<p class=\\"text-4xl font-semibold text-base-content\\">48</p>\\n\\t\\t\\t<p class=\\"mt-1 text-xs uppercase tracking-widest text-base-content/60\\">\\n\\t\\t\\t\\tExperiments in production\\n\\t\\t\\t</p>\\n\\t\\t</div>\\n\\t\\t<div class=\\"rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg\\">\\n\\t\\t\\t<p class=\\"text-4xl font-semibold text-base-content\\">92</p>\\n\\t\\t\\t<p class=\\"mt-1 text-xs uppercase tracking-widest text-base-content/60\\">Average client NPS</p>\\n\\t\\t</div>\\n\\t</div>\\n</PageSection>\\n\\n<PageSection id=\\"work-filters\\">\\n\\t<div class=\\"flex flex-wrap gap-3\\">\\n\\t\\t<label class=\\"filter\\">\\n\\t\\t\\t<span class=\\"filter-label\\">Industry</span>\\n\\t\\t\\t<select bind:value={selectedIndustry} class=\\"select select-bordered\\">\\n\\t\\t\\t\\t{#each industries as industry}\\n\\t\\t\\t\\t\\t<option value={industry}>{industry}</option>\\n\\t\\t\\t\\t{/each}\\n\\t\\t\\t</select>\\n\\t\\t</label>\\n\\t\\t<label class=\\"filter\\">\\n\\t\\t\\t<span class=\\"filter-label\\">Year</span>\\n\\t\\t\\t<select bind:value={selectedYear} class=\\"select select-bordered\\">\\n\\t\\t\\t\\t{#each years as year}\\n\\t\\t\\t\\t\\t<option value={year}>{year}</option>\\n\\t\\t\\t\\t{/each}\\n\\t\\t\\t</select>\\n\\t\\t</label>\\n\\t</div>\\n</PageSection>\\n\\n<PageSection id=\\"work-grid\\">\\n\\t{#if filteredProjects.length === 0}\\n\\t\\t<div\\n\\t\\t\\tclass=\\"rounded-2xl border border-dashed border-base-200/70 bg-base-100/80 p-10 text-center text-base-content/70\\"\\n\\t\\t>\\n\\t\\t\\tNo projects match those filters yet. Try another combination.\\n\\t\\t</div>\\n\\t{:else}\\n\\t\\t<div class=\\"grid gap-6 md:grid-cols-2 lg:grid-cols-3\\">\\n\\t\\t\\t{#each filteredProjects as project (project.slug)}\\n\\t\\t\\t\\t<article class=\\"work-card\\">\\n\\t\\t\\t\\t\\t<div class=\\"media\\">\\n\\t\\t\\t\\t\\t\\t<img\\n\\t\\t\\t\\t\\t\\t\\tsrc={project.coverImage ?? `/images/work/${project.slug}-cover.jpg`}\\n\\t\\t\\t\\t\\t\\t\\talt={project.title}\\n\\t\\t\\t\\t\\t\\t\\tloading=\\"lazy\\"\\n\\t\\t\\t\\t\\t\\t/>\\n\\t\\t\\t\\t\\t</div>\\n\\t\\t\\t\\t\\t<div class=\\"body\\">\\n\\t\\t\\t\\t\\t\\t<div class=\\"chips\\">\\n\\t\\t\\t\\t\\t\\t\\t<span>{project.industry}</span>\\n\\t\\t\\t\\t\\t\\t\\t<span>{project.year}</span>\\n\\t\\t\\t\\t\\t\\t</div>\\n\\t\\t\\t\\t\\t\\t<h2>{project.title}</h2>\\n\\t\\t\\t\\t\\t\\t<p>{project.summary ?? project.description}</p>\\n\\t\\t\\t\\t\\t\\t<ul class=\\"tags\\">\\n\\t\\t\\t\\t\\t\\t\\t{#each project.tags as tag}\\n\\t\\t\\t\\t\\t\\t\\t\\t<li>#{tag}</li>\\n\\t\\t\\t\\t\\t\\t\\t{/each}\\n\\t\\t\\t\\t\\t\\t</ul>\\n\\t\\t\\t\\t\\t\\t<a href={`/work/${project.slug}`} class=\\"link-cta\\">View project</a>\\n\\t\\t\\t\\t\\t</div>\\n\\t\\t\\t\\t</article>\\n\\t\\t\\t{/each}\\n\\t\\t</div>\\n\\t{/if}\\n</PageSection>\\n\\n<PageSection id=\\"work-labs\\" tone=\\"subtle\\">\\n\\t<div class=\\"space-y-6 text-center\\">\\n\\t\\t<span class=\\"eyebrow text-secondary/80\\">From the labs</span>\\n\\t\\t<h2 class=\\"text-3xl font-semibold sm:text-4xl\\">Experiments that inspired these launches.</h2>\\n\\t</div>\\n\\n\\t<div class=\\"grid gap-6 md:grid-cols-3\\">\\n\\t\\t{#each labs as experiment}\\n\\t\\t\\t<div class=\\"surface-card h-full\\">\\n\\t\\t\\t\\t<h3 class=\\"text-lg font-semibold text-base-content\\">{experiment.title}</h3>\\n\\t\\t\\t\\t<p class=\\"mt-2 text-sm text-base-content/70\\">{experiment.summary}</p>\\n\\t\\t\\t\\t<a href={`/labs/${experiment.slug}`} class=\\"link-cta mt-4 inline-flex\\"> Read experiment </a>\\n\\t\\t\\t</div>\\n\\t\\t{/each}\\n\\t</div>\\n</PageSection>\\n\\n<style>\\n\\t.work-card {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 1.25rem;\\n\\t\\tborder-radius: 1.6rem;\\n\\t\\toverflow: hidden;\\n\\t\\tborder: 1px solid rgba(255, 255, 255, 0.08);\\n\\t\\tbackground: linear-gradient(150deg, rgba(9, 13, 31, 0.92), rgba(47, 93, 255, 0.18));\\n\\t\\tbox-shadow: 0 25px 60px rgba(5, 11, 28, 0.35);\\n\\t}\\n\\n\\t.media {\\n\\t\\tposition: relative;\\n\\t\\toverflow: hidden;\\n\\t\\tborder-radius: 1.4rem 1.4rem 0 0;\\n\\t}\\n\\n\\t.media img {\\n\\t\\twidth: 100%;\\n\\t\\theight: 100%;\\n\\t\\t-o-object-fit: cover;\\n\\t\\t   object-fit: cover;\\n\\t\\tdisplay: block;\\n\\t\\ttransition:\\n\\t\\t\\ttransform 400ms ease,\\n\\t\\t\\tfilter 400ms ease;\\n\\t}\\n\\n\\t.work-card:hover .media img {\\n\\t\\ttransform: scale(1.05);\\n\\t\\tfilter: saturate(130%);\\n\\t}\\n\\n\\t.body {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 0.7rem;\\n\\t\\tpadding: 0 1.6rem 1.6rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.92);\\n\\t}\\n\\n\\t.chips {\\n\\t\\tdisplay: flex;\\n\\t\\tgap: 0.5rem;\\n\\t\\tfont-size: 0.75rem;\\n\\t\\ttext-transform: uppercase;\\n\\t\\tletter-spacing: 0.22em;\\n\\t\\tcolor: rgba(226, 232, 255, 0.6);\\n\\t}\\n\\n\\th2 {\\n\\t\\tfont-size: 1.4rem;\\n\\t\\tfont-weight: 600;\\n\\t}\\n\\n\\tp {\\n\\t\\tfont-size: 0.95rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.72);\\n\\t}\\n\\n\\t.tags {\\n\\t\\tdisplay: flex;\\n\\t\\tflex-wrap: wrap;\\n\\t\\tgap: 0.4rem;\\n\\t\\tfont-size: 0.75rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.65);\\n\\t}\\n\\n\\t.filter {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 0.4rem;\\n\\t}\\n\\n\\t.filter-label {\\n\\t\\tfont-size: 0.62rem;\\n\\t\\ttext-transform: uppercase;\\n\\t\\tletter-spacing: 0.28em;\\n\\t\\tcolor: rgba(15, 18, 40, 0.58);\\n\\t}\\n\\n\\t.filter .select {\\n\\t\\tmargin: 0;\\n\\t}\\n</style>\\n"],"names":[],"mappings":"AA4HC,sCAAW,CACV,OAAO,CAAE,IAAI,CACb,GAAG,CAAE,OAAO,CACZ,aAAa,CAAE,MAAM,CACrB,QAAQ,CAAE,MAAM,CAChB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,CAC3C,UAAU,CAAE,gBAAgB,MAAM,CAAC,CAAC,KAAK,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAAC,CAAC,CAAC,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,CAAC,CACnF,UAAU,CAAE,CAAC,CAAC,IAAI,CAAC,IAAI,CAAC,KAAK,CAAC,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAC7C,CAEA,kCAAO,CACN,QAAQ,CAAE,QAAQ,CAClB,QAAQ,CAAE,MAAM,CAChB,aAAa,CAAE,MAAM,CAAC,MAAM,CAAC,CAAC,CAAC,CAChC,CAEA,oBAAM,CAAC,iBAAI,CACV,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,aAAa,CAAE,KAAK,CACjB,UAAU,CAAE,KAAK,CACpB,OAAO,CAAE,KAAK,CACd,UAAU,CACT,SAAS,CAAC,KAAK,CAAC,IAAI;AACvB,GAAG,MAAM,CAAC,KAAK,CAAC,IACf,CAEA,wBAAU,MAAM,CAAC,MAAM,CAAC,iBAAI,CAC3B,SAAS,CAAE,MAAM,IAAI,CAAC,CACtB,MAAM,CAAE,SAAS,IAAI,CACtB,CAEA,iCAAM,CACL,OAAO,CAAE,IAAI,CACb,GAAG,CAAE,MAAM,CACX,OAAO,CAAE,CAAC,CAAC,MAAM,CAAC,MAAM,CACxB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,IAAI,CAChC,CAEA,kCAAO,CACN,OAAO,CAAE,IAAI,CACb,GAAG,CAAE,MAAM,CACX,SAAS,CAAE,OAAO,CAClB,cAAc,CAAE,SAAS,CACzB,cAAc,CAAE,MAAM,CACtB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAC/B,CAEA,8BAAG,CACF,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,GACd,CAEA,6BAAE,CACD,SAAS,CAAE,OAAO,CAClB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,IAAI,CAChC,CAEA,iCAAM,CACL,OAAO,CAAE,IAAI,CACb,SAAS,CAAE,IAAI,CACf,GAAG,CAAE,MAAM,CACX,SAAS,CAAE,OAAO,CAClB,KAAK,CAAE,KAAK,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,GAAG,CAAC,CAAC,IAAI,CAChC,CAEA,mCAAQ,CACP,OAAO,CAAE,IAAI,CACb,GAAG,CAAE,MACN,CAEA,yCAAc,CACb,SAAS,CAAE,OAAO,CAClB,cAAc,CAAE,SAAS,CACzB,cAAc,CAAE,MAAM,CACtB,KAAK,CAAE,KAAK,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,EAAE,CAAC,CAAC,IAAI,CAC7B,CAEA,qBAAO,CAAC,qBAAQ,CACf,MAAM,CAAE,CACT"}'
-};
-const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let filteredProjects;
-  let { data } = $$props;
-  const projects = data.projects ?? [];
-  const labs = data.labs ?? [];
-  const industries = ["All", ...new Set(projects.map((project) => project.industry))];
-  const years = ["All", ...new Set(projects.map((project) => project.year))];
-  let selectedIndustry = "All";
-  let selectedYear = "All";
-  if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
-  $$result.css.add(css);
-  filteredProjects = projects.filter((project) => {
-    const industryMatch = selectedIndustry === "All";
-    const yearMatch = selectedYear === "All";
-    return industryMatch && yearMatch;
-  });
-  return `${validate_component(PageSection, "PageSection").$$render(
-    $$result,
-    {
+import { X as escape_html } from "../../../chunks/context.js";
+function _page($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let filteredProjects;
+    let data = $$props["data"];
+    const projects = data.projects ?? [];
+    const labs = data.labs ?? [];
+    const industries = [
+      "All",
+      ...new Set(projects.map((project) => project.industry))
+    ];
+    const years = ["All", ...new Set(projects.map((project) => project.year))];
+    let selectedIndustry = "All";
+    let selectedYear = "All";
+    filteredProjects = projects.filter((project) => {
+      const industryMatch = selectedIndustry === "All";
+      const yearMatch = selectedYear === "All";
+      return industryMatch && yearMatch;
+    });
+    PageSection($$renderer2, {
       id: "work-hero",
       tone: "contrast",
-      padding: "xl"
-    },
-    {},
-    {
-      default: () => {
-        return `<div class="space-y-6" data-svelte-h="svelte-1jouvzl"><span class="eyebrow text-secondary/80">Case studies</span> <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Launch systems, product platforms, and narrative websites crafted by Mk.01.</h1> <p class="max-w-3xl text-base text-base-content/70 sm:text-lg svelte-frbe2z">Every case study represents a blend of strategy, design systems, and expressive engineering.
-			Select filters to explore by industry or release year.</p></div> <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-svelte-h="svelte-iaesu2"><div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-frbe2z">17+</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-frbe2z">Global collaborators</p></div> <div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-frbe2z">48</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-frbe2z">Experiments in production</p></div> <div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-frbe2z">92</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-frbe2z">Average client NPS</p></div></div>`;
-      }
-    }
-  )} ${validate_component(PageSection, "PageSection").$$render($$result, { id: "work-filters" }, {}, {
-    default: () => {
-      return `<div class="flex flex-wrap gap-3"><label class="filter svelte-frbe2z"><span class="filter-label svelte-frbe2z" data-svelte-h="svelte-10gcbw">Industry</span> <select class="select select-bordered svelte-frbe2z">${each(industries, (industry) => {
-        return `<option${add_attribute("value", industry, 0)}>${escape(industry)}</option>`;
-      })}</select></label> <label class="filter svelte-frbe2z"><span class="filter-label svelte-frbe2z" data-svelte-h="svelte-1s4h4vx">Year</span> <select class="select select-bordered svelte-frbe2z">${each(years, (year) => {
-        return `<option${add_attribute("value", year, 0)}>${escape(year)}</option>`;
-      })}</select></label></div>`;
-    }
-  })} ${validate_component(PageSection, "PageSection").$$render($$result, { id: "work-grid" }, {}, {
-    default: () => {
-      return `${filteredProjects.length === 0 ? `<div class="rounded-2xl border border-dashed border-base-200/70 bg-base-100/80 p-10 text-center text-base-content/70" data-svelte-h="svelte-csxkq3">No projects match those filters yet. Try another combination.</div>` : `<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">${each(filteredProjects, (project) => {
-        return `<article class="work-card svelte-frbe2z"><div class="media svelte-frbe2z"><img${add_attribute("src", project.coverImage ?? `/images/work/${project.slug}-cover.jpg`, 0)}${add_attribute("alt", project.title, 0)} loading="lazy" class="svelte-frbe2z"></div> <div class="body svelte-frbe2z"><div class="chips svelte-frbe2z"><span>${escape(project.industry)}</span> <span>${escape(project.year)}</span></div> <h2 class="svelte-frbe2z">${escape(project.title)}</h2> <p class="svelte-frbe2z">${escape(project.summary ?? project.description)}</p> <ul class="tags svelte-frbe2z">${each(project.tags, (tag) => {
-          return `<li>#${escape(tag)}</li>`;
-        })}</ul> <a${add_attribute("href", `/work/${project.slug}`, 0)} class="link-cta">View project</a></div> </article>`;
-      })}</div>`}`;
-    }
-  })} ${validate_component(PageSection, "PageSection").$$render($$result, { id: "work-labs", tone: "subtle" }, {}, {
-    default: () => {
-      return `<div class="space-y-6 text-center" data-svelte-h="svelte-yqstb8"><span class="eyebrow text-secondary/80">From the labs</span> <h2 class="text-3xl font-semibold sm:text-4xl svelte-frbe2z">Experiments that inspired these launches.</h2></div> <div class="grid gap-6 md:grid-cols-3">${each(labs, (experiment) => {
-        return `<div class="surface-card h-full"><h3 class="text-lg font-semibold text-base-content">${escape(experiment.title)}</h3> <p class="mt-2 text-sm text-base-content/70 svelte-frbe2z">${escape(experiment.summary)}</p> <a${add_attribute("href", `/labs/${experiment.slug}`, 0)} class="link-cta mt-4 inline-flex">Read experiment</a> </div>`;
-      })}</div>`;
-    }
-  })}`;
-});
+      padding: "xl",
+      children: ($$renderer3) => {
+        $$renderer3.push(`<div class="space-y-6"><span class="eyebrow text-secondary/80">Case studies</span> <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Launch systems, product platforms, and narrative websites crafted by Mk.01.</h1> <p class="max-w-3xl text-base text-base-content/70 sm:text-lg svelte-oqsuc6">Every case study represents a blend of strategy, design systems, and expressive engineering.
+			Select filters to explore by industry or release year.</p></div> <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"><div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-oqsuc6">17+</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-oqsuc6">Global collaborators</p></div> <div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-oqsuc6">48</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-oqsuc6">Experiments in production</p></div> <div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg"><p class="text-4xl font-semibold text-base-content svelte-oqsuc6">92</p> <p class="mt-1 text-xs uppercase tracking-widest text-base-content/60 svelte-oqsuc6">Average client NPS</p></div></div>`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!----> `);
+    PageSection($$renderer2, {
+      id: "work-filters",
+      children: ($$renderer3) => {
+        $$renderer3.push(`<div class="flex flex-wrap gap-3"><label class="filter svelte-oqsuc6"><span class="filter-label svelte-oqsuc6">Industry</span> `);
+        $$renderer3.select(
+          { value: selectedIndustry, class: "select select-bordered" },
+          ($$renderer4) => {
+            $$renderer4.push(`<!--[-->`);
+            const each_array = ensure_array_like(industries);
+            for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+              let industry = each_array[$$index];
+              $$renderer4.option({ value: industry }, ($$renderer5) => {
+                $$renderer5.push(`${escape_html(industry)}`);
+              });
+            }
+            $$renderer4.push(`<!--]-->`);
+          },
+          "svelte-oqsuc6"
+        );
+        $$renderer3.push(`</label> <label class="filter svelte-oqsuc6"><span class="filter-label svelte-oqsuc6">Year</span> `);
+        $$renderer3.select(
+          { value: selectedYear, class: "select select-bordered" },
+          ($$renderer4) => {
+            $$renderer4.push(`<!--[-->`);
+            const each_array_1 = ensure_array_like(years);
+            for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+              let year = each_array_1[$$index_1];
+              $$renderer4.option({ value: year }, ($$renderer5) => {
+                $$renderer5.push(`${escape_html(year)}`);
+              });
+            }
+            $$renderer4.push(`<!--]-->`);
+          },
+          "svelte-oqsuc6"
+        );
+        $$renderer3.push(`</label></div>`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!----> `);
+    PageSection($$renderer2, {
+      id: "work-grid",
+      children: ($$renderer3) => {
+        if (filteredProjects.length === 0) {
+          $$renderer3.push("<!--[-->");
+          $$renderer3.push(`<div class="rounded-2xl border border-dashed border-base-200/70 bg-base-100/80 p-10 text-center text-base-content/70">No projects match those filters yet. Try another combination.</div>`);
+        } else {
+          $$renderer3.push("<!--[!-->");
+          $$renderer3.push(`<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"><!--[-->`);
+          const each_array_2 = ensure_array_like(filteredProjects);
+          for (let $$index_3 = 0, $$length = each_array_2.length; $$index_3 < $$length; $$index_3++) {
+            let project = each_array_2[$$index_3];
+            $$renderer3.push(`<article class="work-card svelte-oqsuc6"><div class="media svelte-oqsuc6"><img${attr("src", project.coverImage ?? `/images/work/${project.slug}-cover.jpg`)}${attr("alt", project.title)} loading="lazy" class="svelte-oqsuc6"/></div> <div class="body svelte-oqsuc6"><div class="chips svelte-oqsuc6"><span>${escape_html(project.industry)}</span> <span>${escape_html(project.year)}</span></div> <h2 class="svelte-oqsuc6">${escape_html(project.title)}</h2> <p class="svelte-oqsuc6">${escape_html(project.summary ?? project.description)}</p> <ul class="tags svelte-oqsuc6"><!--[-->`);
+            const each_array_3 = ensure_array_like(project.tags);
+            for (let $$index_2 = 0, $$length2 = each_array_3.length; $$index_2 < $$length2; $$index_2++) {
+              let tag = each_array_3[$$index_2];
+              $$renderer3.push(`<li>#${escape_html(tag)}</li>`);
+            }
+            $$renderer3.push(`<!--]--></ul> <a${attr("href", `/work/${project.slug}`)} class="link-cta">View project</a></div></article>`);
+          }
+          $$renderer3.push(`<!--]--></div>`);
+        }
+        $$renderer3.push(`<!--]-->`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!----> `);
+    PageSection($$renderer2, {
+      id: "work-labs",
+      tone: "subtle",
+      children: ($$renderer3) => {
+        $$renderer3.push(`<div class="space-y-6 text-center"><span class="eyebrow text-secondary/80">From the labs</span> <h2 class="text-3xl font-semibold sm:text-4xl svelte-oqsuc6">Experiments that inspired these launches.</h2></div> <div class="grid gap-6 md:grid-cols-3"><!--[-->`);
+        const each_array_4 = ensure_array_like(labs);
+        for (let $$index_4 = 0, $$length = each_array_4.length; $$index_4 < $$length; $$index_4++) {
+          let experiment = each_array_4[$$index_4];
+          $$renderer3.push(`<div class="surface-card h-full"><h3 class="text-lg font-semibold text-base-content">${escape_html(experiment.title)}</h3> <p class="mt-2 text-sm text-base-content/70 svelte-oqsuc6">${escape_html(experiment.summary)}</p> <a${attr("href", `/labs/${experiment.slug}`)} class="link-cta mt-4 inline-flex">Read experiment</a></div>`);
+        }
+        $$renderer3.push(`<!--]--></div>`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!---->`);
+    bind_props($$props, { data });
+  });
+}
 export {
-  Page as default
+  _page as default
 };

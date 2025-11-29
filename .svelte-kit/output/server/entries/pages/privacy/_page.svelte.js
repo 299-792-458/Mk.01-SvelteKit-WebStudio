@@ -1,21 +1,16 @@
-import { c as create_ssr_component, v as validate_component } from "../../../chunks/ssr.js";
+import "clsx";
 import { P as PageSection } from "../../../chunks/PageSection.js";
-const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  return `${validate_component(PageSection, "PageSection").$$render(
-    $$result,
-    {
-      id: "privacy-policy",
-      tone: "contrast",
-      padding: "compact"
+function _page($$renderer) {
+  PageSection($$renderer, {
+    id: "privacy-policy",
+    tone: "contrast",
+    padding: "compact",
+    children: ($$renderer2) => {
+      $$renderer2.push(`<div class="space-y-6"><h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Privacy Policy</h1> <p class="max-w-3xl text-base text-base-content/70 sm:text-lg">This is a placeholder for the privacy policy.</p></div>`);
     },
-    {},
-    {
-      default: () => {
-        return `<div class="space-y-6" data-svelte-h="svelte-i298x4"><h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Privacy Policy</h1> <p class="max-w-3xl text-base text-base-content/70 sm:text-lg">This is a placeholder for the privacy policy.</p></div>`;
-      }
-    }
-  )}`;
-});
+    $$slots: { default: true }
+  });
+}
 export {
-  Page as default
+  _page as default
 };

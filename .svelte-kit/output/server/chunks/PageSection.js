@@ -1,9 +1,10 @@
-import { c as create_ssr_component, d as add_attribute } from "./ssr.js";
-const PageSection = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+import { a as attr, c as attr_class, f as slot, b as bind_props } from "./index.js";
+import { V as fallback } from "./context.js";
+function PageSection($$renderer, $$props) {
   let sectionClasses;
-  let { id = void 0 } = $$props;
-  let { tone = "default" } = $$props;
-  let { padding = "default" } = $$props;
+  let id = fallback($$props["id"], void 0);
+  let tone = fallback($$props["tone"], "default");
+  let padding = fallback($$props["padding"], "default");
   const toneClasses = {
     default: "bg-base-100",
     subtle: "bg-base-200/40 dark:bg-base-200/20",
@@ -14,12 +15,12 @@ const PageSection = create_ssr_component(($$result, $$props, $$bindings, slots) 
     compact: "py-10 sm:py-12 lg:py-16",
     xl: "py-20 sm:py-24 lg:py-32"
   };
-  if ($$props.id === void 0 && $$bindings.id && id !== void 0) $$bindings.id(id);
-  if ($$props.tone === void 0 && $$bindings.tone && tone !== void 0) $$bindings.tone(tone);
-  if ($$props.padding === void 0 && $$bindings.padding && padding !== void 0) $$bindings.padding(padding);
   sectionClasses = `${paddingClasses[padding]} ${toneClasses[tone]}`;
-  return `<section${add_attribute("id", id, 0)}${add_attribute("class", `transition-colors ${sectionClasses}`, 0)}><div class="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-6 lg:px-8">${slots.default ? slots.default({}) : ``}</div></section>`;
-});
+  $$renderer.push(`<section${attr("id", id)}${attr_class(`transition-colors ${sectionClasses}`)}><div class="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-6 lg:px-8"><!--[-->`);
+  slot($$renderer, $$props, "default", {});
+  $$renderer.push(`<!--]--></div></section>`);
+  bind_props($$props, { id, tone, padding });
+}
 export {
   PageSection as P
 };

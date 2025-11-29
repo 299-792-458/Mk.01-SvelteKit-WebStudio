@@ -13,14 +13,16 @@
     "file": "chunks/PageSection.js",
     "name": "PageSection",
     "imports": [
-      "_ssr.js"
+      "_index.js",
+      "_context.js"
     ]
   },
   "_Surface.js": {
     "file": "chunks/Surface.js",
     "name": "Surface",
     "imports": [
-      "_ssr.js"
+      "_index.js",
+      "_context.js"
     ]
   },
   "_app.config.js": {
@@ -38,19 +40,44 @@
       "src/content/articles/launch-playbook.mdx"
     ]
   },
+  "_context.js": {
+    "file": "chunks/context.js",
+    "name": "context",
+    "imports": [
+      "_false.js"
+    ]
+  },
   "_environment.js": {
     "file": "chunks/environment.js",
     "name": "environment"
   },
   "_exports.js": {
     "file": "chunks/exports.js",
-    "name": "exports"
+    "name": "exports",
+    "imports": [
+      "_context.js"
+    ]
+  },
+  "_false.js": {
+    "file": "chunks/false.js",
+    "name": "false"
+  },
+  "_html.js": {
+    "file": "chunks/html.js",
+    "name": "html"
+  },
+  "_index-server.js": {
+    "file": "chunks/index-server.js",
+    "name": "index-server",
+    "imports": [
+      "_context.js"
+    ]
   },
   "_index.js": {
     "file": "chunks/index.js",
     "name": "index",
     "imports": [
-      "_ssr.js"
+      "_context.js"
     ]
   },
   "_index2.js": {
@@ -72,8 +99,8 @@
     "file": "chunks/internal.js",
     "name": "internal",
     "imports": [
-      "_ssr.js",
-      "_ssr2.js",
+      "_context.js",
+      "_index.js",
       "_environment.js"
     ]
   },
@@ -88,22 +115,11 @@
       "_utils.js"
     ]
   },
-  "_ssr.js": {
-    "file": "chunks/ssr.js",
-    "name": "ssr"
-  },
-  "_ssr2.js": {
-    "file": "chunks/ssr2.js",
-    "name": "ssr"
-  },
-  "_stores.js": {
-    "file": "chunks/stores.js",
-    "name": "stores",
+  "_state.svelte.js": {
+    "file": "chunks/state.svelte.js",
+    "name": "state.svelte",
     "imports": [
-      "_ssr.js",
-      "_exports.js",
-      "_utils.js",
-      "_ssr2.js"
+      "_context.js"
     ]
   },
   "_utils.js": {
@@ -117,17 +133,20 @@
     "isEntry": true,
     "imports": [
       "_shared.js",
+      "_false.js",
       "_environment.js"
     ]
   },
-  "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte": {
+  "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte": {
     "file": "entries/fallbacks/error.svelte.js",
     "name": "entries/fallbacks/error.svelte",
-    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-4/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_stores.js"
+      "_context.js",
+      "_state.svelte.js",
+      "_exports.js",
+      "_utils.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
@@ -136,11 +155,11 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
     "isEntry": true,
     "imports": [
-      "_shared.js",
+      "_false.js",
       "_environment.js",
+      "_shared.js",
       "_exports.js",
       "_utils.js",
-      "_index.js",
       "_internal.js"
     ]
   },
@@ -150,7 +169,7 @@
     "src": "src/content/articles/design-systems.mdx",
     "isDynamicEntry": true,
     "imports": [
-      "_ssr.js"
+      "_html.js"
     ]
   },
   "src/content/articles/expressive-motion.mdx": {
@@ -159,7 +178,7 @@
     "src": "src/content/articles/expressive-motion.mdx",
     "isDynamicEntry": true,
     "imports": [
-      "_ssr.js"
+      "_html.js"
     ]
   },
   "src/content/articles/launch-playbook.mdx": {
@@ -168,26 +187,20 @@
     "src": "src/content/articles/launch-playbook.mdx",
     "isDynamicEntry": true,
     "imports": [
-      "_ssr.js"
+      "_html.js"
     ]
   },
   "src/posts/first-post.md": {
     "file": "chunks/first-post.js",
     "name": "first-post",
     "src": "src/posts/first-post.md",
-    "isDynamicEntry": true,
-    "imports": [
-      "_ssr.js"
-    ]
+    "isDynamicEntry": true
   },
   "src/posts/second-post.md": {
     "file": "chunks/second-post.js",
     "name": "second-post",
     "src": "src/posts/second-post.md",
-    "isDynamicEntry": true,
-    "imports": [
-      "_ssr.js"
-    ]
+    "isDynamicEntry": true
   },
   "src/routes/+layout.svelte": {
     "file": "entries/pages/_layout.svelte.js",
@@ -195,13 +208,17 @@
     "src": "src/routes/+layout.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_stores.js",
       "_index.js",
-      "_seo.js"
+      "_context.js",
+      "_exports.js",
+      "_utils.js",
+      "_state.svelte.js",
+      "_index-server.js",
+      "_seo.js",
+      "_html.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.BpIF2hyu.css"
+      "_app/immutable/assets/_layout.rJsDYJd-.css"
     ]
   },
   "src/routes/+layout.ts": {
@@ -228,13 +245,15 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index.js",
+      "_index-server.js",
       "_app.config.js",
+      "_context.js",
       "_Surface.js",
       "_PageSection.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.DCLejsJj.css"
+      "_app/immutable/assets/_page.EJsHZvTg.css"
     ]
   },
   "src/routes/about/+page.svelte": {
@@ -243,11 +262,12 @@
     "src": "src/routes/about/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index.js",
+      "_context.js",
       "_PageSection.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.Czsk5sDE.css"
+      "_app/immutable/assets/_page.BqsM70qM.css"
     ]
   },
   "src/routes/about/+page.ts": {
@@ -275,8 +295,9 @@
     "src": "src/routes/blog/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ]
   },
   "src/routes/blog/[slug]/+page.server.js": {
@@ -295,8 +316,9 @@
     "src": "src/routes/blog/[slug]/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ],
     "dynamicImports": [
       "src/posts/first-post.md",
@@ -318,7 +340,8 @@
     "src": "src/routes/blog/category/[category]/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js"
+      "_index.js",
+      "_context.js"
     ]
   },
   "src/routes/capabilities/+page.svelte": {
@@ -327,8 +350,9 @@
     "src": "src/routes/capabilities/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ]
   },
   "src/routes/capabilities/+page.ts": {
@@ -346,8 +370,9 @@
     "src": "src/routes/contact/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ]
   },
   "src/routes/contact/+page.ts": {
@@ -365,11 +390,12 @@
     "src": "src/routes/labs/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.JrsNaftL.css"
+      "_app/immutable/assets/_page.B5cl4gIw.css"
     ]
   },
   "src/routes/labs/+page.ts": {
@@ -388,12 +414,13 @@
     "src": "src/routes/labs/[slug]/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index.js",
       "_PageSection.js",
-      "_Surface.js"
+      "_Surface.js",
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CDhq1t8s.css"
+      "_app/immutable/assets/_page.CHw8jJPj.css"
     ]
   },
   "src/routes/labs/[slug]/+page.ts": {
@@ -413,8 +440,9 @@
     "src": "src/routes/open-source/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ]
   },
   "src/routes/open-source/+page.ts": {
@@ -432,7 +460,6 @@
     "src": "src/routes/privacy/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
       "_PageSection.js"
     ]
   },
@@ -451,8 +478,9 @@
     "src": "src/routes/stack/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ]
   },
   "src/routes/stack/+page.ts": {
@@ -470,7 +498,6 @@
     "src": "src/routes/terms/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
       "_PageSection.js"
     ]
   },
@@ -501,11 +528,12 @@
     "src": "src/routes/work/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
-      "_PageSection.js"
+      "_index.js",
+      "_PageSection.js",
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.De1cwOL7.css"
+      "_app/immutable/assets/_page.qfY7FW42.css"
     ]
   },
   "src/routes/work/[slug]/+page.server.ts": {
@@ -525,12 +553,13 @@
     "src": "src/routes/work/[slug]/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_ssr.js",
+      "_index.js",
       "_PageSection.js",
-      "_Surface.js"
+      "_Surface.js",
+      "_context.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.B8E-2UDv.css"
+      "_app/immutable/assets/_page.HGNDnG2L.css"
     ]
   }
 }

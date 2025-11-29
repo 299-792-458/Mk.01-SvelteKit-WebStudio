@@ -1,50 +1,57 @@
-import { c as create_ssr_component, v as validate_component, e as each, d as add_attribute, f as escape, n as null_to_empty } from "../../../chunks/ssr.js";
+import { b as bind_props, e as ensure_array_like, a as attr, c as attr_class } from "../../../chunks/index.js";
 import { P as PageSection } from "../../../chunks/PageSection.js";
-const css = {
-  code: ".lab-card.svelte-10n1n2x.svelte-10n1n2x{display:grid;gap:1.25rem;border-radius:1.6rem;border:1px solid rgba(255, 255, 255, 0.08);background:radial-gradient(120% 120% at 10% 0%, rgba(255, 107, 203, 0.18), transparent 65%),\n			radial-gradient(130% 140% at 100% 100%, rgba(47, 93, 255, 0.24), rgba(9, 13, 31, 0.9));box-shadow:0 25px 60px rgba(5, 11, 28, 0.35);overflow:hidden}.media.svelte-10n1n2x.svelte-10n1n2x{position:relative;overflow:hidden;border-radius:1.4rem 1.4rem 0 0;min-height:220px}.media.svelte-10n1n2x img.svelte-10n1n2x{width:100%;height:100%;-o-object-fit:cover;object-fit:cover;display:block;filter:saturate(120%);transform:scale(1.02);transition:transform 400ms ease,\n			filter 400ms ease}.lab-card.svelte-10n1n2x:hover img.svelte-10n1n2x{transform:scale(1.05);filter:saturate(140%)}.glow.svelte-10n1n2x.svelte-10n1n2x{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%, rgba(255, 107, 203, 0.25), transparent 60%);mix-blend-mode:screen;pointer-events:none}.body.svelte-10n1n2x.svelte-10n1n2x{display:grid;gap:0.9rem;padding:0 1.6rem 1.6rem 1.6rem;color:rgba(226, 232, 255, 0.95)}.badge.svelte-10n1n2x.svelte-10n1n2x{align-self:start}h2.svelte-10n1n2x.svelte-10n1n2x{font-size:1.4rem;font-weight:600}p.svelte-10n1n2x.svelte-10n1n2x{font-size:0.95rem;color:rgba(226, 232, 255, 0.72)}.tech.svelte-10n1n2x.svelte-10n1n2x{display:flex;flex-wrap:wrap;gap:0.45rem}.tech.svelte-10n1n2x li.svelte-10n1n2x{padding:0.35rem 0.6rem;border-radius:0.75rem;background:rgba(255, 255, 255, 0.08);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(226, 232, 255, 0.75)}.highlight.svelte-10n1n2x.svelte-10n1n2x{display:grid;gap:0.25rem;font-size:0.85rem}.highlight.svelte-10n1n2x span.svelte-10n1n2x{text-transform:uppercase;letter-spacing:0.28em;font-size:0.68rem;color:rgba(226, 232, 255, 0.55)}.cta-group.svelte-10n1n2x.svelte-10n1n2x{display:flex;gap:0.6rem}",
-  map: '{"version":3,"file":"+page.svelte","sources":["+page.svelte"],"sourcesContent":["<script lang=\\"ts\\">import PageSection from \\"$lib/components/ui/PageSection.svelte\\";\\nexport let data;\\nconst experiments = data.experiments ?? [];\\nconst statusBadge = {\\n  prototype: { label: \\"Prototype\\", tone: \\"badge-secondary\\" },\\n  production: { label: \\"In production\\", tone: \\"badge-primary\\" },\\n  archived: { label: \\"Archived\\", tone: \\"badge-ghost\\" }\\n};\\n<\/script>\\n\\n<PageSection id=\\"labs-hero\\" tone=\\"contrast\\" padding=\\"xl\\">\\n\\t<div class=\\"space-y-6 text-center\\">\\n\\t\\t<span class=\\"eyebrow text-secondary/80\\">Mk.01 Labs</span>\\n\\t\\t<h1 class=\\"mx-auto max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl\\">\\n\\t\\t\\tExplorations that bend light, sound, and data into living web experiences.\\n\\t\\t</h1>\\n\\t\\t<p class=\\"mx-auto max-w-3xl text-base text-base-content/70 sm:text-lg\\">\\n\\t\\t\\tThe Labs are our playground for prototyping radical ideas. Some ship into production, others\\n\\t\\t\\tbecome open-source seeds, all of them teach us how to build bolder products.\\n\\t\\t</p>\\n\\t\\t<div class=\\"flex flex-wrap justify-center gap-3\\">\\n\\t\\t\\t<a href=\\"/work\\" class=\\"btn btn-outline btn-lg\\">See launched work</a>\\n\\t\\t\\t<a href=\\"mailto:studio@mk1.dev\\" class=\\"btn btn-primary btn-lg\\">Collaborate on R&D</a>\\n\\t\\t</div>\\n\\t</div>\\n</PageSection>\\n\\n<PageSection id=\\"labs-grid\\">\\n\\t<div class=\\"grid gap-8 lg:grid-cols-3\\">\\n\\t\\t{#each experiments as experiment}\\n\\t\\t\\t<article class=\\"lab-card\\">\\n\\t\\t\\t\\t<div class=\\"media\\">\\n\\t\\t\\t\\t\\t<div class=\\"glow\\" />\\n\\t\\t\\t\\t\\t<img src={experiment.thumbnail} alt={experiment.title} loading=\\"lazy\\" />\\n\\t\\t\\t\\t</div>\\n\\t\\t\\t\\t<div class=\\"body\\">\\n\\t\\t\\t\\t\\t<span class={`badge ${statusBadge[experiment.status].tone}`}>\\n\\t\\t\\t\\t\\t\\t{statusBadge[experiment.status].label}\\n\\t\\t\\t\\t\\t</span>\\n\\t\\t\\t\\t\\t<h2>{experiment.title}</h2>\\n\\t\\t\\t\\t\\t<p>{experiment.summary}</p>\\n\\t\\t\\t\\t\\t<ul class=\\"tech\\">\\n\\t\\t\\t\\t\\t\\t{#each experiment.tech as tech}\\n\\t\\t\\t\\t\\t\\t\\t<li>{tech}</li>\\n\\t\\t\\t\\t\\t\\t{/each}\\n\\t\\t\\t\\t\\t</ul>\\n\\t\\t\\t\\t\\t<p class=\\"highlight\\">\\n\\t\\t\\t\\t\\t\\t<span>Highlight</span>\\n\\t\\t\\t\\t\\t\\t{experiment.highlight}\\n\\t\\t\\t\\t\\t</p>\\n\\t\\t\\t\\t\\t<div class=\\"cta-group\\">\\n\\t\\t\\t\\t\\t\\t<a href={`/labs/${experiment.slug}`} class=\\"btn btn-sm btn-outline\\">Read case</a>\\n\\t\\t\\t\\t\\t\\t{#if experiment.links.demo}\\n\\t\\t\\t\\t\\t\\t\\t<a\\n\\t\\t\\t\\t\\t\\t\\t\\thref={experiment.links.demo}\\n\\t\\t\\t\\t\\t\\t\\t\\tclass=\\"btn btn-sm btn-ghost\\"\\n\\t\\t\\t\\t\\t\\t\\t\\ttarget=\\"_blank\\"\\n\\t\\t\\t\\t\\t\\t\\t\\trel=\\"noreferrer\\"\\n\\t\\t\\t\\t\\t\\t\\t>\\n\\t\\t\\t\\t\\t\\t\\t\\tLaunch demo\\n\\t\\t\\t\\t\\t\\t\\t</a>\\n\\t\\t\\t\\t\\t\\t{:else}\\n\\t\\t\\t\\t\\t\\t\\t<span class=\\"btn btn-sm btn-ghost btn-disabled\\">Demo brewing</span>\\n\\t\\t\\t\\t\\t\\t{/if}\\n\\t\\t\\t\\t\\t</div>\\n\\t\\t\\t\\t</div>\\n\\t\\t\\t</article>\\n\\t\\t{/each}\\n\\t</div>\\n</PageSection>\\n\\n<style>\\n\\t.lab-card {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 1.25rem;\\n\\t\\tborder-radius: 1.6rem;\\n\\t\\tborder: 1px solid rgba(255, 255, 255, 0.08);\\n\\t\\tbackground:\\n\\t\\t\\tradial-gradient(120% 120% at 10% 0%, rgba(255, 107, 203, 0.18), transparent 65%),\\n\\t\\t\\tradial-gradient(130% 140% at 100% 100%, rgba(47, 93, 255, 0.24), rgba(9, 13, 31, 0.9));\\n\\t\\tbox-shadow: 0 25px 60px rgba(5, 11, 28, 0.35);\\n\\t\\toverflow: hidden;\\n\\t}\\n\\n\\t.media {\\n\\t\\tposition: relative;\\n\\t\\toverflow: hidden;\\n\\t\\tborder-radius: 1.4rem 1.4rem 0 0;\\n\\t\\tmin-height: 220px;\\n\\t}\\n\\n\\t.media img {\\n\\t\\twidth: 100%;\\n\\t\\theight: 100%;\\n\\t\\t-o-object-fit: cover;\\n\\t\\t   object-fit: cover;\\n\\t\\tdisplay: block;\\n\\t\\tfilter: saturate(120%);\\n\\t\\ttransform: scale(1.02);\\n\\t\\ttransition:\\n\\t\\t\\ttransform 400ms ease,\\n\\t\\t\\tfilter 400ms ease;\\n\\t}\\n\\n\\t.lab-card:hover img {\\n\\t\\ttransform: scale(1.05);\\n\\t\\tfilter: saturate(140%);\\n\\t}\\n\\n\\t.glow {\\n\\t\\tposition: absolute;\\n\\t\\tinset: 0;\\n\\t\\tbackground: radial-gradient(circle at 20% 20%, rgba(255, 107, 203, 0.25), transparent 60%);\\n\\t\\tmix-blend-mode: screen;\\n\\t\\tpointer-events: none;\\n\\t}\\n\\n\\t.body {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 0.9rem;\\n\\t\\tpadding: 0 1.6rem 1.6rem 1.6rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.95);\\n\\t}\\n\\n\\t.badge {\\n\\t\\talign-self: start;\\n\\t}\\n\\n\\th2 {\\n\\t\\tfont-size: 1.4rem;\\n\\t\\tfont-weight: 600;\\n\\t}\\n\\n\\tp {\\n\\t\\tfont-size: 0.95rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.72);\\n\\t}\\n\\n\\t.tech {\\n\\t\\tdisplay: flex;\\n\\t\\tflex-wrap: wrap;\\n\\t\\tgap: 0.45rem;\\n\\t}\\n\\n\\t.tech li {\\n\\t\\tpadding: 0.35rem 0.6rem;\\n\\t\\tborder-radius: 0.75rem;\\n\\t\\tbackground: rgba(255, 255, 255, 0.08);\\n\\t\\tfont-size: 0.75rem;\\n\\t\\tletter-spacing: 0.08em;\\n\\t\\ttext-transform: uppercase;\\n\\t\\tcolor: rgba(226, 232, 255, 0.75);\\n\\t}\\n\\n\\t.highlight {\\n\\t\\tdisplay: grid;\\n\\t\\tgap: 0.25rem;\\n\\t\\tfont-size: 0.85rem;\\n\\t}\\n\\n\\t.highlight span {\\n\\t\\ttext-transform: uppercase;\\n\\t\\tletter-spacing: 0.28em;\\n\\t\\tfont-size: 0.68rem;\\n\\t\\tcolor: rgba(226, 232, 255, 0.55);\\n\\t}\\n\\n\\t.cta-group {\\n\\t\\tdisplay: flex;\\n\\t\\tgap: 0.6rem;\\n\\t}\\n</style>\\n"],"names":[],"mappings":"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"}'
-};
-const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { data } = $$props;
-  const experiments = data.experiments ?? [];
-  const statusBadge = {
-    prototype: {
-      label: "Prototype",
-      tone: "badge-secondary"
-    },
-    production: {
-      label: "In production",
-      tone: "badge-primary"
-    },
-    archived: { label: "Archived", tone: "badge-ghost" }
-  };
-  if ($$props.data === void 0 && $$bindings.data && data !== void 0) $$bindings.data(data);
-  $$result.css.add(css);
-  return `${validate_component(PageSection, "PageSection").$$render(
-    $$result,
-    {
+import { X as escape_html } from "../../../chunks/context.js";
+function _page($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let data = $$props["data"];
+    const experiments = data.experiments ?? [];
+    const statusBadge = {
+      prototype: { label: "Prototype", tone: "badge-secondary" },
+      production: { label: "In production", tone: "badge-primary" },
+      archived: { label: "Archived", tone: "badge-ghost" }
+    };
+    PageSection($$renderer2, {
       id: "labs-hero",
       tone: "contrast",
-      padding: "xl"
-    },
-    {},
-    {
-      default: () => {
-        return `<div class="space-y-6 text-center" data-svelte-h="svelte-1o5q0cw"><span class="eyebrow text-secondary/80">Mk.01 Labs</span> <h1 class="mx-auto max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Explorations that bend light, sound, and data into living web experiences.</h1> <p class="mx-auto max-w-3xl text-base text-base-content/70 sm:text-lg svelte-10n1n2x">The Labs are our playground for prototyping radical ideas. Some ship into production, others
-			become open-source seeds, all of them teach us how to build bolder products.</p> <div class="flex flex-wrap justify-center gap-3"><a href="/work" class="btn btn-outline btn-lg">See launched work</a> <a href="mailto:studio@mk1.dev" class="btn btn-primary btn-lg">Collaborate on R&amp;D</a></div></div>`;
-      }
-    }
-  )} ${validate_component(PageSection, "PageSection").$$render($$result, { id: "labs-grid" }, {}, {
-    default: () => {
-      return `<div class="grid gap-8 lg:grid-cols-3">${each(experiments, (experiment) => {
-        return `<article class="lab-card svelte-10n1n2x"><div class="media svelte-10n1n2x"><div class="glow svelte-10n1n2x"></div> <img${add_attribute("src", experiment.thumbnail, 0)}${add_attribute("alt", experiment.title, 0)} loading="lazy" class="svelte-10n1n2x"></div> <div class="body svelte-10n1n2x"><span class="${escape(null_to_empty(`badge ${statusBadge[experiment.status].tone}`), true) + " svelte-10n1n2x"}">${escape(statusBadge[experiment.status].label)}</span> <h2 class="svelte-10n1n2x">${escape(experiment.title)}</h2> <p class="svelte-10n1n2x">${escape(experiment.summary)}</p> <ul class="tech svelte-10n1n2x">${each(experiment.tech, (tech) => {
-          return `<li class="svelte-10n1n2x">${escape(tech)}</li>`;
-        })}</ul> <p class="highlight svelte-10n1n2x"><span class="svelte-10n1n2x" data-svelte-h="svelte-1ot8rky">Highlight</span> ${escape(experiment.highlight)}</p> <div class="cta-group svelte-10n1n2x"><a${add_attribute("href", `/labs/${experiment.slug}`, 0)} class="btn btn-sm btn-outline">Read case</a> ${experiment.links.demo ? `<a${add_attribute("href", experiment.links.demo, 0)} class="btn btn-sm btn-ghost" target="_blank" rel="noreferrer">Launch demo
-							</a>` : `<span class="btn btn-sm btn-ghost btn-disabled" data-svelte-h="svelte-1cevhxi">Demo brewing</span>`} </div></div> </article>`;
-      })}</div>`;
-    }
-  })}`;
-});
+      padding: "xl",
+      children: ($$renderer3) => {
+        $$renderer3.push(`<div class="space-y-6 text-center"><span class="eyebrow text-secondary/80">Mk.01 Labs</span> <h1 class="mx-auto max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Explorations that bend light, sound, and data into living web experiences.</h1> <p class="mx-auto max-w-3xl text-base text-base-content/70 sm:text-lg svelte-7hut91">The Labs are our playground for prototyping radical ideas. Some ship into production, others
+			become open-source seeds, all of them teach us how to build bolder products.</p> <div class="flex flex-wrap justify-center gap-3"><a href="/work" class="btn btn-outline btn-lg">See launched work</a> <a href="mailto:studio@mk1.dev" class="btn btn-primary btn-lg">Collaborate on R&amp;D</a></div></div>`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!----> `);
+    PageSection($$renderer2, {
+      id: "labs-grid",
+      children: ($$renderer3) => {
+        $$renderer3.push(`<div class="grid gap-8 lg:grid-cols-3"><!--[-->`);
+        const each_array = ensure_array_like(experiments);
+        for (let $$index_1 = 0, $$length = each_array.length; $$index_1 < $$length; $$index_1++) {
+          let experiment = each_array[$$index_1];
+          $$renderer3.push(`<article class="lab-card svelte-7hut91"><div class="media svelte-7hut91"><div class="glow svelte-7hut91"></div> <img${attr("src", experiment.thumbnail)}${attr("alt", experiment.title)} loading="lazy" class="svelte-7hut91"/></div> <div class="body svelte-7hut91"><span${attr_class(`badge ${statusBadge[experiment.status].tone}`, "svelte-7hut91")}>${escape_html(statusBadge[experiment.status].label)}</span> <h2 class="svelte-7hut91">${escape_html(experiment.title)}</h2> <p class="svelte-7hut91">${escape_html(experiment.summary)}</p> <ul class="tech svelte-7hut91"><!--[-->`);
+          const each_array_1 = ensure_array_like(experiment.tech);
+          for (let $$index = 0, $$length2 = each_array_1.length; $$index < $$length2; $$index++) {
+            let tech = each_array_1[$$index];
+            $$renderer3.push(`<li class="svelte-7hut91">${escape_html(tech)}</li>`);
+          }
+          $$renderer3.push(`<!--]--></ul> <p class="highlight svelte-7hut91"><span class="svelte-7hut91">Highlight</span> ${escape_html(experiment.highlight)}</p> <div class="cta-group svelte-7hut91"><a${attr("href", `/labs/${experiment.slug}`)} class="btn btn-sm btn-outline">Read case</a> `);
+          if (experiment.links.demo) {
+            $$renderer3.push("<!--[-->");
+            $$renderer3.push(`<a${attr("href", experiment.links.demo)} class="btn btn-sm btn-ghost" target="_blank" rel="noreferrer">Launch demo</a>`);
+          } else {
+            $$renderer3.push("<!--[!-->");
+            $$renderer3.push(`<span class="btn btn-sm btn-ghost btn-disabled">Demo brewing</span>`);
+          }
+          $$renderer3.push(`<!--]--></div></div></article>`);
+        }
+        $$renderer3.push(`<!--]--></div>`);
+      },
+      $$slots: { default: true }
+    });
+    $$renderer2.push(`<!---->`);
+    bind_props($$props, { data });
+  });
+}
 export {
-  Page as default
+  _page as default
 };
