@@ -82,19 +82,44 @@
 
 		const clock = new THREE.Clock();
 
+		let mouseX = 0;
+		let mouseY = 0;
+		let targetX = 0;
+		let targetY = 0;
+
+		const handleMouseMove = (event: MouseEvent) => {
+			mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+			mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+		};
+		window.addEventListener('mousemove', handleMouseMove);
+
 		function animate() {
 			frameId = requestAnimationFrame(animate);
 			const delta = clock.getDelta();
 			const elapsed = clock.getElapsedTime();
 
+			// Smooth mouse follow
+			targetX += (mouseX - targetX) * 0.05;
+			targetY += (mouseY - targetY) * 0.05;
+
 			mesh.rotation.y += delta * 0.1;
+			mesh.rotation.x = targetY * 0.2;
+			mesh.rotation.z = targetX * 0.2;
+
 			innerMesh.rotation.y -= delta * 0.05;
-			particles.rotation.y += delta * 0.02;
+			innerMesh.rotation.x = -targetY * 0.2;
+			innerMesh.rotation.z = -targetX * 0.2;
+			
+			particles.rotation.y += delta * 0.02 + targetX * 0.05;
 
 			// Float effect
 			const floatY = Math.sin(elapsed * 0.5) * 0.2;
 			mesh.position.y = floatY;
 			innerMesh.position.y = floatY;
+
+			camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+			camera.position.y += (2 + mouseY * 0.2 - camera.position.y) * 0.05;
+			camera.lookAt(0, 0, 0);
 
 			renderer.render(scene, camera);
 		}
@@ -111,6 +136,7 @@
 		window.addEventListener('resize', resize);
 
 		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
 			window.removeEventListener('resize', resize);
 			cancelAnimationFrame(frameId);
 			renderer.dispose();
