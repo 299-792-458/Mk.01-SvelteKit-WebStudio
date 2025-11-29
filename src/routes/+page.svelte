@@ -324,11 +324,11 @@
 
 <Scene />
 
-<Reveal type="fade" delay={0.2}>
+<!-- <Reveal type="fade" delay={0.2}> -->
 	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
-</Reveal>
+<!-- </Reveal> -->
 
-<Reveal type="slide" delay={0.4}>
+<!-- <Reveal type="slide" delay={0.4}> -->
 	<PageSection id="signal" tone="subtle" padding="compact">
 		<div class="surface-panel">
 			<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
