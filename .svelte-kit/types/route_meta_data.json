@@ -1,0 +1,63 @@
+{
+	"/": [
+		"src/routes/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/about": [
+		"src/routes/about/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/blog": [
+		"src/routes/blog/+page.server.js",
+		"src/routes/+layout.ts"
+	],
+	"/blog/category/[category]": [
+		"src/routes/blog/category/[category]/+page.server.js",
+		"src/routes/+layout.ts"
+	],
+	"/blog/[slug]": [
+		"src/routes/blog/[slug]/+page.server.js",
+		"src/routes/+layout.ts"
+	],
+	"/capabilities": [
+		"src/routes/capabilities/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/contact": [
+		"src/routes/contact/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/labs": [
+		"src/routes/labs/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/labs/[slug]": [
+		"src/routes/labs/[slug]/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/open-source": [
+		"src/routes/open-source/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/privacy": [
+		"src/routes/privacy/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/stack": [
+		"src/routes/stack/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/terms": [
+		"src/routes/terms/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/work": [
+		"src/routes/work/+page.server.ts",
+		"src/routes/+layout.ts"
+	],
+	"/work/[slug]": [
+		"src/routes/work/[slug]/+page.server.ts",
+		"src/routes/+layout.ts"
+	]
+}

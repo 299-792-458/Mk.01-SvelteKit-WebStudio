@@ -1,5 +1,5 @@
 const config = {
-	extensions: ['.md']
+	extensions: ['.md', '.mdx']
 };
 
 export default config;

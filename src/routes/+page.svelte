@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { appConfig } from '$config/app.config';
 	import HeroSequencer from '$components/experience/HeroSequencer.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
+	import Scene from '$lib/components/3d/Scene.svelte';
+	import Reveal from '$lib/components/motion/Reveal.svelte';
 
 	import type { PageData } from './$types';
 
@@ -11,7 +13,7 @@
 	const identity = data.identity ?? appConfig.identity;
 	const metrics = data.metrics ?? appConfig.metrics;
 	let liveSignalIndex = 0;
-	let liveSignalTimer: ReturnType<typeof setInterval> | undefined;
+	let liveSignalTimer;
 
 	const studioPillars = [
 		{
@@ -320,67 +322,74 @@
 	}
 </script>
 
-<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
+<Scene />
 
-<PageSection id="signal" tone="subtle" padding="compact">
-	<div class="surface-panel">
-		<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-			<div class="max-w-3xl space-y-4">
-				<span class="eyebrow text-secondary/80">Studio signal</span>
-				<h2 class="text-3xl font-semibold sm:text-4xl">
-					A universal web studio for bold founders, product crews, and curious labs.
-				</h2>
-				<p class="text-base text-base-content/70 sm:text-lg">
-					We choreograph brand, product, and engineering into one expressive surface. Strategy is our
-					guardrail, experimentation is our tempo.
-				</p>
+<Reveal type="fade" delay={0.2}>
+	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
+</Reveal>
+
+<Reveal type="slide" delay={0.4}>
+	<PageSection id="signal" tone="subtle" padding="compact">
+		<div class="surface-panel">
+			<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+				<div class="max-w-3xl space-y-4">
+					<span class="eyebrow text-secondary/80">Studio signal</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">
+						A universal web studio for bold founders, product crews, and curious labs.
+					</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						We choreograph brand, product, and engineering into one expressive surface. Strategy is our
+						guardrail, experimentation is our tempo.
+					</p>
+				</div>
+				<div class="signal-marquee" aria-hidden="true">
+					<div class="marquee-track">
+						{#each Array(2) as _}
+							<span>Launch builds</span>
+							<span>Design engineering</span>
+							<span>Interactive stories</span>
+							<span>Inclusive by default</span>
+							<span>Prototype to production</span>
+						{/each}
+					</div>
+				</div>
 			</div>
-			<div class="signal-marquee" aria-hidden="true">
-				<div class="marquee-track">
-					{#each Array(2) as _}
-						<span>Launch builds</span>
-						<span>Design engineering</span>
-						<span>Interactive stories</span>
-						<span>Inclusive by default</span>
-						<span>Prototype to production</span>
-					{/each}
+
+			<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Experiments shipped</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.experimentsShipped}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Launches, interactive demos, and product refreshes that made it to customers.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Global collaborators</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.activeCollaborators}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Teams we have plugged into across timezones, industries, and internal stacks.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Sprint rhythm</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.averageSprintLength}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Delivery cadence tuned for fast iteration without sacrificing craft.
+					</p>
+				</div>
+				<div class="surface-card">
+					<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Response time</p>
+					<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.responseTime}</p>
+					<p class="mt-2 text-sm text-base-content/70">
+						Direct access to the studio—no layers of account management slowing you down.
+					</p>
 				</div>
 			</div>
 		</div>
+	</PageSection>
+</Reveal>
 
-		<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Experiments shipped</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.experimentsShipped}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Launches, interactive demos, and product refreshes that made it to customers.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Global collaborators</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.activeCollaborators}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Teams we have plugged into across timezones, industries, and internal stacks.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Sprint rhythm</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.averageSprintLength}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Delivery cadence tuned for fast iteration without sacrificing craft.
-				</p>
-			</div>
-			<div class="surface-card">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/70">Response time</p>
-				<p class="mt-2 text-3xl font-semibold text-base-content">{metrics.responseTime}</p>
-				<p class="mt-2 text-sm text-base-content/70">
-					Direct access to the studio—no layers of account management slowing you down.
-				</p>
-			</div>
-		</div>
-	</div>
-</PageSection>
-
+<Reveal delay={0.2}>
 <PageSection id="manifesto" tone="contrast">
 	<div class="grid gap-10 lg:grid-cols-[1.25fr_minmax(0,1fr)] lg:items-start">
 		<div class="space-y-6">
@@ -397,7 +406,7 @@
 		<div class="grid gap-4">
 			{#each studioPillars as pillar}
 				<div
-					class="rounded-2xl border border-base-200/80 bg-base-100/60 p-6 shadow-lg backdrop-blur"
+					class="rounded-2xl border border-base-200/80 bg-base-100/60 p-6 shadow-lg backdrop-blur transition-transform hover:scale-[1.02]"
 				>
 					<p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary/70">
 						{pillar.title}
@@ -408,160 +417,11 @@
 		</div>
 	</div>
 </PageSection>
+</Reveal>
 
-<PageSection id="signal-reel" tone="default" padding="compact">
-	<div class="grid gap-6 lg:grid-cols-[1fr_minmax(0,1.1fr)] lg:items-center">
-		<div class="space-y-3">
-			<span class="eyebrow text-secondary/80">Live signal</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">A studio tuned for expressive, durable web.</h2>
-			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
-				The ticker below cycles through how we build. Every message is a promise we deliver on.
-			</p>
-		</div>
-
-		<div class="signal-reel">
-			<div class="reel-track" style={`--active-index:${liveSignalIndex}`}>
-				{#each liveSignals as signal, idx}
-					<div class={`reel-item ${liveSignalIndex === idx ? 'active' : ''}`}>
-						<span class="spark" aria-hidden="true" />
-						{signal}
-					</div>
-				{/each}
-			</div>
-		</div>
-	</div>
-</PageSection>
-
-<PageSection id="signature-moves" tone="default">
-	<div class="mx-auto max-w-3xl text-center space-y-3">
-		<span class="eyebrow">Signature moves</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">
-			Every build follows a cinematic arc—signal, intrigue, decision.
-		</h2>
-		<p class="text-base text-base-content/70 sm:text-lg">
-			We choreograph story beats across scroll, interactions, and content to keep people engaged and
-			confident.
-		</p>
-	</div>
-
-	<div class="grid gap-6 lg:grid-cols-3">
-		{#each signatureMoves as move}
-			<div class="surface-panel h-full border border-base-200/80">
-				<p class="text-xs uppercase tracking-[0.3em] text-primary/80">{move.title}</p>
-				<p class="mt-3 text-sm text-base-content/70">{move.description}</p>
-			</div>
-		{/each}
-	</div>
-</PageSection>
-
-<PageSection id="immersion" tone="contrast">
-	<div class="grid gap-8 lg:grid-cols-[1.1fr_minmax(0,0.9fr)] lg:items-start">
-		<div class="space-y-4">
-			<span class="eyebrow text-secondary/80">Immersion lab</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">Motion, story, and product in one reel.</h2>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				We ship experiences that feel alive without sacrificing performance. Each slice below is a
-				module we can dial up or down for your brand.
-			</p>
-			<div class="flex flex-wrap gap-2">
-				{#each credibility as cred}
-					<span
-						class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
-					>
-						{cred}
-					</span>
-				{/each}
-			</div>
-		</div>
-
-		<div class="immersion-grid">
-			{#each immersionSlices as slice, index}
-				<article class="immersive-card" style={`--accent:${slice.accent}; --index:${index}`}>
-					<div class="beam" aria-hidden="true" />
-					<div class="badge">{slice.badge}</div>
-					<h3>{slice.title}</h3>
-					<p>{slice.description}</p>
-				</article>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-
-<PageSection id="services" tone="subtle">
-	<div class="mx-auto max-w-3xl text-center space-y-4">
-		<span class="eyebrow">Service tracks</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">Choose the lane that matches your momentum.</h2>
-		<p class="text-base text-base-content/70 sm:text-lg">
-			Each track blends research, design, and engineering so you can move from storyboard to shipped
-			in weeks—not quarters.
-		</p>
-	</div>
-
-	<div class="grid gap-6 lg:grid-cols-3">
-		{#each serviceTracks as track}
-			<div class="surface-panel h-full border-primary/20 bg-gradient-to-br from-base-100 to-base-200/70">
-				<h3 class="text-xl font-semibold text-base-content">{track.title}</h3>
-				<p class="mt-3 text-sm text-base-content/70">{track.description}</p>
-				<div class="mt-6 flex flex-wrap gap-2">
-					{#each track.outcomes as outcome}
-						<span
-							class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
-						>
-							{outcome}
-						</span>
-					{/each}
-				</div>
-			</div>
-		{/each}
-	</div>
-</PageSection>
-
-<PageSection id="micro-features" tone="subtle">
-	<div class="mx-auto max-w-3xl text-center space-y-3">
-		<span class="eyebrow">Feature kit</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">Small touches that make the whole feel premium.</h2>
-		<p class="text-base text-base-content/70 sm:text-lg">
-			Reusable micro-features that ship with every engagement, ready to adapt to your brand system.
-		</p>
-	</div>
-
-	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-		{#each microFeatures as feature}
-			<div class="micro-card">
-				<div class="micro-glow" aria-hidden="true" />
-				<p class="text-sm font-semibold text-base-content">{feature.title}</p>
-				<p class="mt-2 text-xs text-base-content/70">{feature.description}</p>
-			</div>
-		{/each}
-	</div>
-</PageSection>
-
-<PageSection id="industries" tone="default" padding="compact">
-	<div class="grid gap-6 lg:grid-cols-[1fr_minmax(0,1.15fr)] lg:items-start">
-		<div class="space-y-4">
-			<span class="eyebrow text-secondary/80">Focus areas</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">
-				Universal craft tuned for your sector.
-			</h2>
-			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
-				We translate complex products into clear story arcs—whether you ship AI copilots, dev tools,
-				fintech dashboards, or culture-forward drops.
-			</p>
-		</div>
-
-		<div class="grid gap-4 sm:grid-cols-2">
-			{#each industryFocus as focus}
-				<div class="surface-card h-full border-base-300/70">
-					<p class="text-sm font-semibold text-base-content">{focus.title}</p>
-					<p class="mt-2 text-sm text-base-content/70">{focus.description}</p>
-				</div>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-
+<Reveal type="slide" delay={0.2}>
 <PageSection id="featured-work">
-	<div class="mx-auto max-w-3xl text-center space-y-4">
+	<div class="mx-auto max-w-3xl text-center space-y-4 mb-12">
 		<span class="eyebrow">Featured Work</span>
 		<h2 class="text-3xl font-semibold sm:text-4xl">A selection of recent flagship builds.</h2>
 		<p class="text-base text-base-content/70 sm:text-lg">
@@ -570,105 +430,50 @@
 		</p>
 	</div>
 
-	<div class="grid gap-6 lg:grid-cols-3">
-		{#each data.projects as project}
+    <!-- Bento Grid Layout -->
+	<div class="grid gap-4 md:grid-cols-3 md:auto-rows-[350px]">
+		{#each data.projects as project, i}
 			<a
 				href={`/work/${project.slug}`}
-				class="surface-card group flex h-full flex-col justify-between"
+				class="group relative overflow-hidden rounded-3xl bg-neutral-900 shadow-2xl transition-all hover:shadow-glow hover:scale-[1.01]
+                       {i === 0 ? 'md:col-span-2 md:row-span-2' : ''}
+                       {i === 3 ? 'md:col-span-2' : ''}"
 			>
-				<div class="space-y-3">
-					<div class="overflow-hidden rounded-lg">
-						<img
-							src={project.image}
-							alt={project.title}
-							class="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
-						/>
-					</div>
-					<h3 class="text-xl font-semibold text-base-content group-hover:text-primary">
+                <!-- Background Image with scale on hover -->
+				<div class="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-105">
+					<img
+						src={project.image}
+						alt={project.title}
+						class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+					/>
+                </div>
+                
+                <!-- Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                <!-- Content -->
+				<div class="absolute inset-0 flex flex-col justify-end p-8">
+					<h3 class="transform translate-y-2 text-3xl font-bold text-white opacity-90 transition-all duration-500 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100">
 						{project.title}
 					</h3>
-					<p class="text-sm text-base-content/70">{project.description}</p>
+					<p class="mt-2 transform translate-y-4 text-lg text-gray-300 opacity-0 transition-all duration-500 delay-75 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100">
+                        {project.description}
+                    </p>
+                    <span class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary-400 opacity-0 transition-all duration-500 delay-100 group-hover:opacity-100">
+                        View Case Study &rarr;
+                    </span>
 				</div>
-				<span class="link-cta mt-6">View Project</span>
 			</a>
 		{/each}
 	</div>
 
-	<div class="mt-8 text-center">
+	<div class="mt-12 text-center">
 		<a href="/work" class="btn btn-primary btn-lg">View all work</a>
 	</div>
 </PageSection>
+</Reveal>
 
-<PageSection id="toolkit" tone="subtle">
-	<div class="grid gap-10 lg:grid-cols-[1.15fr_minmax(0,1fr)] lg:items-start">
-		<div class="space-y-4">
-			<span class="eyebrow text-secondary/80">Toolkit</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">Design, build, and measure in one stack.</h2>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				We ship with modern primitives—typed code, structured content, and instrumented experiments—so
-				you keep learning after launch.
-			</p>
-			<div class="grid gap-4 sm:grid-cols-2">
-				{#each capabilityToolkit as capability}
-					<div class="surface-card h-full">
-						<p class="text-xs uppercase tracking-[0.28em] text-primary/80">{capability.title}</p>
-						<ul class="mt-3 space-y-2 text-sm text-base-content/70">
-							{#each capability.items as item}
-								<li class="flex items-start gap-2">
-									<span class="mt-[6px] block h-1.5 w-1.5 rounded-full bg-primary/70" />
-									<span>{item}</span>
-								</li>
-							{/each}
-						</ul>
-					</div>
-				{/each}
-			</div>
-		</div>
-
-		<div class="surface-panel border-primary/10 bg-gradient-to-br from-base-100 via-base-200/60 to-primary/5">
-			<h3 class="text-xl font-semibold text-base-content">Engineered for the modern web</h3>
-			<p class="mt-3 text-sm text-base-content/70">
-				Opinionated stack choices keep performance high and maintenance low. We also adapt to your
-				team’s existing toolkit when needed.
-			</p>
-			<div class="mt-4 grid gap-3 sm:grid-cols-2">
-				{#each stackHighlights as stack}
-					<div class="rounded-2xl border border-base-200/80 bg-base-100/80 p-4">
-						<p class="text-sm font-semibold text-base-content">{stack.name}</p>
-						<p class="mt-2 text-xs text-base-content/70">{stack.note}</p>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</div>
-</PageSection>
-
-<PageSection id="delivery" tone="default">
-	<div class="grid gap-8 lg:grid-cols-[1.1fr_minmax(0,1fr)] lg:items-start">
-		<div class="space-y-4">
-			<span class="eyebrow">Delivery path</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">A calm, transparent path from idea to launch.</h2>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				We run fast without chaos. You’ll see the plan, the rituals, and the artifacts every step of
-				the way.
-			</p>
-		</div>
-
-		<div class="grid gap-4">
-			{#each deliveryBeats as beat, idx}
-				<div class="delivery-row">
-					<div class="delivery-dot" aria-hidden="true" />
-					<div class="delivery-rail" aria-hidden="true" />
-					<div class="delivery-content surface-card">
-						<p class="text-xs uppercase tracking-[0.28em] text-primary/80">{idx + 1}. {beat.title}</p>
-						<p class="mt-2 text-sm text-base-content/70">{beat.description}</p>
-					</div>
-				</div>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-
+<Reveal delay={0.2}>
 <PageSection id="actions" tone="contrast" padding="compact">
 	<div class="surface-panel mx-auto max-w-5xl bg-base-100/80">
 		<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -697,167 +502,7 @@
 		</div>
 	</div>
 </PageSection>
-
-<PageSection id="latest" tone="subtle">
-	<div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-		<div class="space-y-3">
-			<span class="eyebrow text-secondary/80">Journal</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">Latest writing from the studio.</h2>
-			<p class="max-w-2xl text-sm text-base-content/70 sm:text-base">
-				Insights on modern web craft, behind-the-scenes process notes, and explorations fresh from
-				the lab.
-			</p>
-		</div>
-		<a href="/blog" class="btn btn-outline btn-sm self-start">View all posts</a>
-	</div>
-
-	<div class="grid gap-6 lg:grid-cols-3">
-		{#if data.posts?.length}
-			{#each data.posts as post}
-				<article
-					class="group flex h-full flex-col rounded-2xl border border-base-300/70 bg-base-100/80 p-6 transition-transform hover:-translate-y-1 hover:shadow-lg"
-				>
-					<div class="text-xs uppercase tracking-widest text-base-content/60">
-						{formatDate(post.date)}
-					</div>
-					<h3 class="mt-3 text-2xl font-semibold text-base-content group-hover:text-primary">
-						{post.title}
-					</h3>
-					<p class="mt-3 flex-1 text-sm text-base-content/70">{post.description}</p>
-					<a href={`/blog/${post.slug}`} class="link-cta mt-6">
-						Read article
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-4 w-4"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="1.5"
-								d="M17 8l4 4m0 0l-4 4m4-4H3"
-							/>
-						</svg>
-					</a>
-				</article>
-			{/each}
-		{:else}
-			<div
-				class="rounded-2xl border border-dashed border-base-300/70 bg-base-100/60 p-10 text-center text-base-content/70"
-			>
-				New stories are brewing. Check back soon!
-			</div>
-		{/if}
-	</div>
-</PageSection>
-
-<PageSection id="capabilities">
-	<div class="mx-auto max-w-3xl text-center space-y-3">
-		<span class="eyebrow">Collaboration</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">
-			Shape a collaboration model that fits your momentum.
-		</h2>
-		<p class="text-base text-base-content/70 sm:text-lg">
-			We adapt to your team’s cadence—plug us into a sprint, co-create a launch, or prototype
-			something audacious.
-		</p>
-	</div>
-
-	<div class="grid gap-6 lg:grid-cols-3">
-		{#each collaborationModes as mode}
-			<div class="surface-card h-full">
-				<h3 class="text-xl font-semibold">{mode.title}</h3>
-				<p class="mt-3 text-sm text-base-content/70">{mode.description}</p>
-				<div
-					class="mt-6 rounded-xl border border-base-200/70 bg-base-100/80 p-4 text-xs uppercase tracking-widest text-base-content/60"
-				>
-					{mode.deliverables}
-				</div>
-			</div>
-		{/each}
-	</div>
-</PageSection>
-
-<PageSection id="cadence" tone="contrast">
-	<div class="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)] lg:items-center">
-		<div class="space-y-4">
-			<span class="eyebrow text-secondary/80">Operating cadence</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">
-				We move with purpose—measured, transparent, and ready to ship.
-			</h2>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				Expect thoughtful kickoff, tight feedback loops, and a calm hand at launch. We map every
-				sprint so you know exactly what is landing.
-			</p>
-		</div>
-
-		<div class="grid gap-4">
-			{#each operatingCadence as item}
-				<div class="rounded-2xl border border-base-200/80 bg-base-100/70 p-6 shadow-lg">
-					<p class="text-xs font-semibold uppercase tracking-[0.28em] text-primary/80">
-						{item.title}
-					</p>
-					<p class="mt-3 text-sm text-base-content/70">{item.description}</p>
-				</div>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-
-<PageSection id="faq" tone="default" padding="compact">
-	<div class="grid gap-8 lg:grid-cols-[1fr_minmax(0,1.1fr)] lg:items-start">
-		<div class="space-y-3">
-			<span class="eyebrow">FAQ</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">Answers to common collab questions.</h2>
-			<p class="max-w-2xl text-sm text-base-content/70 sm:text-base">
-				More questions? Email <a href="mailto:studio@mk1.dev" class="link-cta">studio@mk1.dev</a>
-				and we’ll reply quickly.
-			</p>
-		</div>
-
-		<div class="space-y-3">
-			{#each faqItems as item, index}
-				<button
-					type="button"
-					class="faq-row"
-					on:click={() => (openFaq = openFaq === index ? -1 : index)}
-					aria-expanded={openFaq === index}
-				>
-					<div class="flex items-center justify-between gap-4">
-						<p class="text-left text-sm font-semibold text-base-content sm:text-base">
-							{item.question}
-						</p>
-						<span class="faq-icon" aria-hidden="true">{openFaq === index ? '−' : '+'}</span>
-					</div>
-					{#if openFaq === index}
-						<p class="faq-answer">
-							{item.answer}
-						</p>
-					{/if}
-				</button>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-
-<PageSection id="connect" tone="contrast" padding="compact">
-	<div class="surface-panel mx-auto max-w-4xl bg-base-100/80 text-center">
-		<span class="eyebrow text-secondary/80">Let’s build together</span>
-		<h2 class="mt-4 text-3xl font-semibold sm:text-4xl">
-			Have an idea, launch, or experiment in mind?
-		</h2>
-		<p class="mt-4 text-base text-base-content/70 sm:text-lg">
-			Share your project vision, and we’ll map a path from discovery to a memorable, shippable
-			experience.
-		</p>
-		<div class="mt-6 flex flex-wrap justify-center gap-3">
-			<a href="mailto:studio@mk1.dev" class="btn btn-primary btn-lg">Open a conversation</a>
-			<a href="/about" class="btn btn-ghost btn-lg">Get to know the studio</a>
-		</div>
-	</div>
-</PageSection>
+</Reveal>
 
 <style>
 	.signal-marquee {
