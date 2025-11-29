@@ -93,5 +93,5 @@
 	</div>
 
 	<CommandPalette />
-	<AmbientAudio />
+	<!-- <AmbientAudio /> -->
 </div>
