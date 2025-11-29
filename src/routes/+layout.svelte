@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import AppShell from '$lib/components/layout/AppShell.svelte';
+	import SmoothScroll from '$lib/components/layout/SmoothScroll.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
@@ -43,6 +44,8 @@
 	{@html jsonLdMarkup}
 </svelte:head>
 
-<AppShell>
-	<slot />
-</AppShell>
+<SmoothScroll>
+	<AppShell>
+		<slot />
+	</AppShell>
+</SmoothScroll>

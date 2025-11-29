@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import { page } from '$app/stores';
+	import { animate } from 'motion';
+	import { fly, fade } from 'svelte/transition';
 
-	type Theme = 'studio-light' | 'studio-dark';
-
-	export let theme: Theme = 'studio-light';
-
-	const dispatch = createEventDispatcher<{ themeChange: Theme }>();
+	export let theme: 'studio-light' | 'studio-dark' = 'studio-light';
+	const dispatch = createEventDispatcher<{ themeChange: 'studio-light' | 'studio-dark' }>();
 
 	const navLinks = [
 		{ href: '/', label: 'Home' },
@@ -16,115 +16,118 @@
 	];
 
 	let mobileOpen = false;
+	let navElement: HTMLElement;
 
 	function closeMobileMenu() {
 		mobileOpen = false;
 	}
+
+	onMount(() => {
+		if (navElement) {
+			animate(
+				navElement,
+				{ y: [-50, 0], opacity: [0, 1], scale: [0.9, 1] },
+				{ duration: 0.8, easing: [0.16, 1, 0.3, 1] }
+			);
+		}
+	});
 </script>
 
-<header class="sticky top-0 z-40 border-b border-base-300/60 bg-base-100/80 backdrop-blur">
-	<nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-		<a href="/" class="flex items-center gap-2 text-lg font-semibold tracking-tight">
-			<span
-				class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary via-secondary to-primary text-base-100 shadow-lg"
-			>
-				Mk
-			</span>
-			<span class="hidden sm:inline-flex flex-col leading-tight">
-				<span class="text-sm uppercase tracking-[0.35em] text-base-content/60">Studio</span>
-				<span class="text-lg font-semibold">Mk.01 SvelteKit</span>
-			</span>
-			<span class="sm:hidden text-lg font-semibold">Mk.01 Studio</span>
+<div class="pointer-events-none fixed inset-x-0 top-6 z-50 flex justify-center px-4">
+	<nav
+		bind:this={navElement}
+		class="pointer-events-auto relative flex items-center gap-2 rounded-full border border-white/10 bg-base-100/60 p-2 shadow-glow backdrop-blur-surface transition-all duration-500 hover:scale-[1.01] hover:bg-base-100/80 supports-[backdrop-filter]:bg-base-100/40"
+	>
+		<!-- Logo -->
+		<a
+			href="/"
+			class="group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-lg transition-transform duration-300 hover:rotate-12"
+		>
+			<span class="font-display font-bold">M</span>
 		</a>
 
-		<div class="hidden items-center gap-6 text-sm font-medium md:flex">
+		<!-- Desktop Links -->
+		<div class="hidden items-center gap-1 px-4 md:flex">
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class="transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+					class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 hover:text-primary {$page
+						.url.pathname === link.href
+						? 'bg-white/5 text-primary'
+						: 'text-base-content/80'}"
 				>
 					{link.label}
+					{#if $page.url.pathname === link.href}
+						<span
+							class="absolute bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"
+						></span>
+					{/if}
 				</a>
 			{/each}
 		</div>
 
-		<div class="flex items-center gap-2">
-			<a href="mailto:studio@mk1.dev" class="btn btn-primary btn-sm hidden sm:inline-flex">
-				Start a Project
-			</a>
-
-			<div class="hidden md:block">
-				<ThemeToggle {theme} on:toggle={(event) => dispatch('themeChange', event.detail)} />
-			</div>
-
-			<button
-				type="button"
-				class="btn btn-ghost btn-sm md:hidden"
-				on:click={() => (mobileOpen = !mobileOpen)}
-				aria-expanded={mobileOpen}
-				aria-controls="mobile-menu"
+		<!-- Action & Theme -->
+		<div class="flex items-center gap-2 pl-2">
+			<a
+				href="/contact"
+				class="btn btn-ghost btn-circle btn-sm hidden sm:flex"
+				aria-label="Contact"
 			>
-				<span class="sr-only">Toggle navigation</span>
-				{#if mobileOpen}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				{:else}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M4 6h16M4 12h16M4 18h16"
-						/>
-					</svg>
-				{/if}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="h-5 w-5"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+					/>
+				</svg>
+			</a>
+			<ThemeToggle {theme} on:toggle={(e) => dispatch('themeChange', e.detail)} />
+
+			<!-- Mobile Toggle -->
+			<button
+				class="btn btn-ghost btn-circle btn-sm md:hidden"
+				on:click={() => (mobileOpen = !mobileOpen)}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-5 w-5"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					><path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M4 6h16M4 12h16M4 18h16"
+					/></svg
+				>
 			</button>
 		</div>
 	</nav>
+</div>
 
-	{#if mobileOpen}
-		<div id="mobile-menu" class="border-t border-base-300/60 bg-base-100/95 md:hidden">
-			<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-				<div class="flex flex-col gap-3 text-base font-medium">
-					{#each navLinks as link}
-						<a
-							href={link.href}
-							class="rounded-lg px-3 py-2 transition-colors hover:bg-base-200/80"
-							on:click={closeMobileMenu}
-						>
-							{link.label}
-						</a>
-					{/each}
-					<a
-						href="mailto:studio@mk1.dev"
-						class="btn btn-primary btn-sm mt-2"
-						on:click={closeMobileMenu}
-					>
-						Start a Project
-					</a>
-					<div class="mt-2">
-						<ThemeToggle {theme} on:toggle={(event) => dispatch('themeChange', event.detail)} />
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
-</header>
+<!-- Mobile Menu Overlay -->
+{#if mobileOpen}
+	<div
+		class="fixed inset-0 z-40 flex flex-col gap-4 bg-base-100/95 px-6 pt-24 backdrop-blur-xl md:hidden"
+		transition:fly={{ y: -20, duration: 300 }}
+	>
+		{#each navLinks as link}
+			<a
+				href={link.href}
+				class="font-display text-2xl font-bold text-base-content"
+				on:click={closeMobileMenu}
+			>
+				{link.label}
+			</a>
+		{/each}
+		<button class="btn btn-primary mt-8" on:click={closeMobileMenu}>Close Menu</button>
+	</div>
+{/if}

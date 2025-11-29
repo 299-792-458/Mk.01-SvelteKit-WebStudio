@@ -23,20 +23,29 @@ export default {
 			},
 			spacing: {
 				'section-compact': '3rem',
-				'section-default': '4rem',
-				'section-xl': '6rem'
+				'section-default': '6rem', // Increased for airier look
+				'section-xl': '10rem'
 			},
 			maxWidth: {
 				content: '45rem',
-				wide: '64rem',
-				full: '76rem'
+				wide: '68rem',
+				full: '86rem'
 			},
 			boxShadow: {
-				glow: '0 12px 40px -20px rgba(99, 102, 241, 0.65)',
-				card: '0 18px 40px -24px rgba(15, 23, 42, 0.25)'
+				glow: '0 0 40px -10px rgba(99, 102, 241, 0.4)',
+				'glow-lg': '0 0 80px -20px rgba(99, 102, 241, 0.3)',
+				card: '0 20px 40px -12px rgba(0, 0, 0, 0.4)',
+				'glass-inset': 'inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 2px 4px rgba(0,0,0,0.2)'
 			},
 			backdropBlur: {
-				surface: '18px'
+				surface: '20px',
+				deep: '40px'
+			},
+			transitionTimingFunction: {
+				'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+				'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+				'in-expo': 'cubic-bezier(0.7, 0, 0.84, 0)',
+				'in-out-expo': 'cubic-bezier(0.87, 0, 0.13, 1)'
 			},
 			keyframes: {
 				'gradient-shift': {
@@ -50,12 +59,22 @@ export default {
 				fade: {
 					'0%': { opacity: 0, transform: 'translateY(16px)' },
 					'100%': { opacity: 1, transform: 'translateY(0)' }
+				},
+				'slide-up': {
+					'0%': { opacity: 0, transform: 'translateY(20px) scale(0.98)' },
+					'100%': { opacity: 1, transform: 'translateY(0) scale(1)' }
+				},
+				'reveal-width': {
+					'0%': { width: '0%' },
+					'100%': { width: '100%' }
 				}
 			},
 			animation: {
 				'gradient-shift': 'gradient-shift 12s ease infinite',
 				float: 'float 8s ease-in-out infinite',
-				fade: 'fade 0.6s ease forwards'
+				fade: 'fade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+				'slide-up': 'slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+				'reveal-width': 'reveal-width 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards'
 			}
 		}
 	},
@@ -105,17 +124,17 @@ export default {
 			},
 			{
 				'studio-pro-dark': {
-					primary: '#8B5CF6', // A vibrant purple
+					primary: '#8B5CF6', 
 					'primary-content': '#FFFFFF',
-					secondary: '#38BDF8', // A bright blue
+					secondary: '#38BDF8', 
 					'secondary-content': '#000000',
-					accent: '#F471B5', // A pinkish accent
+					accent: '#F471B5', 
 					'accent-content': '#000000',
-					neutral: '#1E293B',
+					neutral: '#0F172A', // Darker neutral
 					'neutral-content': '#E2E8F0',
-					'base-100': '#020617', // A very dark blue
-					'base-200': '#0f172a',
-					'base-300': '#1e293b',
+					'base-100': '#020617', // Almost black
+					'base-200': '#0B1120', // Deep Navy
+					'base-300': '#151e32',
 					'base-content': '#E2E8F0',
 					info: '#0EA5E9',
 					success: '#22C55E',
