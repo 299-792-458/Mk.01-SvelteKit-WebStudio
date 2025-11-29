@@ -91,10 +91,11 @@
 			<ThemeToggle {theme} on:toggle={(e) => dispatch('themeChange', e.detail)} />
 
 			<!-- Mobile Toggle -->
-			<button
-				class="btn btn-ghost btn-circle btn-sm md:hidden"
-				on:click={() => (mobileOpen = !mobileOpen)}
-			>
+	<button
+		class="btn btn-ghost btn-circle btn-sm md:hidden"
+		aria-label="Toggle menu"
+		on:click={() => (mobileOpen = !mobileOpen)}
+	>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
