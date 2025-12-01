@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { appConfig } from '$config/app.config';
 	import HeroSequencer from '$components/experience/HeroSequencer.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
@@ -200,7 +200,7 @@
 		'Design-to-code handoff'
 	];
 
-	let openFaq = 0;
+	let openFaq = -1;
 
 	const quickActions = [
 		{
@@ -308,19 +308,6 @@
 		}
 	];
 
-	const dateFormatter = new Intl.DateTimeFormat('en', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric'
-	});
-
-	function formatDate(value) {
-		try {
-			return dateFormatter.format(new Date(value));
-		} catch {
-			return value;
-		}
-	}
 </script>
 
 <Scene />
@@ -416,6 +403,240 @@
 				</div>
 			{/each}
 		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.2}>
+<PageSection id="signature" tone="subtle">
+	<div class="grid gap-10 lg:grid-cols-[1.15fr_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-6">
+			<span class="eyebrow text-secondary/80">Signature moves</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">
+				Plays we run to make a product feel inevitable.
+			</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Each move blends concept, craft, and code so launches land with story and systems in sync.
+			</p>
+		</div>
+
+		<div class="grid gap-4">
+			{#each signatureMoves as move}
+				<div class="surface-card flex flex-col gap-3">
+					<h3 class="text-xl font-semibold">{move.title}</h3>
+					<p class="text-sm text-base-content/70">{move.description}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	<div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+		{#each immersionSlices as slice}
+			<div
+				class="relative overflow-hidden rounded-2xl border border-base-200/80 bg-base-100/80 p-6 shadow-lg backdrop-blur"
+				style={`background-image:${slice.accent};`}
+			>
+				<div class="absolute inset-0 bg-gradient-to-br from-white/85 via-white/55 to-transparent"></div>
+				<div class="relative space-y-3">
+					<span class="inline-flex items-center rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-primary/80">
+						{slice.badge}
+					</span>
+					<h3 class="text-lg font-semibold text-base-content">{slice.title}</h3>
+					<p class="text-sm text-base-content/70">{slice.description}</p>
+				</div>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.15}>
+<PageSection id="capabilities">
+	<div class="grid gap-10 lg:grid-cols-[1.1fr_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-primary/80">Capability toolkit</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Strategy to ship, covered end-to-end.</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Design language, technical delivery, and growth analytics live inside one studio lane. You get a
+				portfolio-ready story and a production-ready build at once.
+			</p>
+		</div>
+
+		<div class="grid gap-4 md:grid-cols-3">
+			{#each capabilityToolkit as pillar}
+				<div class="surface-card h-full space-y-3">
+					<h3 class="text-lg font-semibold text-base-content">{pillar.title}</h3>
+					<ul class="space-y-2 text-sm text-base-content/70">
+						{#each pillar.items as item}
+							<li class="flex items-start gap-2">
+								<span class="mt-1 inline-flex h-1.5 w-4 rounded-full bg-primary/70"></span>
+								<span>{item}</span>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	<div class="mt-12 grid gap-4 lg:grid-cols-2">
+		{#each serviceTracks as track}
+			<div class="surface-panel h-full bg-base-100/80">
+				<div class="flex flex-col gap-3">
+					<p class="text-xs uppercase tracking-[0.3em] text-secondary/80">{track.title}</p>
+					<h3 class="text-2xl font-semibold text-base-content">{track.description}</h3>
+					<ul class="mt-2 grid gap-2 sm:grid-cols-2">
+						{#each track.outcomes as outcome}
+							<li class="rounded-lg border border-base-200/70 bg-base-100/80 px-3 py-2 text-sm text-base-content/70">
+								{outcome}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.15}>
+<PageSection id="stack" tone="contrast">
+	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_1.1fr] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Stack & focus</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Built to ship across industries.</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Whether you are a founder, PM, recruiter, or creative partner, the stack is tuned for fast
+				iteration, strong storytelling, and portfolio-grade polish.
+			</p>
+			<div class="flex flex-wrap gap-2">
+				{#each industryFocus as sector}
+					<span class="rounded-full bg-base-100/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary/80">
+						{sector.title}
+					</span>
+				{/each}
+			</div>
+		</div>
+
+		<div class="grid gap-4 md:grid-cols-2">
+			{#each stackHighlights as stack}
+				<div class="surface-card h-full">
+					<h3 class="text-lg font-semibold text-base-content">{stack.name}</h3>
+					<p class="mt-2 text-sm text-base-content/70">{stack.note}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	<div class="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+		<div class="space-y-4">
+			<span class="eyebrow text-primary/80">Operating cadence</span>
+			<div class="grid gap-3">
+				{#each operatingCadence as cadence}
+					<div class="rounded-2xl border border-base-200/80 bg-base-100/70 p-4 shadow-md backdrop-blur">
+						<h3 class="text-base font-semibold text-base-content">{cadence.title}</h3>
+						<p class="mt-1 text-sm text-base-content/70">{cadence.description}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Delivery beats</span>
+			<div class="grid gap-3 sm:grid-cols-2">
+				{#each deliveryBeats as beat}
+					<div class="surface-card h-full bg-base-100/85">
+						<h3 class="text-lg font-semibold text-base-content">{beat.title}</h3>
+						<p class="mt-2 text-sm text-base-content/70">{beat.description}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.2}>
+<PageSection id="signals" tone="subtle">
+	<div class="grid gap-10 lg:grid-cols-[1.1fr_minmax(0,1fr)] lg:items-center">
+		<div class="space-y-4">
+			<span class="eyebrow text-primary/80">Live signals</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Proof points you can feel.</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Runs as portfolio-grade demos or production builds. Motion stays performant, accessibility stays
+				baked in, and analytics are wired from the start.
+			</p>
+			<div class="signal-reel">
+				<div class="reel-track">
+					{#each liveSignals as signal, index}
+						<div class={`reel-item ${index === liveSignalIndex ? 'active' : ''}`}>
+							<span class="spark" aria-hidden="true"></span>
+							<span>{signal}</span>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-2">
+			{#each microFeatures as feature}
+				<div class="micro-card">
+					<div class="micro-glow" aria-hidden="true"></div>
+					<div class="relative space-y-2">
+						<p class="text-xs uppercase tracking-[0.28em] text-secondary/80">{feature.title}</p>
+						<p class="text-sm text-base-content/70">{feature.description}</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.25}>
+<PageSection id="collaboration">
+	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_1fr] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Collaboration modes</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Pick the lane that fits your goals.</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Embedded partner for product teams, launch studio for marketing pushes, or exploration lab for
+				portfolio-ready experiments.
+			</p>
+		</div>
+
+		<div class="grid gap-4 md:grid-cols-2">
+			{#each collaborationModes as mode}
+				<div class="surface-card h-full space-y-3">
+					<div class="flex items-center justify-between gap-2">
+						<h3 class="text-xl font-semibold text-base-content">{mode.title}</h3>
+						<span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
+							{mode.deliverables}
+						</span>
+					</div>
+					<p class="text-sm text-base-content/70">{mode.description}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+
+	<div class="mt-12 grid gap-4 lg:grid-cols-2">
+		{#each faqItems as item, index}
+			<button
+				type="button"
+				class="faq-row text-left"
+				on:click={() => (openFaq = openFaq === index ? -1 : index)}
+				aria-expanded={openFaq === index}
+			>
+				<div class="flex items-center justify-between gap-3">
+					<span class="text-base font-semibold text-base-content">{item.question}</span>
+					<span class="faq-icon" aria-hidden="true">{openFaq === index ? '–' : '+'}</span>
+				</div>
+				{#if openFaq === index}
+					<p class="faq-answer">{item.answer}</p>
+				{/if}
+			</button>
+		{/each}
 	</div>
 </PageSection>
 </Reveal>

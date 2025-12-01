@@ -1,0 +1,10 @@
+*.svelte linguist-language=Svelte
+
+# Keep supporting files out of language stats so Svelte stays prominent
+svelte.config.js linguist-vendored
+tailwind.config.js linguist-vendored
+postcss.config.js linguist-vendored
+mdsvex.config.js linguist-vendored
+
+docs/** linguist-documentation
+static/** linguist-vendored

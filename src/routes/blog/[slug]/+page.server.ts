@@ -1,8 +1,9 @@
+import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { getPostBySlug } from '$lib/server/content';
 import { buildSeo } from '$lib/utils/seo';
 
-export async function load({ params }) {
+export const load: PageServerLoad = async ({ params }) => {
 	const post = await getPostBySlug(params.slug);
 
 	if (!post) {
@@ -27,4 +28,4 @@ export async function load({ params }) {
 			publishedTime: metadata.date
 		})
 	};
-}
+};
