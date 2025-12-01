@@ -312,9 +312,48 @@
 		}
 	];
 
+	const timelineBeats = [
+		{ year: '2015', title: 'First shader toy', detail: 'Built GLSL loops for music visuals in small clubs.' },
+		{
+			year: '2018',
+			title: 'Systems obsessed',
+			detail: 'Led design systems rollouts and motion specs for multi-product teams.'
+		},
+		{
+			year: '2021',
+			title: '3D on the web',
+			detail: 'Shipped WebGL-led campaigns with realtime story-driven scroll.'
+		},
+		{
+			year: '2024',
+			title: 'Mk.01 studio',
+			detail: 'Hybrid launch+lab practice crafting cinematic, performant experiences.'
+		}
+	];
+
 </script>
 
-<Scene />
+<div class="hero-wrap">
+	<NeonGridHero />
+	<div class="hero-overlay">
+		<Reveal type="fade" delay={0.15}>
+			<div class="hero-text">
+				<p class="eyebrow text-secondary/80">Engineer / Creator / System Architect</p>
+				<h1 class="text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+					Hardcore web lab for neon-grade launches.
+				</h1>
+				<p class="max-w-2xl text-lg text-base-content/70">
+					Cybernetic motion, shader-driven surfaces, and product-grade craft in one SvelteKit stack. Turn
+					your story into an interactive spectacle.
+				</p>
+				<div class="flex flex-wrap gap-3">
+					<a class="btn btn-primary btn-lg" href="#featured-work">See works</a>
+					<a class="btn btn-ghost btn-lg" href="#contact">Contact</a>
+				</div>
+			</div>
+		</Reveal>
+	</div>
+</div>
 
 <Reveal type="fade" delay={0.2}>
 	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
@@ -407,6 +446,24 @@
 				</div>
 			{/each}
 		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.2}>
+<PageSection id="about" tone="contrast">
+	<div class="grid gap-10 lg:grid-cols-[1.1fr_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-primary/80">Identity</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">
+				An interactive chronicle you can scroll, drag, and orbit.
+			</h2>
+			<p class="max-w-2xl text-base text-base-content/70 sm:text-lg">
+				Instead of static copy, your story lives inside a kinetic timeline. Hover, drag, and scrub to
+				reveal each layer—principles, pivots, and experiments.
+			</p>
+		</div>
+		<InteractiveTimeline items={timelineBeats} />
 	</div>
 </PageSection>
 </Reveal>
@@ -656,45 +713,63 @@
 		</p>
 	</div>
 
-    <!-- Bento Grid Layout -->
-	<div class="grid gap-4 md:grid-cols-3 md:auto-rows-[350px]">
-		{#each data.projects as project, i}
-			<a
-				href={`/work/${project.slug}`}
-				class="group relative overflow-hidden rounded-3xl bg-neutral-900 shadow-2xl transition-all hover:shadow-glow hover:scale-[1.01]
-                       {i === 0 ? 'md:col-span-2 md:row-span-2' : ''}
-                       {i === 3 ? 'md:col-span-2' : ''}"
-			>
-                <!-- Background Image with scale on hover -->
-				<div class="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-105">
-					<img
-						src={project.image}
-						alt={project.title}
-						class="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-					/>
-                </div>
-                
-                <!-- Gradient Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-
-                <!-- Content -->
-				<div class="absolute inset-0 flex flex-col justify-end p-8">
-					<h3 class="transform translate-y-2 text-3xl font-bold text-white opacity-90 transition-all duration-500 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100">
-						{project.title}
-					</h3>
-					<p class="mt-2 transform translate-y-4 text-lg text-gray-300 opacity-0 transition-all duration-500 delay-75 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100">
-                        {project.description}
-                    </p>
-                    <span class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary-400 opacity-0 transition-all duration-500 delay-100 group-hover:opacity-100">
-                        View Case Study &rarr;
-                    </span>
-				</div>
-			</a>
-		{/each}
-	</div>
+	<ProjectCarousel projects={data.projects} />
 
 	<div class="mt-12 text-center">
 		<a href="/work" class="btn btn-primary btn-lg">View all work</a>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.15}>
+<PageSection id="lab" tone="contrast">
+	<div class="space-y-4">
+		<span class="eyebrow text-secondary/80">Playground / Tech lab</span>
+		<h2 class="text-3xl font-semibold sm:text-4xl">Tweak parameters, watch the canvas morph.</h2>
+		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+			GLSL-powered sandbox for shader demos, particle fields, and audio-reactive visuals. Use it to show
+			engineering rigor and creative range in one viewport.
+		</p>
+	</div>
+	<LabPlayground />
+</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.15}>
+<PageSection id="writing" tone="subtle">
+	<div class="space-y-3">
+		<span class="eyebrow text-primary/80">Writing / Log</span>
+		<h2 class="text-3xl font-semibold sm:text-4xl">Dynamic journal with glitch-backed cards.</h2>
+		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+			Even before content lands, the layout performs—hover to warp the noise, filter to reshuffle the
+			grid, scroll to pin headlines. (Feeds real posts when ready.)
+		</p>
+	</div>
+	<div class="grid gap-4 md:grid-cols-3 auto-rows-[200px] writing-grid">
+		{#each liveSignals as signal, index}
+			<div class="writing-card">
+				<div class="noise" style={`--i:${index};`} aria-hidden="true"></div>
+				<p class="text-sm uppercase tracking-[0.24em] text-secondary/80">Signal</p>
+				<h3 class="text-xl font-semibold text-base-content">{signal}</h3>
+				<p class="text-sm text-base-content/70">Hover to disrupt the grid. Replace with posts anytime.</p>
+			</div>
+		{/each}
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.2}>
+<PageSection id="contact" tone="contrast" padding="compact">
+	<div class="grid gap-6 lg:grid-cols-[1.1fr_minmax(0,1fr)] lg:items-center">
+		<div class="space-y-3">
+			<span class="eyebrow text-secondary/80">Contact</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Input sparks motion. Submission swaps scenes.</h2>
+			<p class="text-base text-base-content/70 sm:text-lg">
+				Every field emits light; the submit animates the panel. Use this for recruiter outreach, project
+				kickoffs, or lab collabs.
+			</p>
+		</div>
+		<ReactiveContact />
 	</div>
 </PageSection>
 </Reveal>
@@ -731,6 +806,88 @@
 </Reveal>
 
 <style>
+	.hero-wrap {
+		position: relative;
+		min-height: 90vh;
+		display: grid;
+		place-items: center;
+		overflow: hidden;
+	}
+
+	.hero-overlay {
+		position: relative;
+		z-index: 1;
+		max-width: 1200px;
+		padding: 2rem;
+	}
+
+	.hero-text {
+		display: grid;
+		gap: 1rem;
+		background: linear-gradient(135deg, rgba(6, 8, 16, 0.72), rgba(7, 7, 14, 0.9));
+		border: 1px solid rgba(124, 247, 255, 0.18);
+		border-radius: 1.2rem;
+		padding: 1.6rem;
+		box-shadow:
+			0 30px 80px rgba(0, 0, 0, 0.45),
+			inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+		backdrop-filter: blur(10px);
+	}
+
+	.writing-grid {
+		position: relative;
+		perspective: 1200px;
+	}
+
+	.writing-card {
+		position: relative;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(8, 10, 18, 0.9);
+		overflow: hidden;
+		transition:
+			transform 220ms ease,
+			border-color 220ms ease,
+			box-shadow 220ms ease;
+	}
+
+	.writing-card:hover {
+		transform: rotateX(4deg) rotateY(-4deg) translateY(-4px);
+		border-color: rgba(124, 247, 255, 0.3);
+		box-shadow:
+			0 24px 64px rgba(0, 0, 0, 0.45),
+			0 12px 32px rgba(124, 247, 255, 0.18);
+	}
+
+	.writing-card .noise {
+		position: absolute;
+		inset: -30%;
+		background: repeating-linear-gradient(
+				45deg,
+				rgba(124, 247, 255, 0.15),
+				rgba(124, 247, 255, 0.15) 2px,
+				transparent 3px,
+				transparent 6px
+			),
+			repeating-linear-gradient(
+				-35deg,
+				rgba(255, 70, 201, 0.14),
+				rgba(255, 70, 201, 0.14) 2px,
+				transparent 4px,
+				transparent 7px
+			);
+		filter: blur(10px);
+		opacity: 0.12;
+		transform: rotate(calc(var(--i) * 5deg));
+		transition: transform 240ms ease, opacity 240ms ease;
+	}
+
+	.writing-card:hover .noise {
+		transform: scale(1.1) rotate(calc(var(--i) * -6deg));
+		opacity: 0.18;
+	}
+
     /* ... existing styles ... */
 	.signal-marquee {
 		min-width: 260px;
