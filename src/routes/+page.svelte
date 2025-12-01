@@ -338,11 +338,11 @@
 	<div class="hero-overlay">
 		<Reveal type="fade" delay={0.15}>
 			<div class="hero-text">
-				<p class="eyebrow text-secondary/80">Engineer / Creator / System Architect</p>
-				<h1 class="text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+				<p class="eyebrow text-cyan-100/80">Engineer / Creator / System Architect</p>
+				<h1 class="text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
 					Hardcore web lab for neon-grade launches.
 				</h1>
-				<p class="max-w-2xl text-lg text-base-content/70">
+				<p class="max-w-2xl text-lg text-white/70">
 					Cybernetic motion, shader-driven surfaces, and product-grade craft in one SvelteKit stack. Turn
 					your story into an interactive spectacle.
 				</p>
@@ -850,6 +850,7 @@
 			transform 220ms ease,
 			border-color 220ms ease,
 			box-shadow 220ms ease;
+		color: #f8fbff;
 	}
 
 	.writing-card:hover {
