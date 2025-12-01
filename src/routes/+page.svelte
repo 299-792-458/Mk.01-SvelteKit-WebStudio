@@ -2,8 +2,12 @@
 	import { onMount } from 'svelte';
 	import { appConfig } from '$config/app.config';
 	import HeroSequencer from '$components/experience/HeroSequencer.svelte';
+	import NeonGridHero from '$lib/components/3d/NeonGridHero.svelte';
+	import InteractiveTimeline from '$lib/components/experience/InteractiveTimeline.svelte';
+	import ProjectCarousel from '$lib/components/experience/ProjectCarousel.svelte';
+	import LabPlayground from '$lib/components/experience/LabPlayground.svelte';
+	import ReactiveContact from '$lib/components/experience/ReactiveContact.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
-	import Scene from '$lib/components/3d/Scene.svelte';
 	import Reveal from '$lib/components/motion/Reveal.svelte';
 
 	import type { PageData } from './$types';
