@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { motion } from 'motion';
+	import { animate } from 'motion';
 	import { onMount } from 'svelte';
 
 	let container: HTMLDivElement;
@@ -16,17 +16,21 @@
 	});
 
 	function pulse(element: HTMLElement) {
-		motion(element.parentElement!, {
-			filter: ['brightness(1)', 'brightness(1.2)', 'brightness(1)'],
-			scale: [1, 1.01, 1]
-		}, { duration: 0.6, easing: 'ease-out' });
+		animate(
+			element.parentElement!,
+			{
+				filter: ['brightness(1)', 'brightness(1.2)', 'brightness(1)'],
+				scale: [1, 1.01, 1]
+			},
+			{ duration: 0.6, easing: 'ease-out' }
+		);
 	}
 
 	async function submit() {
 		status = 'sending';
 		await new Promise((r) => setTimeout(r, 900));
 		status = 'sent';
-		motion(container, { scale: [1, 1.02, 1], opacity: [1, 0.9, 1] }, { duration: 0.5 });
+		animate(container, { scale: [1, 1.02, 1], opacity: [1, 0.9, 1] }, { duration: 0.5 });
 	}
 </script>
 

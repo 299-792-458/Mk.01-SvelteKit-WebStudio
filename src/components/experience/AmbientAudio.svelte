@@ -8,8 +8,8 @@ const isPlayingStore = derived(experienceStore, ($experience) => $experience.isA
 let isPlaying = false;
 let audioElement: HTMLAudioElement | null = null;
 
-	const ambienceSrc =
-		'https://cdn.pixabay.com/download/audio/2023/11/06/audio_3a1babf1d8.mp3?filename=cyberpunk-city-ambient-175576.mp3';
+	// Host locally to avoid hotlink errors; place file in static/audio/...
+	const ambienceSrc = '/audio/cyberpunk-city-ambient.mp3';
 
 function toggle() {
 	experienceStore.toggleAmbientAudio();

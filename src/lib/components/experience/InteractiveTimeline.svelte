@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { motion } from 'motion';
+	import { animate } from 'motion';
 	import { onMount } from 'svelte';
 
 	export let items: { year: string; title: string; detail: string }[] = [];
@@ -9,15 +9,19 @@
 	onMount(() => {
 		const cards = container.querySelectorAll('.timeline-card');
 		cards.forEach((card, index) => {
-			motion(card, {
-				opacity: [0, 1],
-				y: [30, 0],
-				scale: [0.95, 1]
-			}, {
-				duration: 0.6,
-				delay: index * 0.08,
-				easing: 'cubic-bezier(0.25, 0.8, 0.4, 1)'
-			});
+			animate(
+				card,
+				{
+					opacity: [0, 1],
+					y: [30, 0],
+					scale: [0.95, 1]
+				},
+				{
+					duration: 0.6,
+					delay: index * 0.08,
+					easing: 'cubic-bezier(0.25, 0.8, 0.4, 1)'
+				}
+			);
 		});
 	});
 </script>

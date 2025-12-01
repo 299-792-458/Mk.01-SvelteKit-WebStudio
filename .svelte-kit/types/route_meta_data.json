@@ -9,15 +9,15 @@
 		"src/routes/+layout.ts"
 	],
 	"/blog": [
-		"src/routes/blog/+page.server.js",
+		"src/routes/blog/+page.server.ts",
 		"src/routes/+layout.ts"
 	],
 	"/blog/category/[category]": [
-		"src/routes/blog/category/[category]/+page.server.js",
+		"src/routes/blog/category/[category]/+page.server.ts",
 		"src/routes/+layout.ts"
 	],
 	"/blog/[slug]": [
-		"src/routes/blog/[slug]/+page.server.js",
+		"src/routes/blog/[slug]/+page.server.ts",
 		"src/routes/+layout.ts"
 	],
 	"/capabilities": [
