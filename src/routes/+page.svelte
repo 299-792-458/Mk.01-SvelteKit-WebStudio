@@ -452,6 +452,29 @@
 		'Analytics wired'
 	];
 
+	const pipelineStages = [
+		{
+			title: 'Design tokens → code',
+			description: 'Source of truth flows to Tailwind/daisyUI and native exports.',
+			status: 'synced'
+		},
+		{
+			title: 'CI quality gates',
+			description: 'Lighthouse, a11y, i18n, and visual diff sweeps on every PR.',
+			status: 'running'
+		},
+		{
+			title: 'Edge deploy',
+			description: 'Streaming SSR + static fallbacks on Cloudflare/Netlify.',
+			status: 'green'
+		},
+		{
+			title: 'Observability',
+			description: 'Web Vitals, tracing hooks, and consent-aware analytics.',
+			status: 'recording'
+		}
+	];
+
 	const microFeatures = [
 		{
 			title: 'Adaptive theming',
@@ -475,11 +498,17 @@
 	let activeScrollStep = 0;
 	let activePersona = 0;
 	let activeMode = 0;
+	let activePipeline = 0;
+	let pipelineTimer: ReturnType<typeof setInterval> | null = null;
 
 	onMount(() => {
 		liveSignalTimer = setInterval(() => {
 			liveSignalIndex = (liveSignalIndex + 1) % liveSignals.length;
 		}, 3200);
+
+		pipelineTimer = setInterval(() => {
+			activePipeline = (activePipeline + 1) % pipelineStages.length;
+		}, 2600);
 
 		let observer: IntersectionObserver | null = null;
 		if (typeof window !== 'undefined') {
@@ -506,6 +535,10 @@
 			if (liveSignalTimer !== null) {
 				clearInterval(liveSignalTimer);
 				liveSignalTimer = null;
+			}
+			if (pipelineTimer !== null) {
+				clearInterval(pipelineTimer);
+				pipelineTimer = null;
 			}
 			observer?.disconnect();
 		};
