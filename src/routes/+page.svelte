@@ -305,6 +305,73 @@
 		'Ship fast without chaos'
 	];
 
+	const scrollMoments = [
+		{
+			title: 'Scroll-synced cinematics',
+			description:
+				'Pinned canvases with parallax strata, shader-driven overlays, and text that syncs to scroll progress.',
+			metric: '90fps',
+			note: 'GPU-budgeted motion on M-series and Intel alike.'
+		},
+		{
+			title: 'Interaction-grade product demo',
+			description: 'Live input capture, state replay, and keyboard-safe focus choreography.',
+			metric: '0.2s',
+			note: 'Input-to-feedback latency on demo flows.'
+		},
+		{
+			title: 'Edge-streamed media',
+			description: 'Adaptive streams, prefetch on intent, and intelligent idle tasks.',
+			metric: '25ms',
+			note: 'Hops to the closest POP using edge routing.'
+		},
+		{
+			title: 'Resilient analytics',
+			description: 'Client + server events with replays, consent-aware pipelines, and anti-adblock fallbacks.',
+			metric: '4 nines',
+			note: 'Uptime for telemetry collection.'
+		},
+		{
+			title: 'Enterprise-proofing',
+			description: 'a11y sweeps, i18n stubs, and perf budgets enforced before sign-off.',
+			metric: 'WCAG 2.1',
+			note: 'AA+ targets baked into CI gates.'
+		}
+	];
+
+	const systemsProof = [
+		{
+			title: 'Motion budgeter',
+			description: 'Frame-timing guardrails inspired by Apple HIG and Google M3 motion curves.',
+			tag: 'FPS aware'
+		},
+		{
+			title: 'Design tokens → code',
+			description: 'Source of truth flows to Tailwind/daisyUI plus native apps through openfmt exports.',
+			tag: 'Multi-platform'
+		},
+		{
+			title: 'Edge + ISR ready',
+			description: 'Netlify/Cloudflare adapters with streaming SSR and static fallbacks.',
+			tag: 'Hybrid deploys'
+		},
+		{
+			title: 'Observability baked in',
+			description: 'Tracing hooks, Web Vitals logging, and privacy-safe analytics shipping by default.',
+			tag: 'Telemetry'
+		},
+		{
+			title: 'Security posture',
+			description: 'CSP, strict headers, dependency audits, and secrets hygiene from day one.',
+			tag: 'Enterprise'
+		},
+		{
+			title: 'Localization spine',
+			description: 'Locale routing, RTL rehearsals, and copy pipelines ready for translators.',
+			tag: 'Global-first'
+		}
+	];
+
 	const microFeatures = [
 		{
 			title: 'Adaptive theming',
@@ -324,16 +391,41 @@
 		}
 	];
 
+	let scrollStepRefs: HTMLElement[] = [];
+	let activeScrollStep = 0;
+
 	onMount(() => {
 		liveSignalTimer = setInterval(() => {
 			liveSignalIndex = (liveSignalIndex + 1) % liveSignals.length;
 		}, 3200);
+
+		let observer: IntersectionObserver | null = null;
+		if (typeof window !== 'undefined') {
+			observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const index = Number(entry.target.getAttribute('data-index'));
+							if (!Number.isNaN(index)) {
+								activeScrollStep = index;
+							}
+						}
+					});
+				},
+				{
+					rootMargin: '-20% 0px -40% 0px',
+					threshold: 0.32
+				}
+			);
+			scrollStepRefs.forEach((ref) => ref && observer?.observe(ref));
+		}
 
 		return () => {
 			if (liveSignalTimer !== null) {
 				clearInterval(liveSignalTimer);
 				liveSignalTimer = null;
 			}
+			observer?.disconnect();
 		};
 	});
 
@@ -461,6 +553,62 @@
 			<p class="sequencer-chip">Analytics ready</p>
 		</div>
 	</div>
+</Reveal>
+
+<Reveal type="fade" delay={0.1}>
+	<PageSection id="kinetic" tone="contrast">
+		<div class="scroll-lab">
+			<div
+				class="scroll-viewport"
+				style={`--progress:${scrollMoments.length > 1 ? activeScrollStep / (scrollMoments.length - 1) : 0};`}
+			>
+				<div class="scroll-core">
+					<p class="eyebrow text-secondary/80">Scroll lab</p>
+					<h3>Big-tech caliber motion systems.</h3>
+					<p class="scroll-copy">
+						Pinned 3D layers, shader overlays, and scroll-synced text that respect performance budgets.
+						Built for Apple-grade smoothness and Google-scale resilience.
+					</p>
+					<div class="scroll-meter">
+						<div class="meter-track">
+							<div class="meter-fill"></div>
+						</div>
+						<span>Scene {activeScrollStep + 1} / {scrollMoments.length}</span>
+					</div>
+					<div class="scroll-badges">
+						<span>GPU budgeted</span>
+						<span>Motion-safe</span>
+						<span>Edge streamed</span>
+					</div>
+				</div>
+				<div class="scroll-holo" aria-hidden="true">
+					<div class="holo-grid"></div>
+					<div class="holo-orb orb-1"></div>
+					<div class="holo-orb orb-2"></div>
+					<div class="holo-orb orb-3"></div>
+				</div>
+			</div>
+			<div class="scroll-steps">
+				{#each scrollMoments as moment, index}
+					<article
+						class={`scroll-step ${activeScrollStep === index ? 'active' : ''}`}
+						data-index={index}
+						bind:this={(el) => (scrollStepRefs[index] = el)}
+					>
+						<div class="step-head">
+							<span class="step-index">{String(index + 1).padStart(2, '0')}</span>
+							<div class="step-metric">
+								<p class="metric-value">{moment.metric}</p>
+								<p class="metric-note">{moment.note}</p>
+							</div>
+						</div>
+						<h4>{moment.title}</h4>
+						<p>{moment.description}</p>
+					</article>
+				{/each}
+			</div>
+		</div>
+	</PageSection>
 </Reveal>
 
 <Reveal type="fade" delay={0.2}>
@@ -760,6 +908,51 @@
 						<p class="text-xs uppercase tracking-[0.28em] text-secondary/80">{feature.title}</p>
 						<p class="text-sm text-base-content/70">{feature.description}</p>
 					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.18}>
+<PageSection id="systems" tone="contrast">
+	<div class="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Systems proof</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Engineered to pass enterprise sniff tests.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				Motion tuned like Apple, resilience baked like Google. Edge-first delivery, observability hooks,
+				and compliance guardrails so the spectacle is as durable as it is cinematic.
+			</p>
+			<div class="grid gap-3 sm:grid-cols-3">
+				<div class="sys-stat">
+					<p class="stat-label">Web Vitals</p>
+					<p class="stat-value">98th percentile</p>
+					<p class="stat-note">Core metrics rehearsed in CI.</p>
+				</div>
+				<div class="sys-stat">
+					<p class="stat-label">Locales ready</p>
+					<p class="stat-value">12+</p>
+					<p class="stat-note">RTL & CLDR rehearsed.</p>
+				</div>
+				<div class="sys-stat">
+					<p class="stat-label">Security</p>
+					<p class="stat-value">CSP + SRI</p>
+					<p class="stat-note">Strict headers & audits.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-2">
+			{#each systemsProof as system}
+				<div class="system-card">
+					<div class="system-top">
+						<span class="system-tag">{system.tag}</span>
+						<span class="glint" aria-hidden="true"></span>
+					</div>
+					<h3>{system.title}</h3>
+					<p>{system.description}</p>
 				</div>
 			{/each}
 		</div>
@@ -1116,6 +1309,211 @@
 		color: rgba(15, 23, 42, 0.65);
 	}
 
+	.scroll-lab {
+		display: grid;
+		grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+		gap: 1.5rem;
+		align-items: start;
+	}
+
+	.scroll-viewport {
+		position: sticky;
+		top: 120px;
+		min-height: 520px;
+		border-radius: 1.5rem;
+		overflow: hidden;
+		background: radial-gradient(circle at 20% 20%, rgba(124, 247, 255, 0.18), transparent 45%),
+			radial-gradient(circle at 80% 30%, rgba(255, 70, 201, 0.16), transparent 40%),
+			linear-gradient(145deg, rgba(5, 7, 16, 0.95), rgba(12, 18, 32, 0.9));
+		border: 1px solid rgba(124, 247, 255, 0.18);
+		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+		color: #eaf5ff;
+	}
+
+	.scroll-core {
+		position: relative;
+		padding: 1.6rem;
+		display: grid;
+		gap: 0.8rem;
+		backdrop-filter: blur(4px);
+	}
+
+	.scroll-copy {
+		color: rgba(234, 245, 255, 0.8);
+		max-width: 34rem;
+	}
+
+	.scroll-meter {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.meter-track {
+		position: relative;
+		flex: 1;
+		height: 6px;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.12);
+		overflow: hidden;
+	}
+
+	.meter-fill {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, rgba(124, 247, 255, 0.9), rgba(255, 70, 201, 0.9));
+		transform-origin: left;
+		transform: scaleX(var(--progress));
+		transition: transform 320ms ease;
+	}
+
+	.scroll-badges {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.scroll-badges span {
+		padding: 0.45rem 0.9rem;
+		border-radius: 999px;
+		border: 1px solid rgba(124, 247, 255, 0.25);
+		background: rgba(255, 255, 255, 0.08);
+		font-size: 0.82rem;
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+	}
+
+	.scroll-holo {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.holo-grid {
+		position: absolute;
+		inset: 8% 12%;
+		background-image:
+			linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+		background-size: 80px 80px;
+		mask-image: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+		animation: pan 24s linear infinite;
+	}
+
+	.holo-orb {
+		position: absolute;
+		width: 22rem;
+		height: 22rem;
+		border-radius: 999px;
+		filter: blur(24px);
+		mix-blend-mode: screen;
+		opacity: 0.7;
+	}
+
+	.holo-orb.orb-1 {
+		top: -10%;
+		left: 6%;
+		background: radial-gradient(circle, rgba(124, 247, 255, 0.35), transparent 60%);
+		animation: float 16s ease-in-out infinite;
+	}
+
+	.holo-orb.orb-2 {
+		bottom: -8%;
+		right: -4%;
+		background: radial-gradient(circle, rgba(255, 70, 201, 0.3), transparent 62%);
+		animation: drift 18s ease-in-out infinite;
+	}
+
+	.holo-orb.orb-3 {
+		top: 35%;
+		right: 28%;
+		width: 12rem;
+		height: 12rem;
+		background: radial-gradient(circle, rgba(99, 102, 241, 0.38), transparent 58%);
+		animation: float 12s ease-in-out infinite alternate;
+	}
+
+	.scroll-steps {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	.scroll-step {
+		position: relative;
+		padding: 1rem 1.1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		transition:
+			transform 200ms ease,
+			box-shadow 200ms ease,
+			border-color 200ms ease,
+			background 200ms ease;
+	}
+
+	.scroll-step:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.45);
+	}
+
+	.scroll-step.active {
+		border-color: rgba(99, 102, 241, 0.28);
+		box-shadow:
+			0 16px 42px -20px rgba(15, 23, 42, 0.45),
+			0 12px 32px -24px rgba(124, 247, 255, 0.3);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+	}
+
+	.step-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.6rem;
+		margin-bottom: 0.35rem;
+	}
+
+	.step-index {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.95rem;
+		color: rgba(15, 23, 42, 0.75);
+		letter-spacing: 0.15em;
+	}
+
+	.step-metric {
+		text-align: right;
+	}
+
+	.step-metric .metric-value {
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.9);
+	}
+
+	.step-metric .metric-note {
+		font-size: 0.85rem;
+		color: rgba(15, 23, 42, 0.65);
+	}
+
+	.scroll-step h4 {
+		font-size: 1.1rem;
+		margin-bottom: 0.2rem;
+	}
+
+	.scroll-step p {
+		color: rgba(15, 23, 42, 0.72);
+		font-size: 0.95rem;
+	}
+
+	@keyframes pan {
+		0% {
+			transform: translate3d(0, 0, 0);
+		}
+
+		100% {
+			transform: translate3d(-60px, -60px, 0);
+		}
+	}
+
 	.sequencer-head {
 		display: flex;
 		justify-content: space-between;
@@ -1172,6 +1570,97 @@
 		text-transform: uppercase;
 		color: inherit;
 		opacity: 0.82;
+	}
+
+	.system-card {
+		position: relative;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.88);
+		box-shadow: 0 14px 34px -22px rgba(15, 23, 42, 0.5);
+		overflow: hidden;
+		transition:
+			transform 200ms ease,
+			box-shadow 200ms ease,
+			border-color 200ms ease;
+	}
+
+	.system-card:hover {
+		transform: translateY(-3px);
+		border-color: rgba(99, 102, 241, 0.24);
+		box-shadow:
+			0 18px 42px -20px rgba(15, 23, 42, 0.55),
+			0 10px 28px -18px rgba(124, 247, 255, 0.2);
+	}
+
+	.system-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-bottom: 0.4rem;
+	}
+
+	.system-tag {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.35rem 0.8rem;
+		border-radius: 999px;
+		border: 1px solid rgba(99, 102, 241, 0.2);
+		background: rgba(99, 102, 241, 0.08);
+		font-size: 0.75rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.glint {
+		width: 14px;
+		height: 14px;
+		border-radius: 999px;
+		background: radial-gradient(circle, rgba(124, 247, 255, 0.9), rgba(99, 102, 241, 0.4));
+		box-shadow:
+			0 0 0 8px rgba(124, 247, 255, 0.18),
+			0 0 0 16px rgba(99, 102, 241, 0.08);
+		animation: pulse-spark 2.2s ease-in-out infinite;
+	}
+
+	.system-card h3 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.9);
+	}
+
+	.system-card p {
+		color: rgba(15, 23, 42, 0.68);
+		font-size: 0.95rem;
+	}
+
+	.sys-stat {
+		padding: 0.9rem 1rem;
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.85);
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		box-shadow: 0 12px 26px -18px rgba(15, 23, 42, 0.35);
+	}
+
+	.stat-label {
+		font-size: 0.78rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: rgba(15, 23, 42, 0.55);
+	}
+
+	.stat-value {
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.9);
+	}
+
+	.stat-note {
+		font-size: 0.9rem;
+		color: rgba(15, 23, 42, 0.68);
 	}
 
 	.writing-grid {
@@ -1445,6 +1934,15 @@
 			grid-template-columns: 1fr;
 		}
 
+		.scroll-lab {
+			grid-template-columns: 1fr;
+		}
+
+		.scroll-viewport {
+			position: relative;
+			top: auto;
+		}
+
 		.sequencer-head {
 			flex-direction: column;
 			align-items: flex-start;
@@ -1468,6 +1966,10 @@
 
 		.mode-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.scroll-step {
+			font-size: 0.95rem;
 		}
 	}
 </style>
