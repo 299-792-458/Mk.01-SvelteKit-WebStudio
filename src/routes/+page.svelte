@@ -416,6 +416,42 @@
 		}
 	];
 
+	const modeDeck = [
+		{
+			name: 'Launch',
+			title: 'Campaign OS',
+			description: 'Programmable hero states, CTA hand-offs, and instrumented experiments.',
+			bullets: ['Edge-streamed hero', 'A/B scaffolding', 'Narrative chapters'],
+			metric: 'Preview in 48h'
+		},
+		{
+			name: 'Product',
+			title: 'Product-grade UX',
+			description: 'Interaction-safe flows with analytics, auth hooks, and motion constraints.',
+			bullets: ['Accessibility rehearsed', 'Latency budgeted', 'Design tokens mapped'],
+			metric: 'p75 TTI 1.2s'
+		},
+		{
+			name: 'Lab',
+			title: 'Speculative R&D',
+			description: 'Shader-backed canvases, WebGL stingers, and concept decks ready to share.',
+			bullets: ['Shader playgrounds', 'Realtime inputs', 'Story beats'],
+			metric: 'Prototype in 1w'
+		}
+	];
+
+	const integrationLogos = [
+		'Cloudflare edge',
+		'Netlify previews',
+		'SvelteKit + Vite',
+		'Playwright visual sweeps',
+		'Contentlayer',
+		'Tailwind + daisyUI',
+		'Lenis smooth',
+		'CSP + SRI',
+		'Analytics wired'
+	];
+
 	const microFeatures = [
 		{
 			title: 'Adaptive theming',
@@ -438,6 +474,7 @@
 	let scrollStepRefs: HTMLElement[] = [];
 	let activeScrollStep = 0;
 	let activePersona = 0;
+	let activeMode = 0;
 
 	onMount(() => {
 		liveSignalTimer = setInterval(() => {
@@ -1076,6 +1113,63 @@
 </Reveal>
 
 <Reveal type="slide" delay={0.25}>
+<PageSection id="modes" tone="subtle">
+	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-primary/80">Mode deck</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">One build. Three operating modes.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				Switch between launch, product, and lab without swapping stacks. Modes share the same component
+				spine, analytics wiring, and accessibility guardrails.
+			</p>
+			<div class="mode-switcher">
+				{#each modeDeck as mode, index}
+					<button
+						type="button"
+						class={`mode-tab ${activeMode === index ? 'active' : ''}`}
+						on:click={() => (activeMode = index)}
+					>
+						{mode.name}
+					</button>
+				{/each}
+			</div>
+			<div class="integration-rail" aria-hidden="true">
+				<div class="integration-track">
+					{#each integrationLogos as logo}
+						<span>{logo}</span>
+					{/each}
+					{#each integrationLogos as logo}
+						<span>{logo}</span>
+					{/each}
+				</div>
+			</div>
+		</div>
+
+		<div class="mode-card">
+			<div class="mode-meta">
+				<p class="eyebrow text-secondary/80">{modeDeck[activeMode].metric}</p>
+				<h3>{modeDeck[activeMode].title}</h3>
+				<p class="text-base text-base-content/70">{modeDeck[activeMode].description}</p>
+			</div>
+			<ul class="mode-list">
+				{#each modeDeck[activeMode].bullets as bullet}
+					<li>
+						<span aria-hidden="true">●</span>
+						<p>{bullet}</p>
+					</li>
+				{/each}
+			</ul>
+			<div class="mode-footer">
+				<p>Reusable spine</p>
+				<p>Motion budgeted</p>
+				<p>Edge deploy</p>
+			</div>
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.28}>
 <PageSection id="collaboration">
 	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_1fr] lg:items-start">
 		<div class="space-y-4">
@@ -1999,6 +2093,101 @@
 		color: rgba(15, 23, 42, 0.7);
 	}
 
+	.mode-switcher {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.mode-tab {
+		padding: 0.65rem 1rem;
+		border-radius: 0.95rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.85);
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease,
+			border-color 160ms ease,
+			background 160ms ease;
+	}
+
+	.mode-tab.active {
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(14, 165, 233, 0.12));
+		border-color: rgba(99, 102, 241, 0.3);
+		box-shadow: 0 12px 28px -18px rgba(15, 23, 42, 0.45);
+	}
+
+	.mode-tab:hover {
+		transform: translateY(-2px);
+	}
+
+	.mode-card {
+		border-radius: 1.4rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		box-shadow: 0 20px 50px -30px rgba(15, 23, 42, 0.55);
+		padding: 1.2rem;
+		display: grid;
+		gap: 0.8rem;
+	}
+
+	.mode-list {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	.mode-list li {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.6rem;
+		align-items: baseline;
+		color: rgba(15, 23, 42, 0.78);
+	}
+
+	.mode-list span {
+		color: rgba(99, 102, 241, 0.9);
+	}
+
+	.mode-footer {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		font-size: 0.88rem;
+		color: rgba(15, 23, 42, 0.7);
+	}
+
+	.integration-rail {
+		position: relative;
+		overflow: hidden;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+	}
+
+	.integration-track {
+		display: inline-flex;
+		gap: 1rem;
+		align-items: center;
+		padding: 0.85rem 1.2rem;
+		min-width: max-content;
+		text-transform: uppercase;
+		letter-spacing: 0.16em;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.7);
+		animation: ally-marquee 28s linear infinite;
+	}
+
+	.integration-track span {
+		padding: 0.35rem 0.8rem;
+		border-radius: 0.9rem;
+		border: 1px solid rgba(99, 102, 241, 0.22);
+		background: rgba(99, 102, 241, 0.1);
+	}
+
 	.writing-grid {
 		position: relative;
 		perspective: 1200px;
@@ -2287,6 +2476,10 @@
 
 		.panel-head {
 			flex-direction: column;
+		}
+
+		.integration-track {
+			animation-duration: 22s;
 		}
 	}
 
