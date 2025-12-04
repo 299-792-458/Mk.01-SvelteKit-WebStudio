@@ -305,6 +305,50 @@
 		'Ship fast without chaos'
 	];
 
+	const personaViews = [
+		{
+			name: 'Founder / PM',
+			summary: 'Sees roadmap impact, delivery cadence, and go-to-market readiness.',
+			points: [
+				'Launch narratives mapped to OKRs',
+				'Feature tours with analytics wiring',
+				'Experiments and rollout plans'
+			],
+			signal: 'Time-to-first-preview: 3d'
+		},
+		{
+			name: 'Recruiter / Hiring',
+			summary: 'Evaluates depth: systems, accessibility, and production habits.',
+			points: ['WCAG + perf gates in CI', 'Design-token → code parity', 'Audit trail and handoff docs'],
+			signal: 'Vit. p95 above target'
+		},
+		{
+			name: 'Creative / Brand',
+			summary: 'Cares about spectacle without sacrificing clarity or inclusivity.',
+			points: ['Shader-backed hero states', 'Motion-safe choreography', 'Localized storytelling paths'],
+			signal: 'Motion budget locked'
+		}
+	];
+
+	const allyBadges = [
+		'Apple-grade polish',
+		'Google-scale resilience',
+		'Stripe-like clarity',
+		'Figma-ready tokens',
+		'Cloudflare edge',
+		'Netlify instant previews',
+		'Playwright visual sweeps',
+		'Analytics wired',
+		'Security headers'
+	];
+
+	const perfHud = [
+		{ label: 'LCP p75', value: '1.9s', note: 'Streaming hero + preconnect' },
+		{ label: 'CLS p75', value: '0.02', note: 'Reserved media & fonts' },
+		{ label: 'TTI p75', value: '1.2s', note: 'Islands + lazy hydration' },
+		{ label: 'Uptime', value: '99.98%', note: 'Edge + static fallbacks' }
+	];
+
 	const scrollMoments = [
 		{
 			title: 'Scroll-synced cinematics',
@@ -393,6 +437,7 @@
 
 	let scrollStepRefs: HTMLElement[] = [];
 	let activeScrollStep = 0;
+	let activePersona = 0;
 
 	onMount(() => {
 		liveSignalTimer = setInterval(() => {
@@ -606,6 +651,31 @@
 						<p>{moment.description}</p>
 					</article>
 				{/each}
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.12}>
+	<PageSection id="allies" tone="subtle">
+		<div class="ally-head">
+			<div>
+				<span class="eyebrow text-primary/80">Allies & standards</span>
+				<h2 class="text-3xl font-semibold sm:text-4xl">Benchmarked against big-tech bar.</h2>
+				<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+					Crafted to feel at home in Apple keynotes, Google developer events, or enterprise RFPs. Every
+					surface is built with compliance, performance, and storytelling in mind.
+				</p>
+			</div>
+			<div class="ally-strip" aria-hidden="true">
+				<div class="ally-track">
+					{#each allyBadges as badge}
+						<span>{badge}</span>
+					{/each}
+					{#each allyBadges as badge}
+						<span>{badge}</span>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</PageSection>
@@ -960,6 +1030,51 @@
 </PageSection>
 </Reveal>
 
+<Reveal type="slide" delay={0.18}>
+<PageSection id="systems" tone="contrast">
+	<div class="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-4">
+			<span class="eyebrow text-secondary/80">Systems proof</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Engineered to pass enterprise sniff tests.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				Motion tuned like Apple, resilience baked like Google. Edge-first delivery, observability hooks,
+				and compliance guardrails so the spectacle is as durable as it is cinematic.
+			</p>
+			<div class="grid gap-3 sm:grid-cols-3">
+				<div class="sys-stat">
+					<p class="stat-label">Web Vitals</p>
+					<p class="stat-value">98th percentile</p>
+					<p class="stat-note">Core metrics rehearsed in CI.</p>
+				</div>
+				<div class="sys-stat">
+					<p class="stat-label">Locales ready</p>
+					<p class="stat-value">12+</p>
+					<p class="stat-note">RTL & CLDR rehearsed.</p>
+				</div>
+				<div class="sys-stat">
+					<p class="stat-label">Security</p>
+					<p class="stat-value">CSP + SRI</p>
+					<p class="stat-note">Strict headers & audits.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-2">
+			{#each systemsProof as system}
+				<div class="system-card">
+					<div class="system-top">
+						<span class="system-tag">{system.tag}</span>
+						<span class="glint" aria-hidden="true"></span>
+					</div>
+					<h3>{system.title}</h3>
+					<p>{system.description}</p>
+				</div>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
 <Reveal type="slide" delay={0.25}>
 <PageSection id="collaboration">
 	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_1fr] lg:items-start">
@@ -1004,6 +1119,64 @@
 				{/if}
 			</button>
 		{/each}
+	</div>
+</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.22}>
+<PageSection id="mission" tone="subtle">
+	<div class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-start">
+		<div class="space-y-3">
+			<span class="eyebrow text-primary/80">Mission control</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">Switch viewpoints without losing the plot.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				Whether a founder, recruiter, or creative director visits, the page adapts. Toggle personas to
+				see the proof points that matter to each.
+			</p>
+			<div class="persona-tabs">
+				{#each personaViews as view, index}
+					<button
+						type="button"
+						class={`persona-tab ${activePersona === index ? 'active' : ''}`}
+						on:click={() => (activePersona = index)}
+					>
+						<span>{view.name}</span>
+					</button>
+				{/each}
+			</div>
+
+			<div class="persona-card">
+				<div class="persona-top">
+					<p class="eyebrow text-secondary/80">{personaViews[activePersona].signal}</p>
+					<h3>{personaViews[activePersona].name}</h3>
+					<p class="text-base text-base-content/70">{personaViews[activePersona].summary}</p>
+				</div>
+				<ul class="persona-list">
+					{#each personaViews[activePersona].points as point}
+						<li>
+							<span aria-hidden="true">◆</span>
+							<p>{point}</p>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		</div>
+
+		<div class="hud">
+			<div class="hud-header">
+				<p class="eyebrow text-secondary/80">Performance HUD</p>
+				<p class="hud-note">Benchmarks pulled from lab runs and production playbooks.</p>
+			</div>
+			<div class="hud-grid">
+				{#each perfHud as stat}
+					<div class="hud-tile">
+						<p class="hud-label">{stat.label}</p>
+						<p class="hud-value">{stat.value}</p>
+						<p class="hud-sub">{stat.note}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
 	</div>
 </PageSection>
 </Reveal>
@@ -1661,6 +1834,169 @@
 	.stat-note {
 		font-size: 0.9rem;
 		color: rgba(15, 23, 42, 0.68);
+	}
+
+	.ally-head {
+		display: grid;
+		gap: 1rem;
+		align-items: center;
+		justify-items: stretch;
+	}
+
+	.ally-strip {
+		position: relative;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		border-radius: 1rem;
+		overflow: hidden;
+		background: rgba(255, 255, 255, 0.9);
+	}
+
+	.ally-track {
+		display: inline-flex;
+		gap: 1.2rem;
+		align-items: center;
+		padding: 1rem 1.4rem;
+		min-width: max-content;
+		animation: ally-marquee 26s linear infinite;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.7);
+	}
+
+	.ally-track span {
+		padding: 0.35rem 0.7rem;
+		border-radius: 999px;
+		border: 1px solid rgba(99, 102, 241, 0.22);
+		background: rgba(99, 102, 241, 0.1);
+	}
+
+	@keyframes ally-marquee {
+		0% {
+			transform: translateX(0);
+		}
+
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
+	.persona-tabs {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.persona-tab {
+		padding: 0.6rem 0.9rem;
+		border-radius: 0.9rem;
+		border: 1px solid rgba(15, 23, 42, 0.12);
+		background: rgba(255, 255, 255, 0.85);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: rgba(15, 23, 42, 0.8);
+		transition:
+			transform 160ms ease,
+			box-shadow 160ms ease,
+			border-color 160ms ease,
+			background 160ms ease;
+	}
+
+	.persona-tab.active {
+		border-color: rgba(99, 102, 241, 0.3);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(14, 165, 233, 0.12));
+		box-shadow: 0 10px 26px -18px rgba(15, 23, 42, 0.4);
+	}
+
+	.persona-tab:hover {
+		transform: translateY(-2px);
+	}
+
+	.persona-card {
+		margin-top: 1rem;
+		border-radius: 1.2rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		box-shadow: 0 18px 45px -26px rgba(15, 23, 42, 0.5);
+		padding: 1.2rem;
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.persona-top h3 {
+		font-size: 1.4rem;
+	}
+
+	.persona-list {
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.persona-list li {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.65rem;
+		align-items: baseline;
+		color: rgba(15, 23, 42, 0.78);
+	}
+
+	.persona-list span {
+		color: rgba(99, 102, 241, 0.9);
+		font-size: 0.8rem;
+	}
+
+	.hud {
+		border-radius: 1.3rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+		padding: 1.2rem;
+		box-shadow: 0 18px 45px -24px rgba(15, 23, 42, 0.5);
+	}
+
+	.hud-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.hud-note {
+		color: rgba(15, 23, 42, 0.7);
+		font-size: 0.95rem;
+	}
+
+	.hud-grid {
+		display: grid;
+		gap: 0.7rem;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	}
+
+	.hud-tile {
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		padding: 0.9rem 1rem;
+		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.4);
+	}
+
+	.hud-label {
+		font-size: 0.78rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: rgba(15, 23, 42, 0.58);
+	}
+
+	.hud-value {
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.92);
+	}
+
+	.hud-sub {
+		font-size: 0.9rem;
+		color: rgba(15, 23, 42, 0.7);
 	}
 
 	.writing-grid {
