@@ -1145,6 +1145,48 @@
 </PageSection>
 </Reveal>
 
+<Reveal type="fade" delay={0.18}>
+<PageSection id="pipeline" tone="contrast" padding="compact">
+	<div class="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-start">
+		<div class="space-y-3">
+			<span class="eyebrow text-primary/80">Launch pipeline</span>
+			<h2 class="text-3xl font-semibold sm:text-4xl">From tokens to telemetry without friction.</h2>
+			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+				CI gates, edge deploys, and observability are rehearsed. Scroll the stages—active steps glow as the
+				loop runs.
+			</p>
+			<div class="pipeline-meter">
+				<div class="pipeline-track">
+					<div class="pipeline-fill" style={`--progress:${(activePipeline + 1) / pipelineStages.length};`}></div>
+				</div>
+				<span class="pipeline-note">Stage {activePipeline + 1}/{pipelineStages.length}</span>
+			</div>
+			<div class="pipeline-chips">
+				<span>CI budgets</span>
+				<span>Edge + ISR</span>
+				<span>Observability</span>
+				<span>Compliance</span>
+			</div>
+		</div>
+
+		<div class="pipeline-rail">
+			{#each pipelineStages as stage, index}
+				<div class={`pipeline-step ${activePipeline === index ? 'active' : ''}`}>
+					<div class="step-left">
+						<span class="step-dot" aria-hidden="true"></span>
+						<div>
+							<h4>{stage.title}</h4>
+							<p>{stage.description}</p>
+						</div>
+					</div>
+					<span class="stage-status">{stage.status}</span>
+				</div>
+			{/each}
+		</div>
+	</div>
+</PageSection>
+</Reveal>
+
 <Reveal type="slide" delay={0.25}>
 <PageSection id="modes" tone="subtle">
 	<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
@@ -2221,6 +2263,109 @@
 		background: rgba(99, 102, 241, 0.1);
 	}
 
+	.pipeline-meter {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.pipeline-track {
+		position: relative;
+		flex: 1;
+		height: 8px;
+		border-radius: 999px;
+		background: rgba(15, 23, 42, 0.1);
+		overflow: hidden;
+	}
+
+	.pipeline-fill {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.9));
+		transform-origin: left;
+		transform: scaleX(var(--progress));
+		transition: transform 320ms ease;
+	}
+
+	.pipeline-note {
+		font-size: 0.9rem;
+		color: rgba(15, 23, 42, 0.72);
+	}
+
+	.pipeline-chips {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin-top: 0.5rem;
+	}
+
+	.pipeline-chips span {
+		padding: 0.4rem 0.75rem;
+		border-radius: 0.9rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+	}
+
+	.pipeline-rail {
+		display: grid;
+		gap: 0.8rem;
+	}
+
+	.pipeline-step {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.85rem 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.9);
+		transition:
+			transform 180ms ease,
+			box-shadow 180ms ease,
+			border-color 180ms ease,
+			background 180ms ease;
+	}
+
+	.pipeline-step:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.45);
+	}
+
+	.pipeline-step.active {
+		border-color: rgba(99, 102, 241, 0.25);
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+		box-shadow:
+			0 18px 42px -20px rgba(15, 23, 42, 0.45),
+			0 10px 28px -18px rgba(124, 247, 255, 0.2);
+	}
+
+	.step-left {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+	}
+
+	.step-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 999px;
+		background: radial-gradient(circle, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.8));
+		box-shadow:
+			0 0 0 6px rgba(99, 102, 241, 0.18),
+			0 0 0 12px rgba(14, 165, 233, 0.12);
+	}
+
+	.stage-status {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+		color: rgba(15, 23, 42, 0.7);
+	}
+
 	.writing-grid {
 		position: relative;
 		perspective: 1200px;
@@ -2513,6 +2658,14 @@
 
 		.integration-track {
 			animation-duration: 22s;
+		}
+
+		.pipeline-rail {
+			order: 2;
+		}
+
+		.pipeline-meter {
+			order: 1;
 		}
 	}
 
