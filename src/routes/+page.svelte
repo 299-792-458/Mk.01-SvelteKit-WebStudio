@@ -19,6 +19,52 @@
 	let liveSignalIndex = 0;
 	let liveSignalTimer: ReturnType<typeof setInterval> | null = null;
 
+	const heroModes = [
+		{
+			badge: 'Portfolio',
+			title: 'Flagship portfolio OS',
+			description: 'Case study sequences, interactive timelines, and a hiring-friendly surface that feels alive.'
+		},
+		{
+			badge: 'Launch',
+			title: 'Campaign theater',
+			description: 'Programmatic hero states, choreographed scroll, and cinematic CTA hand-offs for launches.'
+		},
+		{
+			badge: 'Product',
+			title: 'Product-grade demo',
+			description: 'Live-feel walkthroughs, analytics wiring, and accessibility baked in so it is ready to ship.'
+		},
+		{
+			badge: 'Lab',
+			title: 'Future lab',
+			description: 'Shader playgrounds, prototypes, and speculative decks to show creative and technical range.'
+		}
+	];
+
+	const heroMetrics = [
+		{
+			label: 'Experiments shipped',
+			value: metrics.experimentsShipped,
+			note: 'Launches, refactors, and lab drops that made it to people.'
+		},
+		{
+			label: 'Partners plugged in',
+			value: metrics.activeCollaborators,
+			note: 'Teams across timezones and industries without friction.'
+		},
+		{
+			label: 'Sprint rhythm',
+			value: metrics.averageSprintLength,
+			note: 'Strategy → prototype → ship on a predictable tempo.'
+		},
+		{
+			label: 'Response window',
+			value: metrics.responseTime,
+			note: 'Direct line to the builder—no layers or lag.'
+		}
+	];
+
 	const studioPillars = [
 		{
 			title: 'Strategy, then spectacle',
@@ -336,24 +382,86 @@
 <div class="hero-wrap">
 	<NeonGridHero />
 	<div class="hero-overlay">
-		<Reveal type="fade" delay={0.15}>
-			<div class="hero-text">
-				<p class="eyebrow text-cyan-100/80">Engineer / Creator / System Architect</p>
-				<h1 class="text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
-					Hardcore web lab for neon-grade launches.
-				</h1>
-				<p class="max-w-2xl text-lg text-white/70">
-					Cybernetic motion, shader-driven surfaces, and product-grade craft in one SvelteKit stack. Turn
-					your story into an interactive spectacle.
-				</p>
-				<div class="flex flex-wrap gap-3">
-					<a class="btn btn-primary btn-lg" href="#featured-work">See works</a>
-					<a class="btn btn-ghost btn-lg" href="#contact">Contact</a>
+		<Reveal type="fade" delay={0.12}>
+			<div class="hero-grid">
+				<div class="hero-main">
+					<p class="eyebrow text-cyan-100/80">Mk.01 / Ultimate Surface</p>
+					<h1 class="hero-title">
+						A universal web flagship for portfolios, products, and labs.
+					</h1>
+					<p class="hero-sub">
+						Cinematic hero systems, product-grade UX, and speculative experiments in one build.
+						Recruiters, founders, and collaborators all land on the same living stage.
+					</p>
+					<div class="hero-actions">
+						<a class="btn btn-primary btn-lg" href="#featured-work">Play the reel</a>
+						<a class="btn btn-ghost btn-lg hero-ghost" href="#contact">Book a slot</a>
+					</div>
+					<div class="cred-row">
+						{#each credibility as proof}
+							<span class="cred-pill">{proof}</span>
+						{/each}
+					</div>
+				</div>
+				<div class="hero-panel">
+					<div class="panel-head">
+						<div>
+							<p class="eyebrow text-secondary/80">Universal mode</p>
+							<h3>Built for hiring, launches, and in-flight products.</h3>
+							<p class="panel-sub">
+								One codebase that sells your story, shows real capability, and doubles as a
+								production-ready scaffold.
+							</p>
+						</div>
+						<div class="panel-chip">
+							<span>Currently shipping</span>
+							<strong>{metrics.experimentsShipped}</strong>
+						</div>
+					</div>
+					<div class="mode-grid">
+						{#each heroModes as mode}
+							<div class="mode-card">
+								<div class="mode-top">
+									<span class="mode-badge">{mode.badge}</span>
+									<span aria-hidden="true">↗</span>
+								</div>
+								<h4>{mode.title}</h4>
+								<p>{mode.description}</p>
+							</div>
+						{/each}
+					</div>
+					<div class="metric-rail">
+						{#each heroMetrics as metric}
+							<div class="metric-chip">
+								<p class="metric-label">{metric.label}</p>
+								<p class="metric-value">{metric.value}</p>
+								<p class="metric-note">{metric.note}</p>
+							</div>
+						{/each}
+					</div>
 				</div>
 			</div>
 		</Reveal>
 	</div>
 </div>
+
+<Reveal type="slide" delay={0.18}>
+	<div class="sequencer-head">
+		<div>
+			<span class="eyebrow text-secondary/80">Experience engine</span>
+			<h2>Launch energy with product discipline.</h2>
+			<p>
+				Hero sequences, stats, and storytelling beats orchestrated in one pass. Built to swap between
+				portfolio mode, campaign mode, and product mode without touching Figma first.
+			</p>
+		</div>
+		<div class="sequencer-meta">
+			<p class="sequencer-chip">Adaptive layouts</p>
+			<p class="sequencer-chip">Motion safe defaults</p>
+			<p class="sequencer-chip">Analytics ready</p>
+		</div>
+	</div>
+</Reveal>
 
 <Reveal type="fade" delay={0.2}>
 	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
@@ -415,6 +523,11 @@
 						Direct access to the studio—no layers of account management slowing you down.
 					</p>
 				</div>
+			</div>
+			<div class="credibility-rail">
+				{#each credibility as proof}
+					<span class="cred-chip">{proof}</span>
+				{/each}
 			</div>
 		</div>
 	</PageSection>
@@ -808,30 +921,257 @@
 <style>
 	.hero-wrap {
 		position: relative;
-		min-height: 90vh;
+		min-height: 92vh;
 		display: grid;
-		place-items: center;
+		align-items: center;
 		overflow: hidden;
 	}
 
 	.hero-overlay {
 		position: relative;
 		z-index: 1;
-		max-width: 1200px;
-		padding: 2rem;
+		max-width: 1280px;
+		width: min(1200px, 94vw);
+		margin: 0 auto;
+		padding: clamp(1.5rem, 4vw, 3rem);
 	}
 
-	.hero-text {
+	.hero-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+		align-items: start;
+	}
+
+	.hero-main {
 		display: grid;
 		gap: 1rem;
-		background: linear-gradient(135deg, rgba(6, 8, 16, 0.72), rgba(7, 7, 14, 0.9));
-		border: 1px solid rgba(124, 247, 255, 0.18);
-		border-radius: 1.2rem;
-		padding: 1.6rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		border-radius: 1.4rem;
+		background: radial-gradient(circle at 10% 10%, rgba(124, 247, 255, 0.12), transparent 35%),
+			radial-gradient(circle at 80% 15%, rgba(255, 70, 201, 0.1), transparent 32%),
+			linear-gradient(140deg, rgba(6, 8, 16, 0.82), rgba(8, 10, 22, 0.92));
+		border: 1px solid rgba(124, 247, 255, 0.16);
 		box-shadow:
-			0 30px 80px rgba(0, 0, 0, 0.45),
+			0 30px 90px rgba(0, 0, 0, 0.45),
 			inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+		backdrop-filter: blur(12px);
+		color: #f7fbff;
+	}
+
+	.hero-title {
+		font-size: clamp(2.6rem, 4vw, 3.8rem);
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+	}
+
+	.hero-sub {
+		color: rgba(238, 244, 255, 0.78);
+		font-size: clamp(1rem, 1.2vw, 1.15rem);
+		max-width: 38rem;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.hero-ghost {
+		border: 1px solid rgba(124, 247, 255, 0.35);
+		background: rgba(255, 255, 255, 0.08);
+		color: #dff7ff;
+	}
+
+	.cred-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.cred-pill {
+		border-radius: 999px;
+		padding: 0.5rem 0.8rem;
+		font-size: 0.8rem;
+		color: rgba(240, 247, 255, 0.9);
+		border: 1px solid rgba(124, 247, 255, 0.26);
+		background: rgba(255, 255, 255, 0.06);
+		letter-spacing: 0.08em;
+	}
+
+	.hero-panel {
+		display: grid;
+		gap: 1rem;
+		padding: clamp(1.4rem, 3vw, 2.2rem);
+		border-radius: 1.4rem;
+		background: linear-gradient(130deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		box-shadow:
+			0 20px 60px rgba(0, 0, 0, 0.4),
+			0 10px 30px rgba(124, 247, 255, 0.16);
 		backdrop-filter: blur(10px);
+		color: #0f172a;
+	}
+
+	.panel-head {
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+
+	.panel-sub {
+		color: rgba(15, 23, 42, 0.7);
+		max-width: 30rem;
+	}
+
+	.panel-chip {
+		display: grid;
+		gap: 0.1rem;
+		padding: 0.75rem 1rem;
+		border-radius: 1rem;
+		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
+		color: rgba(15, 23, 42, 0.8);
+		text-align: right;
+		border: 1px solid rgba(99, 102, 241, 0.2);
+		min-width: 140px;
+	}
+
+	.mode-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 0.9rem;
+	}
+
+	.mode-card {
+		position: relative;
+		padding: 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(15, 23, 42, 0.1);
+		background: rgba(255, 255, 255, 0.8);
+		box-shadow: 0 14px 36px -18px rgba(15, 23, 42, 0.35);
+		transition:
+			transform 180ms ease,
+			box-shadow 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.mode-card:hover {
+		transform: translateY(-3px);
+		border-color: rgba(99, 102, 241, 0.24);
+		box-shadow: 0 18px 44px -20px rgba(15, 23, 42, 0.45);
+	}
+
+	.mode-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.mode-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.35rem 0.7rem;
+		border-radius: 999px;
+		border: 1px solid rgba(99, 102, 241, 0.24);
+		background: rgba(99, 102, 241, 0.08);
+		font-size: 0.7rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.metric-rail {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.metric-chip {
+		padding: 0.8rem 0.9rem;
+		border-radius: 0.9rem;
+		border: 1px solid rgba(15, 23, 42, 0.08);
+		background: rgba(255, 255, 255, 0.75);
+		color: rgba(15, 23, 42, 0.8);
+		box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.35);
+	}
+
+	.metric-label {
+		font-size: 0.74rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: rgba(15, 23, 42, 0.55);
+	}
+
+	.metric-value {
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: rgba(15, 23, 42, 0.95);
+	}
+
+	.metric-note {
+		font-size: 0.85rem;
+		color: rgba(15, 23, 42, 0.65);
+	}
+
+	.sequencer-head {
+		display: flex;
+		justify-content: space-between;
+		gap: 1.5rem;
+		align-items: flex-start;
+		padding: 0 1.5rem;
+		max-width: 1100px;
+		margin: 0 auto 1.5rem;
+	}
+
+	.sequencer-head h2 {
+		font-size: clamp(2rem, 4vw, 2.6rem);
+	}
+
+	.sequencer-head p {
+		color: inherit;
+		opacity: 0.75;
+		max-width: 38rem;
+	}
+
+	.sequencer-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		align-items: flex-end;
+	}
+
+	.sequencer-chip {
+		border: 1px solid rgba(99, 102, 241, 0.25);
+		background: rgba(99, 102, 241, 0.08);
+		color: rgba(15, 23, 42, 0.7);
+		border-radius: 999px;
+		padding: 0.45rem 0.9rem;
+		font-size: 0.82rem;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+	}
+
+	.credibility-rail {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1rem;
+	}
+
+	.cred-chip {
+		padding: 0.55rem 0.9rem;
+		border-radius: 999px;
+		border: 1px solid rgba(99, 102, 241, 0.35);
+		background: rgba(99, 102, 241, 0.12);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		color: inherit;
+		opacity: 0.82;
 	}
 
 	.writing-grid {
@@ -1098,5 +1438,36 @@
 		background: rgba(99, 102, 241, 0.12);
 		color: rgba(15, 23, 42, 0.8);
 		font-weight: 700;
+	}
+
+	@media (max-width: 1024px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.sequencer-head {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 0 1rem;
+		}
+
+		.panel-head {
+			flex-direction: column;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.hero-overlay {
+			padding: 1.25rem;
+		}
+
+		.hero-main,
+		.hero-panel {
+			padding: 1.1rem;
+		}
+
+		.mode-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

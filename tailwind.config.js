@@ -8,8 +8,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				display: ['"Space Grotesk"', ...defaultTheme.fontFamily.sans],
-				sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+				display: ['Syne', '"Space Grotesk"', ...defaultTheme.fontFamily.sans],
+				sans: ['Manrope', 'Inter', ...defaultTheme.fontFamily.sans],
 				mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono]
 			},
 			colors: {
