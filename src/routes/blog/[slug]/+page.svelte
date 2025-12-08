@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import PageSection from '$lib/components/ui/PageSection.svelte';
+	import type { PageData } from './$types';
 
-	export let data;
+	export let data: PageData;
 
 	const tags = data.tags ?? [];
 
@@ -11,7 +12,7 @@
 		day: 'numeric'
 	});
 
-	function formatDate(value) {
+	function formatDate(value: string | number | Date) {
 		try {
 			return dateFormatter.format(new Date(value));
 		} catch {

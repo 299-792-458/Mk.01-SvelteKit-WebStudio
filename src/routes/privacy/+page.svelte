@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import PageSection from '$lib/components/ui/PageSection.svelte';
 </script>
 

@@ -1,5 +1,7 @@
-<script>
-	export let data;
+<script lang="ts">
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	const { posts, category } = data;
 
@@ -9,7 +11,7 @@
 		day: 'numeric'
 	});
 
-	function formatDate(value) {
+	function formatDate(value: string | number | Date) {
 		try {
 			return dateFormatter.format(new Date(value));
 		} catch {

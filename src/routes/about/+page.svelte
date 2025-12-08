@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import TeamConstellation from '$components/experience/TeamConstellation.svelte';
 	import Timeline from '$components/experience/Timeline.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
