@@ -47,7 +47,7 @@
 	</div>
 	<div class="media">
 		<div class="glow"></div>
-		<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
+		<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" decoding="async" />
 	</div>
 </div>
 </PageSection>
@@ -88,6 +88,8 @@
 							src={relatedProject.coverImage ?? '/images/work/neon-metropolis-cover.jpg'}
 							alt={relatedProject.title}
 							class="aspect-video w-full object-cover"
+							loading="lazy"
+							decoding="async"
 						/>
 					</div>
 					<h3 class="text-xl font-semibold text-base-content">{relatedProject.title}</h3>

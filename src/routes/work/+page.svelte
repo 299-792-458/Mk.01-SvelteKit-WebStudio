@@ -89,6 +89,9 @@
 							src={project.coverImage ?? `/images/work/${project.slug}-cover.jpg`}
 							alt={project.title}
 							loading="lazy"
+							decoding="async"
+							width="960"
+							height="640"
 						/>
 					</div>
 					<div class="body">

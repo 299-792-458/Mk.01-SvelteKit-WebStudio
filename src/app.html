@@ -9,6 +9,25 @@
 			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
 			rel="stylesheet"
 		/>
+		<script>
+			(() => {
+				const mapLegacy = { light: 'studio-light', dark: 'studio-dark' };
+				const allowed = ['studio-light', 'studio-dark', 'studio-pro-dark'];
+				const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
+				const prefersDark =
+					typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
+
+				const initial = stored && allowed.includes(stored)
+					? stored
+					: stored && stored in mapLegacy
+						? mapLegacy[stored as keyof typeof mapLegacy]
+						: prefersDark
+							? 'studio-dark'
+							: 'studio-light';
+
+				document.documentElement.dataset.theme = initial;
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body>

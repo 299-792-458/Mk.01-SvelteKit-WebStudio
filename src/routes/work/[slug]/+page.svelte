@@ -52,7 +52,13 @@
 				<source src={projectContent.hero.video} type="video/mp4" />
 			</video>
 		{:else}
-			<img src={`/images/work/${project.slug}-hero.jpg`} alt={project.title} class="hero-image" />
+			<img
+				src={`/images/work/${project.slug}-hero.jpg`}
+				alt={project.title}
+				class="hero-image"
+				loading="lazy"
+				decoding="async"
+			/>
 		{/if}
 		<div class="hero-overlay">
 			<h2>{projectContent.hero.headline}</h2>

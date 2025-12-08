@@ -4,7 +4,10 @@
 
 	export let data: PageData;
 
-	const { posts, pageNumber, totalPages, searchTerm } = data;
+	const { posts, pageNumber, totalPages, searchTerm, categories, tags, categoryFilter, tagFilter } = data;
+	let search = searchTerm;
+	let selectedCategory = categoryFilter;
+	let selectedTag = tagFilter;
 
 	const dateFormatter = new Intl.DateTimeFormat('en', {
 		year: 'numeric',
@@ -32,15 +35,56 @@
 			in public. Grab a coffee and explore the process.
 		</p>
 
-		<form class="mt-4">
+		<form class="mt-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_180px_180px_auto]" method="get">
 			<input
 				type="search"
 				name="search"
 				placeholder="Search articles..."
 				class="input input-bordered w-full max-w-xs"
-				value={searchTerm}
+				bind:value={search}
 			/>
+			<label class="flex flex-col gap-2 text-sm text-base-content/70">
+				<span class="font-medium text-base-content">Category</span>
+				<select name="category" class="select select-bordered" bind:value={selectedCategory}>
+					<option value="">All categories</option>
+					{#each categories as category}
+						<option value={category.toLowerCase()}>{category}</option>
+					{/each}
+				</select>
+			</label>
+			<label class="flex flex-col gap-2 text-sm text-base-content/70">
+				<span class="font-medium text-base-content">Tag</span>
+				<select name="tag" class="select select-bordered" bind:value={selectedTag}>
+					<option value="">All tags</option>
+					{#each tags as tag}
+						<option value={tag.toLowerCase()}>{tag}</option>
+					{/each}
+				</select>
+			</label>
+			<div class="flex items-end gap-2">
+				<button class="btn btn-primary" type="submit">Apply</button>
+				<a href="/blog" class="btn btn-ghost">Reset</a>
+			</div>
 		</form>
+
+		{#if tags.length}
+			<div class="mt-4 flex flex-wrap gap-2 text-xs">
+				{#each tags.slice(0, 12) as tag}
+					<a
+						href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}${searchTerm ? `&search=${encodeURIComponent(searchTerm)}` : ''}${categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ''}`}
+						class={`badge badge-outline ${tag.toLowerCase() === tagFilter ? 'badge-primary' : ''}`}
+						sveltekit:prefetch
+					>
+						#{tag}
+					</a>
+				{/each}
+				{#if tags.length > 12}
+					<span class="text-[0.7rem] uppercase tracking-[0.22em] text-base-content/50">
+						+{tags.length - 12} more tags
+					</span>
+				{/if}
+			</div>
+		{/if}
 	</div>
 </PageSection>
 
@@ -50,7 +94,7 @@
 			<article class="surface-card flex h-full flex-col justify-between">
 				<div class="space-y-3">
 					<div class="flex justify-between">
-						<a href={`/blog/category/${post.category?.toLowerCase()}`}>
+						<a href={`/blog/category/${post.category?.toLowerCase()}`} sveltekit:prefetch>
 							<span class="eyebrow text-accent/80">{post.category}</span>
 						</a>
 					</div>
@@ -63,7 +107,7 @@
 						{/if}
 					</div>
 					<h3 class="text-xl font-semibold text-base-content hover:text-primary">
-						<a href={`/blog/${post.slug}`}>
+						<a href={`/blog/${post.slug}`} sveltekit:prefetch>
 							{post.title}
 						</a>
 					</h3>
@@ -80,7 +124,7 @@
 					</ul>
 				{/if}
 
-				<a href={`/blog/${post.slug}`} class="link-cta mt-6">
+				<a href={`/blog/${post.slug}`} class="link-cta mt-6" sveltekit:prefetch>
 					Read article
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -111,13 +155,13 @@
 	<div class="mt-8 flex justify-center">
 		<div class="btn-group">
 			<a
-				href={`/blog?page=${pageNumber - 1}${searchTerm ? `&search=${searchTerm}` : ''}`}
+				href={`/blog?page=${pageNumber - 1}${searchTerm ? `&search=${searchTerm}` : ''}${categoryFilter ? `&category=${categoryFilter}` : ''}${tagFilter ? `&tag=${tagFilter}` : ''}`}
 				class="btn"
 				disabled={pageNumber <= 1}>«</a
 			>
 			<button class="btn">Page {pageNumber} of {totalPages}</button>
 			<a
-				href={`/blog?page=${pageNumber + 1}${searchTerm ? `&search=${searchTerm}` : ''}`}
+				href={`/blog?page=${pageNumber + 1}${searchTerm ? `&search=${searchTerm}` : ''}${categoryFilter ? `&category=${categoryFilter}` : ''}${tagFilter ? `&tag=${tagFilter}` : ''}`}
 				class="btn"
 				disabled={pageNumber >= totalPages}>»</a
 			>

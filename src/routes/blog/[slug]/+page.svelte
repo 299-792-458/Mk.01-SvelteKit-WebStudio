@@ -1,10 +1,11 @@
 <script lang="ts">
-	import PageSection from '$lib/components/ui/PageSection.svelte';
-	import type { PageData } from './$types';
+import PageSection from '$lib/components/ui/PageSection.svelte';
+import type { PageData } from './$types';
 
-	export let data: PageData;
+export let data: PageData;
 
-	const tags = data.tags ?? [];
+const tags = data.tags ?? [];
+const related = data.related ?? [];
 
 	const dateFormatter = new Intl.DateTimeFormat('en', {
 		year: 'numeric',
@@ -23,7 +24,7 @@
 
 <PageSection id="article-hero" tone="contrast" padding="compact">
 	<div class="space-y-6">
-		<a href="/blog" class="link-cta">
+		<a href="/blog" class="link-cta" sveltekit:prefetch>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-4 w-4 rotate-180"
@@ -43,7 +44,7 @@
 		<div class="space-y-3">
 			<div class="flex gap-4">
 				<span class="eyebrow text-secondary/80">Journal Entry</span>
-				<a href={`/blog/category/${data.category?.toLowerCase()}`}>
+				<a href={`/blog/category/${data.category?.toLowerCase()}`} sveltekit:prefetch>
 					<span class="eyebrow text-accent/80">{data.category}</span>
 				</a>
 			</div>
@@ -94,6 +95,37 @@
 		</article>
 	{/await}
 </PageSection>
+
+{#if related.length}
+	<PageSection id="related-articles" tone="subtle" padding="compact">
+		<div class="space-y-6">
+			<h2 class="text-2xl font-semibold text-base-content sm:text-3xl">Related entries</h2>
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each related as post}
+					<article class="surface-card h-full">
+						<div class="space-y-2">
+							<span class="eyebrow text-accent/80">{post.category}</span>
+							<h3 class="text-xl font-semibold text-base-content hover:text-primary">
+								<a href={`/blog/${post.slug}`} sveltekit:prefetch>{post.title}</a>
+							</h3>
+							<p class="text-sm text-base-content/70 line-clamp-3">{post.description}</p>
+						</div>
+						<ul
+							class="mt-4 flex flex-wrap gap-2 text-[0.7rem] uppercase tracking-[0.22em] text-primary/70"
+						>
+							{#each (post.tags?.slice(0, 4) ?? []) as tag}
+								<li class="rounded-full bg-primary/10 px-3 py-1">#{tag}</li>
+							{/each}
+						</ul>
+						<a href={`/blog/${post.slug}`} class="link-cta mt-4 inline-flex" sveltekit:prefetch>
+							Read entry
+						</a>
+					</article>
+				{/each}
+			</div>
+		</div>
+	</PageSection>
+{/if}
 
 <PageSection id="article-cta" tone="subtle" padding="compact">
 	<div class="surface-panel mx-auto max-w-4xl bg-base-100/80 text-center">
