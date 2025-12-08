@@ -40,12 +40,24 @@
 		"src/routes/open-source/+page.ts",
 		"src/routes/+layout.ts"
 	],
+	"/portfolio": [
+		"src/routes/portfolio/+page.ts",
+		"src/routes/+layout.ts"
+	],
 	"/privacy": [
 		"src/routes/privacy/+page.ts",
 		"src/routes/+layout.ts"
 	],
+	"/services": [
+		"src/routes/services/+page.ts",
+		"src/routes/+layout.ts"
+	],
 	"/stack": [
 		"src/routes/stack/+page.ts",
+		"src/routes/+layout.ts"
+	],
+	"/team": [
+		"src/routes/team/+page.ts",
 		"src/routes/+layout.ts"
 	],
 	"/terms": [

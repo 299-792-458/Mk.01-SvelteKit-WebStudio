@@ -1,7 +1,7 @@
 // @ts-nocheck
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { getPostBySlug } from '$lib/server/content';
+import { getAllPosts, getPostBySlug } from '$lib/server/content';
 import { buildSeo } from '$lib/utils/seo';
 
 export const load = async ({ params }: Parameters<PageServerLoad>[0]) => {
@@ -14,8 +14,25 @@ export const load = async ({ params }: Parameters<PageServerLoad>[0]) => {
 	const { component, ...metadata } = post;
 	void component;
 
+	const related = (await getAllPosts())
+		.filter((entry) => entry.slug !== params.slug && entry.draft !== true)
+		.map((entry) => {
+			const categoryScore =
+				entry.category && metadata.category && entry.category === metadata.category ? 2 : 0;
+			const tagScore = metadata.tags?.length
+				? entry.tags.filter((tag) => metadata.tags?.includes(tag)).length
+				: 0;
+			const score = categoryScore + tagScore;
+			return { entry, score };
+		})
+		.filter((item) => item.score > 0)
+		.sort((a, b) => b.score - a.score)
+		.slice(0, 3)
+		.map((item) => item.entry);
+
 	return {
 		...metadata,
+		related,
 		seo: buildSeo({
 			title: metadata.title,
 			description:

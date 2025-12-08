@@ -27,7 +27,7 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/about" | "/blog" | "/blog/category" | "/blog/category/[category]" | "/blog/[slug]" | "/capabilities" | "/contact" | "/labs" | "/labs/[slug]" | "/open-source" | "/privacy" | "/stack" | "/terms" | "/work" | "/work/[slug]";
+		RouteId(): "/" | "/about" | "/blog" | "/blog/category" | "/blog/category/[category]" | "/blog/[slug]" | "/capabilities" | "/contact" | "/labs" | "/labs/[slug]" | "/open-source" | "/portfolio" | "/privacy" | "/services" | "/stack" | "/team" | "/terms" | "/work" | "/work/[slug]";
 		RouteParams(): {
 			"/blog/category/[category]": { category: string };
 			"/blog/[slug]": { slug: string };
@@ -46,13 +46,16 @@ declare module "$app/types" {
 			"/labs": { slug?: string };
 			"/labs/[slug]": { slug: string };
 			"/open-source": Record<string, never>;
+			"/portfolio": Record<string, never>;
 			"/privacy": Record<string, never>;
+			"/services": Record<string, never>;
 			"/stack": Record<string, never>;
+			"/team": Record<string, never>;
 			"/terms": Record<string, never>;
 			"/work": { slug?: string };
 			"/work/[slug]": { slug: string }
 		};
-		Pathname(): "/" | "/about" | "/about/" | "/blog" | "/blog/" | "/blog/category" | "/blog/category/" | `/blog/category/${string}` & {} | `/blog/category/${string}/` & {} | `/blog/${string}` & {} | `/blog/${string}/` & {} | "/capabilities" | "/capabilities/" | "/contact" | "/contact/" | "/labs" | "/labs/" | `/labs/${string}` & {} | `/labs/${string}/` & {} | "/open-source" | "/open-source/" | "/privacy" | "/privacy/" | "/stack" | "/stack/" | "/terms" | "/terms/" | "/work" | "/work/" | `/work/${string}` & {} | `/work/${string}/` & {};
+		Pathname(): "/" | "/about" | "/about/" | "/blog" | "/blog/" | "/blog/category" | "/blog/category/" | `/blog/category/${string}` & {} | `/blog/category/${string}/` & {} | `/blog/${string}` & {} | `/blog/${string}/` & {} | "/capabilities" | "/capabilities/" | "/contact" | "/contact/" | "/labs" | "/labs/" | `/labs/${string}` & {} | `/labs/${string}/` & {} | "/open-source" | "/open-source/" | "/portfolio" | "/portfolio/" | "/privacy" | "/privacy/" | "/services" | "/services/" | "/stack" | "/stack/" | "/team" | "/team/" | "/terms" | "/terms/" | "/work" | "/work/" | `/work/${string}` & {} | `/work/${string}/` & {};
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): string & {};
 	}

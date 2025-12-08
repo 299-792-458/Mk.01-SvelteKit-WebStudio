@@ -494,12 +494,25 @@
 		}
 	];
 
-	let scrollStepRefs: HTMLElement[] = [];
-	let activeScrollStep = 0;
-	let activePersona = 0;
-	let activeMode = 0;
-	let activePipeline = 0;
-	let pipelineTimer: ReturnType<typeof setInterval> | null = null;
+	let scrollStepRefs: (HTMLElement | null)[] = [];
+let activeScrollStep = 0;
+let activePersona = 0;
+let activeMode = 0;
+let activePipeline = 0;
+let pipelineTimer: ReturnType<typeof setInterval> | null = null;
+let scrollObserver: IntersectionObserver | null = null;
+
+	const registerScrollStep = (node: HTMLElement, index: number) => {
+		scrollStepRefs[index] = node;
+		scrollObserver?.observe(node);
+
+		return {
+			destroy() {
+				scrollObserver?.unobserve(node);
+				scrollStepRefs[index] = null;
+			}
+		};
+	};
 
 	onMount(() => {
 		liveSignalTimer = setInterval(() => {
@@ -510,9 +523,8 @@
 			activePipeline = (activePipeline + 1) % pipelineStages.length;
 		}, 2600);
 
-		let observer: IntersectionObserver | null = null;
 		if (typeof window !== 'undefined') {
-			observer = new IntersectionObserver(
+			scrollObserver = new IntersectionObserver(
 				(entries) => {
 					entries.forEach((entry) => {
 						if (entry.isIntersecting) {
@@ -528,7 +540,7 @@
 					threshold: 0.32
 				}
 			);
-			scrollStepRefs.forEach((ref) => ref && observer?.observe(ref));
+			scrollStepRefs.forEach((ref) => ref && scrollObserver?.observe(ref));
 		}
 
 		return () => {
@@ -540,7 +552,7 @@
 				clearInterval(pipelineTimer);
 				pipelineTimer = null;
 			}
-			observer?.disconnect();
+			scrollObserver?.disconnect();
 		};
 	});
 
@@ -708,7 +720,7 @@
 					<article
 						class={`scroll-step ${activeScrollStep === index ? 'active' : ''}`}
 						data-index={index}
-						bind:this={(el) => (scrollStepRefs[index] = el)}
+						use:registerScrollStep={index}
 					>
 						<div class="step-head">
 							<span class="step-index">{String(index + 1).padStart(2, '0')}</span>

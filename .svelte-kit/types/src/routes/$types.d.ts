@@ -13,7 +13,7 @@ type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends 
 export type Snapshot<T = any> = Kit.Snapshot<T>;
 type PageServerParentData = EnsureDefined<LayoutServerData>;
 type PageParentData = EnsureDefined<LayoutData>;
-type LayoutRouteId = RouteId | "/" | "/about" | "/blog" | "/blog/[slug]" | "/blog/category/[category]" | "/capabilities" | "/contact" | "/labs" | "/labs/[slug]" | "/open-source" | "/privacy" | "/stack" | "/terms" | "/work" | "/work/[slug]" | null
+type LayoutRouteId = RouteId | "/" | "/about" | "/blog" | "/blog/[slug]" | "/blog/category/[category]" | "/capabilities" | "/contact" | "/labs" | "/labs/[slug]" | "/open-source" | "/portfolio" | "/privacy" | "/services" | "/stack" | "/team" | "/terms" | "/work" | "/work/[slug]" | null
 type LayoutParams = RouteParams & { slug?: string; category?: string }
 type LayoutParentData = EnsureDefined<{}>;
 
