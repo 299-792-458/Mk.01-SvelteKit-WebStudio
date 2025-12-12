@@ -9,6 +9,8 @@
 	import ReactiveContact from '$lib/components/experience/ReactiveContact.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
 	import Reveal from '$lib/components/motion/Reveal.svelte';
+	import '../styles/home.css';
+	import '../styles/home-extended.css';
 
 	import type { PageData } from './$types';
 
@@ -494,6 +496,178 @@
 		}
 	];
 
+	const spectraLoops = [
+		{
+			title: 'Helix scroll',
+			summary: 'Pinned depth layers, parallax strata, and bloom-safe highlights.',
+			metric: '1:1 scroll'
+		},
+		{
+			title: 'Chroma cascade',
+			summary: 'Chromatic beams stitched to scroll progress with easing governors.',
+			metric: '90fps cap'
+		},
+		{
+			title: 'Iso-grid deck',
+			summary: 'Isometric tiles rotating on hover with GPU-friendly shadows.',
+			metric: 'GPU safe'
+		},
+		{
+			title: 'Signal synth',
+			summary: 'Audio-reactive bars paired with content reveals and focus guards.',
+			metric: 'Input ready'
+		}
+	];
+
+	const burstStats = [
+		{ label: 'Threads', value: '128', note: 'Web workers + OffscreenCanvas for motion safety.' },
+		{ label: 'Shaders', value: '12', note: 'Pre-baked GLSL stingers with graceful fallbacks.' },
+		{ label: 'Locales', value: '12+', note: 'RTL rehearsed, ICU-safe number/date output.' },
+		{ label: 'Vitals', value: '98p', note: 'LCP/CLS/TTI guarded in CI and preview builds.' }
+	];
+
+	const toggleBank = [
+		{ label: 'Reduced motion safe', status: 'on' },
+		{ label: 'Edge prefetch', status: 'on' },
+		{ label: 'Shader fallback', status: 'on' },
+		{ label: 'Analytics guard', status: 'off' },
+		{ label: 'Locale routing', status: 'on' },
+		{ label: 'Focus choreography', status: 'on' }
+	];
+
+	let toggles = toggleBank.map((toggle) => ({ ...toggle }));
+	let activeLoop = 0;
+	let loopTimer: ReturnType<typeof setInterval> | null = null;
+	const cinematicCues = [
+		{
+			title: 'Scroll-synced theater',
+			description: 'Pinned hero, parallax strata, CTA hand-off, and orchestration lights.',
+			metric: 'scroll 1:1'
+		},
+		{
+			title: 'Product flight deck',
+			description: 'Input-capture overlay, keyboard choreography, focus-safe transitions.',
+			metric: 'latency 0.2s'
+		},
+		{
+			title: 'Shader story beat',
+			description: 'GLSL vignette, audio-reactive overlay, beam-mapped copy reveals.',
+			metric: 'frames 90'
+		},
+		{
+			title: 'Compliance runway',
+			description: 'CSP, SRI, a11y rehearsals, and locale toggles without page reload.',
+			metric: 'AA+ locked'
+		}
+	];
+
+	const kineticRails = [
+		{ label: 'Motion budget', progress: 0.86 },
+		{ label: 'Edge prefetch', progress: 0.74 },
+		{ label: 'Accessibility', progress: 0.94 },
+		{ label: 'Localization', progress: 0.78 },
+		{ label: 'Observability', progress: 0.88 }
+	];
+
+	const ribbonStats = [
+		{ title: 'Scroll sync', value: '12 scenes', note: 'Pinned timelines and sequencers.' },
+		{ title: 'GPU budget', value: '90fps', note: 'Adaptive easing + fallback shaders.' },
+		{ title: 'Edge ready', value: '25ms hop', note: 'Prefetch on intent, streaming hero.' },
+		{ title: 'Compliance', value: 'AA+ / CSP', note: 'Security headers and WCAG baked in.' }
+	];
+
+	const holoTracks = [
+		{
+			title: 'Parallax deck',
+			summary: 'Layered cards with depth hover, shadow morph, and gradient masks.',
+			badge: 'Depth+'
+		},
+		{
+			title: 'Shader tiles',
+			summary: 'GLSL-inspired tiles with shimmer passes and scanlines on scroll.',
+			badge: 'GLSL'
+		},
+		{
+			title: 'Iso stack',
+			summary: 'Isometric cubes rotating gently with focus-safe motion caps.',
+			badge: 'Iso'
+		}
+	];
+
+	const arcadeStats = [
+		{ label: 'Visual sweeps', value: '24', note: 'Playwright visual diff suites.' },
+		{ label: 'Unit gates', value: '180+', note: 'CI-protected behaviors.' },
+		{ label: 'Perf budgets', value: '5', note: 'LCP / CLS / TTI / TBT / FID' },
+		{ label: 'Locales rehearsed', value: '12+', note: 'RTL + ICU formatting' }
+	];
+
+	let activeHolo = 0;
+	let holoTimer: ReturnType<typeof setInterval> | null = null;
+	let activeCue = 0;
+	let cueTimer: ReturnType<typeof setInterval> | null = null;
+
+	const controlPrograms = [
+		{
+			title: 'Cinematic launch rig',
+			status: 'running',
+			description: 'Scroll-synced hero, CTA glow hand-off, and edge-prefetched media.',
+			badges: ['Pinned canvas', 'Scroll sync', 'Edge prefetch']
+		},
+		{
+			title: 'Product lab runtime',
+			status: 'arming',
+			description: 'Input capture, keyboard choreography, and replayable demo states.',
+			badges: ['Keyboard map', 'Replay buffer', 'a11y traps']
+		},
+		{
+			title: 'Storyworld theater',
+			status: 'recording',
+			description: 'Chaptered scrollytelling with shader overlays and voiceover stems.',
+			badges: ['GLSL overlay', 'Narrative beats', 'Audio stems']
+		},
+		{
+			title: 'Telemetry spine',
+			status: 'green',
+			description: 'Vitals logging, consent-aware analytics, and privacy-safe replays.',
+			badges: ['Vitals stream', 'Consent-aware', 'Replay buffer']
+		}
+	];
+
+	const triggerGrid = [
+		{
+			title: 'Motion governor',
+			note: 'Budgeted to 90fps with adaptive easing curves.',
+			metric: 'fps 90'
+		},
+		{
+			title: 'Edge prefetch',
+			note: 'Intent-based prefetching across hero & carousel.',
+			metric: '25ms hop'
+		},
+		{
+			title: 'Accessibility guard',
+			note: 'Focus choreography, reduced motion modes, and traps.',
+			metric: 'WCAG AA+'
+		},
+		{
+			title: 'Shader safe mode',
+			note: 'Auto-fallback to gradients when GPU budget dips.',
+			metric: 'GPU adaptive'
+		},
+		{
+			title: 'Localization spine',
+			note: 'Locale routing with RTL rehearsals baked in.',
+			metric: '12 locales'
+		},
+		{
+			title: 'Compliance pass',
+			note: 'Security headers, CSP, and SRI rehearsed in CI.',
+			metric: 'CSP locked'
+		}
+	];
+
+	let activeProgram = 0;
+	let programTimer: ReturnType<typeof setInterval> | null = null;
 	let scrollStepRefs: (HTMLElement | null)[] = [];
 let activeScrollStep = 0;
 let activePersona = 0;
@@ -522,6 +696,22 @@ let scrollObserver: IntersectionObserver | null = null;
 		pipelineTimer = setInterval(() => {
 			activePipeline = (activePipeline + 1) % pipelineStages.length;
 		}, 2600);
+
+		programTimer = setInterval(() => {
+			activeProgram = (activeProgram + 1) % controlPrograms.length;
+		}, 3000);
+
+		loopTimer = setInterval(() => {
+			activeLoop = (activeLoop + 1) % spectraLoops.length;
+		}, 2600);
+
+		cueTimer = setInterval(() => {
+			activeCue = (activeCue + 1) % cinematicCues.length;
+		}, 3000);
+
+		holoTimer = setInterval(() => {
+			activeHolo = (activeHolo + 1) % holoTracks.length;
+		}, 2800);
 
 		if (typeof window !== 'undefined') {
 			scrollObserver = new IntersectionObserver(
@@ -552,9 +742,31 @@ let scrollObserver: IntersectionObserver | null = null;
 				clearInterval(pipelineTimer);
 				pipelineTimer = null;
 			}
+			if (programTimer !== null) {
+				clearInterval(programTimer);
+				programTimer = null;
+			}
+			if (loopTimer !== null) {
+				clearInterval(loopTimer);
+				loopTimer = null;
+			}
+			if (cueTimer !== null) {
+				clearInterval(cueTimer);
+				cueTimer = null;
+			}
+			if (holoTimer !== null) {
+				clearInterval(holoTimer);
+				holoTimer = null;
+			}
 			scrollObserver?.disconnect();
 		};
 	});
+
+	const toggleSwitch = (index: number) => {
+		toggles = toggles.map((toggle, i) =>
+			i === index ? { ...toggle, status: toggle.status === 'on' ? 'off' : 'on' } : toggle
+		);
+	};
 
 	const collaborationModes = [
 		{
@@ -600,6 +812,13 @@ let scrollObserver: IntersectionObserver | null = null;
 
 <div class="hero-wrap">
 	<NeonGridHero />
+	<div class="hero-beams" aria-hidden="true">
+		<span class="beam beam-1"></span>
+		<span class="beam beam-2"></span>
+		<span class="beam beam-3"></span>
+		<span class="beam beam-4"></span>
+		<span class="beam beam-5"></span>
+	</div>
 	<div class="hero-overlay">
 		<Reveal type="fade" delay={0.12}>
 			<div class="hero-grid">
@@ -757,6 +976,364 @@ let scrollObserver: IntersectionObserver | null = null;
 					{#each allyBadges as badge}
 						<span>{badge}</span>
 					{/each}
+				</div>
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.14}>
+	<PageSection id="control-room" tone="contrast">
+		<div class="control-room">
+			<div class="control-intro">
+				<div>
+					<span class="eyebrow text-secondary/80">Control room</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">Spin up launch, product, or lab rigs.</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						A cinematic operator panel that shows off orchestration: motion governance, shader fallbacks,
+						and instrumentation toggles animate as you switch modes.
+					</p>
+				</div>
+				<div class="control-badges">
+					<span>GPU-aware</span>
+					<span>Edge-streamed</span>
+					<span>a11y rehearsed</span>
+					<span>Locale-ready</span>
+				</div>
+			</div>
+
+			<div class="control-grid">
+				<div class="program-stack">
+					{#each controlPrograms as program, index}
+						<button
+							type="button"
+							class={`program-card ${activeProgram === index ? 'active' : ''}`}
+							on:click={() => (activeProgram = index)}
+							aria-pressed={activeProgram === index}
+						>
+							<div class="program-top">
+								<p class="program-title">{program.title}</p>
+								<span class={`program-status status-${program.status}`}>{program.status}</span>
+							</div>
+							<p class="program-copy">{program.description}</p>
+							<div class="program-badges">
+								{#each program.badges as badge}
+									<span>{badge}</span>
+								{/each}
+							</div>
+						</button>
+					{/each}
+				</div>
+
+				<div class="program-detail">
+					<div class="detail-grid">
+						<div class="detail-head">
+							<p class="eyebrow text-secondary/80">Live rig</p>
+							<h3>{controlPrograms[activeProgram].title}</h3>
+							<p class="detail-copy">{controlPrograms[activeProgram].description}</p>
+						</div>
+						<div class="detail-visual" aria-hidden="true">
+							<div class="detail-orb orb-a"></div>
+							<div class="detail-orb orb-b"></div>
+							<div class="detail-gridlines"></div>
+							<div class="detail-scanline"></div>
+							<div class="detail-pulse"></div>
+						</div>
+					</div>
+
+					<div class="trigger-grid">
+						{#each triggerGrid as trigger}
+							<div class="trigger-card">
+								<div class="trigger-top">
+									<p class="trigger-metric">{trigger.metric}</p>
+									<span class="trigger-dot" aria-hidden="true"></span>
+								</div>
+								<h4>{trigger.title}</h4>
+								<p>{trigger.note}</p>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.18}>
+	<PageSection id="spectra-lab" tone="subtle">
+		<div class="spectra-lab">
+			<div class="spectra-head">
+				<div>
+					<span class="eyebrow text-primary/80">Spectra lab</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">Kinetic systems on standby.</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						A gallery of motion rigs, fallback logic, and telemetry hooks. Tap a loop to see the deck
+						respond with animated beams, scanlines, and vitals bursts.
+					</p>
+				</div>
+				<div class="spectra-pulse" aria-hidden="true">
+					<div class="pulse-ring"></div>
+					<div class="pulse-ring pulse-2"></div>
+					<div class="pulse-core"></div>
+				</div>
+			</div>
+
+			<div class="spectra-grid">
+				<div class="loop-stack">
+					{#each spectraLoops as loop, index}
+						<button
+							type="button"
+							class={`loop-card ${activeLoop === index ? 'active' : ''}`}
+							on:click={() => (activeLoop = index)}
+							aria-pressed={activeLoop === index}
+						>
+							<div class="loop-top">
+								<p class="loop-title">{loop.title}</p>
+								<span class="loop-metric">{loop.metric}</span>
+							</div>
+							<p class="loop-copy">{loop.summary}</p>
+							<span class="loop-glow" aria-hidden="true"></span>
+						</button>
+					{/each}
+				</div>
+
+				<div class="loop-visual">
+					<div class="visual-grid">
+						<div class="visual-planes"></div>
+						<div class="visual-beam beam-a"></div>
+						<div class="visual-beam beam-b"></div>
+						<div class="visual-orb orb-1"></div>
+						<div class="visual-orb orb-2"></div>
+						<div class="visual-orb orb-3"></div>
+						<div class="visual-scan"></div>
+					</div>
+					<div class="burst-grid">
+						{#each burstStats as stat}
+							<div class="burst-card">
+								<p class="burst-label">{stat.label}</p>
+								<p class="burst-value">{stat.value}</p>
+								<p class="burst-note">{stat.note}</p>
+							</div>
+						{/each}
+					</div>
+				</div>
+
+				<div class="toggle-bank">
+					{#each toggles as toggle, index}
+						<button
+							type="button"
+							class={`toggle-chip ${toggle.status === 'on' ? 'on' : 'off'}`}
+							on:click={() => toggleSwitch(index)}
+							aria-pressed={toggle.status === 'on'}
+						>
+							<span class="toggle-dot" aria-hidden="true"></span>
+							<span class="toggle-label">{toggle.label}</span>
+							<span class="toggle-state">{toggle.status}</span>
+						</button>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.22}>
+	<PageSection id="action-theater" tone="contrast">
+		<div class="action-theater">
+			<div class="action-head">
+				<div>
+					<span class="eyebrow text-secondary/80">Action theater</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">Cinematic cues with telemetry baked in.</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						Tap through cues to see motion governance, shader fallbacks, and compliance signals animate
+						in the same view—mix of choreography and production rigor.
+					</p>
+				</div>
+				<div class="action-badges">
+					<span>Scroll-synced</span>
+					<span>GPU budgeted</span>
+					<span>a11y rehearsed</span>
+				</div>
+			</div>
+
+			<div class="action-grid">
+				<div class="cue-stack">
+					{#each cinematicCues as cue, index}
+						<button
+							type="button"
+							class={`cue-card ${activeCue === index ? 'active' : ''}`}
+							on:click={() => (activeCue = index)}
+							aria-pressed={activeCue === index}
+						>
+							<div class="cue-top">
+								<p class="cue-title">{cue.title}</p>
+								<span class="cue-metric">{cue.metric}</span>
+							</div>
+							<p class="cue-copy">{cue.description}</p>
+							<span class="cue-glow" aria-hidden="true"></span>
+						</button>
+					{/each}
+				</div>
+
+				<div class="action-visual">
+					<div class="visual-stage">
+						<div class="stage-gridlines"></div>
+						<div class="stage-orb orb-left"></div>
+						<div class="stage-orb orb-right"></div>
+						<div class="stage-beam beam-1"></div>
+						<div class="stage-beam beam-2"></div>
+						<div class="stage-scan"></div>
+						<div class="stage-cta">
+							<p class="eyebrow text-secondary/80">Live cue</p>
+							<h3>{cinematicCues[activeCue].title}</h3>
+							<p>{cinematicCues[activeCue].description}</p>
+						</div>
+					</div>
+					<div class="rail-grid">
+						{#each kineticRails as rail}
+							<div class="rail-card">
+								<div class="rail-top">
+									<p>{rail.label}</p>
+									<span>{Math.round(rail.progress * 100)}%</span>
+								</div>
+								<div class="rail-track">
+									<div class="rail-fill" style={`--progress:${rail.progress};`}></div>
+								</div>
+							</div>
+						{/each}
+					</div>
+				</div>
+			</div>
+
+			<div class="ribbon-strip" aria-hidden="true">
+				<div class="ribbon-track">
+					{#each ribbonStats as stat}
+						<div class="ribbon-card">
+							<p class="ribbon-label">{stat.title}</p>
+							<p class="ribbon-value">{stat.value}</p>
+							<p class="ribbon-note">{stat.note}</p>
+						</div>
+					{/each}
+					{#each ribbonStats as stat}
+						<div class="ribbon-card">
+							<p class="ribbon-label">{stat.title}</p>
+							<p class="ribbon-value">{stat.value}</p>
+							<p class="ribbon-note">{stat.note}</p>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="fade" delay={0.22}>
+	<PageSection id="holo-vault" tone="subtle">
+		<div class="holo-vault">
+			<div class="holo-head">
+				<div>
+					<span class="eyebrow text-primary/80">Holo vault</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">Hyper-stylized cards with depth-play.</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						Swap tracks to watch layered cards rotate, glow, and pulse with hover parallax. Built to
+						show cinematic instincts with GPU-safe fallbacks.
+					</p>
+				</div>
+				<div class="holo-badges">
+					<span>Parallax</span>
+					<span>Scanlines</span>
+					<span>Gradient masks</span>
+				</div>
+			</div>
+
+			<div class="holo-grid">
+				<div class="holo-stack">
+					{#each holoTracks as holo, index}
+						<button
+							type="button"
+							class={`holo-card ${activeHolo === index ? 'active' : ''}`}
+							on:click={() => (activeHolo = index)}
+							aria-pressed={activeHolo === index}
+						>
+							<div class="holo-top">
+								<p class="holo-title">{holo.title}</p>
+								<span class="holo-badge">{holo.badge}</span>
+							</div>
+							<p class="holo-copy">{holo.summary}</p>
+							<span class="holo-glow" aria-hidden="true"></span>
+						</button>
+					{/each}
+				</div>
+
+				<div class="holo-visual">
+					<div class="holo-plane plane-a"></div>
+					<div class="holo-plane plane-b"></div>
+					<div class="holo-plane plane-c"></div>
+					<div class="holo-scan"></div>
+					<div class="holo-orb orb-1"></div>
+					<div class="holo-orb orb-2"></div>
+					<div class="holo-orb orb-3"></div>
+					<div class="holo-caption">
+						<p class="eyebrow text-secondary/80">Active track</p>
+						<h3>{holoTracks[activeHolo].title}</h3>
+						<p>{holoTracks[activeHolo].summary}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</PageSection>
+</Reveal>
+
+<Reveal type="slide" delay={0.24}>
+	<PageSection id="arcade" tone="contrast">
+		<div class="arcade">
+			<div class="arcade-head">
+				<div>
+					<span class="eyebrow text-secondary/80">Telemetry arcade</span>
+					<h2 class="text-3xl font-semibold sm:text-4xl">Launch metrics rendered like a game HUD.</h2>
+					<p class="text-base text-base-content/70 sm:text-lg">
+						Bursts, gauges, and ribbons animate to prove the build is more than visuals—CI runs, perf
+						budgets, locale rehearsals, and visual diff sweeps all glow here.
+					</p>
+				</div>
+				<div class="arcade-pill">Live</div>
+			</div>
+
+			<div class="arcade-grid">
+				<div class="arcade-gauges">
+					{#each arcadeStats as stat}
+						<div class="gauge-card">
+							<div class="gauge-top">
+								<p class="gauge-label">{stat.label}</p>
+								<span class="gauge-dot" aria-hidden="true"></span>
+							</div>
+							<h3 class="gauge-value">{stat.value}</h3>
+							<p class="gauge-note">{stat.note}</p>
+							<div class="gauge-track">
+								<div class="gauge-fill" style={`--progress:${Math.min(1, (stat.value.match(/\\d+/)?.[0] ?? 80) / 120)};`}></div>
+							</div>
+						</div>
+					{/each}
+				</div>
+
+				<div class="arcade-panel">
+					<div class="panel-gridlines"></div>
+					<div class="panel-beam beam-1"></div>
+					<div class="panel-beam beam-2"></div>
+					<div class="panel-orb orb-a"></div>
+					<div class="panel-orb orb-b"></div>
+					<div class="panel-scan"></div>
+					<div class="panel-meta">
+						<p class="eyebrow text-secondary/80">Auto orchestration</p>
+						<h3>Visual sweeps, perf budgets, and locale rehearsals.</h3>
+						<p>Every launch uses the same guardrails: motion caps, edge prefetch, a11y traps, and CI gates.</p>
+						<div class="panel-chips">
+							<span>Visual diff</span>
+							<span>Perf guard</span>
+							<span>Locale rehearsed</span>
+							<span>Edge ready</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1060,51 +1637,6 @@ let scrollObserver: IntersectionObserver | null = null;
 						<p class="text-xs uppercase tracking-[0.28em] text-secondary/80">{feature.title}</p>
 						<p class="text-sm text-base-content/70">{feature.description}</p>
 					</div>
-				</div>
-			{/each}
-		</div>
-	</div>
-</PageSection>
-</Reveal>
-
-<Reveal type="slide" delay={0.18}>
-<PageSection id="systems" tone="contrast">
-	<div class="grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
-		<div class="space-y-4">
-			<span class="eyebrow text-secondary/80">Systems proof</span>
-			<h2 class="text-3xl font-semibold sm:text-4xl">Engineered to pass enterprise sniff tests.</h2>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-				Motion tuned like Apple, resilience baked like Google. Edge-first delivery, observability hooks,
-				and compliance guardrails so the spectacle is as durable as it is cinematic.
-			</p>
-			<div class="grid gap-3 sm:grid-cols-3">
-				<div class="sys-stat">
-					<p class="stat-label">Web Vitals</p>
-					<p class="stat-value">98th percentile</p>
-					<p class="stat-note">Core metrics rehearsed in CI.</p>
-				</div>
-				<div class="sys-stat">
-					<p class="stat-label">Locales ready</p>
-					<p class="stat-value">12+</p>
-					<p class="stat-note">RTL & CLDR rehearsed.</p>
-				</div>
-				<div class="sys-stat">
-					<p class="stat-label">Security</p>
-					<p class="stat-value">CSP + SRI</p>
-					<p class="stat-note">Strict headers & audits.</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="grid gap-4 sm:grid-cols-2">
-			{#each systemsProof as system}
-				<div class="system-card">
-					<div class="system-top">
-						<span class="system-tag">{system.tag}</span>
-						<span class="glint" aria-hidden="true"></span>
-					</div>
-					<h3>{system.title}</h3>
-					<p>{system.description}</p>
 				</div>
 			{/each}
 		</div>
@@ -1464,1239 +1996,3 @@ let scrollObserver: IntersectionObserver | null = null;
 	</div>
 </PageSection>
 </Reveal>
-
-<style>
-	.hero-wrap {
-		position: relative;
-		min-height: 92vh;
-		display: grid;
-		align-items: center;
-		overflow: hidden;
-	}
-
-	.hero-overlay {
-		position: relative;
-		z-index: 1;
-		max-width: 1280px;
-		width: min(1200px, 94vw);
-		margin: 0 auto;
-		padding: clamp(1.5rem, 4vw, 3rem);
-	}
-
-	.hero-grid {
-		display: grid;
-		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-		gap: clamp(1.5rem, 4vw, 2.5rem);
-		align-items: start;
-	}
-
-	.hero-main {
-		display: grid;
-		gap: 1rem;
-		padding: clamp(1.5rem, 3vw, 2.5rem);
-		border-radius: 1.4rem;
-		background: radial-gradient(circle at 10% 10%, rgba(124, 247, 255, 0.12), transparent 35%),
-			radial-gradient(circle at 80% 15%, rgba(255, 70, 201, 0.1), transparent 32%),
-			linear-gradient(140deg, rgba(6, 8, 16, 0.82), rgba(8, 10, 22, 0.92));
-		border: 1px solid rgba(124, 247, 255, 0.16);
-		box-shadow:
-			0 30px 90px rgba(0, 0, 0, 0.45),
-			inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-		backdrop-filter: blur(12px);
-		color: #f7fbff;
-	}
-
-	.hero-title {
-		font-size: clamp(2.6rem, 4vw, 3.8rem);
-		line-height: 1.05;
-		letter-spacing: -0.02em;
-	}
-
-	.hero-sub {
-		color: rgba(238, 244, 255, 0.78);
-		font-size: clamp(1rem, 1.2vw, 1.15rem);
-		max-width: 38rem;
-	}
-
-	.hero-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-	}
-
-	.hero-ghost {
-		border: 1px solid rgba(124, 247, 255, 0.35);
-		background: rgba(255, 255, 255, 0.08);
-		color: #dff7ff;
-	}
-
-	.cred-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-top: 0.5rem;
-	}
-
-	.cred-pill {
-		border-radius: 999px;
-		padding: 0.5rem 0.8rem;
-		font-size: 0.8rem;
-		color: rgba(240, 247, 255, 0.9);
-		border: 1px solid rgba(124, 247, 255, 0.26);
-		background: rgba(255, 255, 255, 0.06);
-		letter-spacing: 0.08em;
-	}
-
-	.hero-panel {
-		display: grid;
-		gap: 1rem;
-		padding: clamp(1.4rem, 3vw, 2.2rem);
-		border-radius: 1.4rem;
-		background: linear-gradient(130deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		box-shadow:
-			0 20px 60px rgba(0, 0, 0, 0.4),
-			0 10px 30px rgba(124, 247, 255, 0.16);
-		backdrop-filter: blur(10px);
-		color: #0f172a;
-	}
-
-	.panel-head {
-		display: flex;
-		gap: 1rem;
-		justify-content: space-between;
-		align-items: flex-start;
-	}
-
-	.panel-sub {
-		color: rgba(15, 23, 42, 0.7);
-		max-width: 30rem;
-	}
-
-	.panel-chip {
-		display: grid;
-		gap: 0.1rem;
-		padding: 0.75rem 1rem;
-		border-radius: 1rem;
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
-		color: rgba(15, 23, 42, 0.8);
-		text-align: right;
-		border: 1px solid rgba(99, 102, 241, 0.2);
-		min-width: 140px;
-	}
-
-	.mode-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 0.9rem;
-	}
-
-	.mode-card {
-		position: relative;
-		padding: 1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.1);
-		background: rgba(255, 255, 255, 0.8);
-		box-shadow: 0 14px 36px -18px rgba(15, 23, 42, 0.35);
-		transition:
-			transform 180ms ease,
-			box-shadow 180ms ease,
-			border-color 180ms ease;
-	}
-
-	.mode-card:hover {
-		transform: translateY(-3px);
-		border-color: rgba(99, 102, 241, 0.24);
-		box-shadow: 0 18px 44px -20px rgba(15, 23, 42, 0.45);
-	}
-
-	.mode-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-	}
-
-	.mode-badge {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.35rem 0.7rem;
-		border-radius: 999px;
-		border: 1px solid rgba(99, 102, 241, 0.24);
-		background: rgba(99, 102, 241, 0.08);
-		font-size: 0.7rem;
-		letter-spacing: 0.2em;
-		text-transform: uppercase;
-	}
-
-	.metric-rail {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-		gap: 0.75rem;
-	}
-
-	.metric-chip {
-		padding: 0.8rem 0.9rem;
-		border-radius: 0.9rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.75);
-		color: rgba(15, 23, 42, 0.8);
-		box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.35);
-	}
-
-	.metric-label {
-		font-size: 0.74rem;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.55);
-	}
-
-	.metric-value {
-		font-size: 1.4rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.95);
-	}
-
-	.metric-note {
-		font-size: 0.85rem;
-		color: rgba(15, 23, 42, 0.65);
-	}
-
-	.scroll-lab {
-		display: grid;
-		grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-		gap: 1.5rem;
-		align-items: start;
-	}
-
-	.scroll-viewport {
-		position: sticky;
-		top: 120px;
-		min-height: 520px;
-		border-radius: 1.5rem;
-		overflow: hidden;
-		background: radial-gradient(circle at 20% 20%, rgba(124, 247, 255, 0.18), transparent 45%),
-			radial-gradient(circle at 80% 30%, rgba(255, 70, 201, 0.16), transparent 40%),
-			linear-gradient(145deg, rgba(5, 7, 16, 0.95), rgba(12, 18, 32, 0.9));
-		border: 1px solid rgba(124, 247, 255, 0.18);
-		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-		color: #eaf5ff;
-	}
-
-	.scroll-core {
-		position: relative;
-		padding: 1.6rem;
-		display: grid;
-		gap: 0.8rem;
-		backdrop-filter: blur(4px);
-	}
-
-	.scroll-copy {
-		color: rgba(234, 245, 255, 0.8);
-		max-width: 34rem;
-	}
-
-	.scroll-meter {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.meter-track {
-		position: relative;
-		flex: 1;
-		height: 6px;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.12);
-		overflow: hidden;
-	}
-
-	.meter-fill {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(90deg, rgba(124, 247, 255, 0.9), rgba(255, 70, 201, 0.9));
-		transform-origin: left;
-		transform: scaleX(var(--progress));
-		transition: transform 320ms ease;
-	}
-
-	.scroll-badges {
-		display: flex;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.scroll-badges span {
-		padding: 0.45rem 0.9rem;
-		border-radius: 999px;
-		border: 1px solid rgba(124, 247, 255, 0.25);
-		background: rgba(255, 255, 255, 0.08);
-		font-size: 0.82rem;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
-	}
-
-	.scroll-holo {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	.holo-grid {
-		position: absolute;
-		inset: 8% 12%;
-		background-image:
-			linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-		background-size: 80px 80px;
-		mask-image: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
-		animation: pan 24s linear infinite;
-	}
-
-	.holo-orb {
-		position: absolute;
-		width: 22rem;
-		height: 22rem;
-		border-radius: 999px;
-		filter: blur(24px);
-		mix-blend-mode: screen;
-		opacity: 0.7;
-	}
-
-	.holo-orb.orb-1 {
-		top: -10%;
-		left: 6%;
-		background: radial-gradient(circle, rgba(124, 247, 255, 0.35), transparent 60%);
-		animation: float 16s ease-in-out infinite;
-	}
-
-	.holo-orb.orb-2 {
-		bottom: -8%;
-		right: -4%;
-		background: radial-gradient(circle, rgba(255, 70, 201, 0.3), transparent 62%);
-		animation: drift 18s ease-in-out infinite;
-	}
-
-	.holo-orb.orb-3 {
-		top: 35%;
-		right: 28%;
-		width: 12rem;
-		height: 12rem;
-		background: radial-gradient(circle, rgba(99, 102, 241, 0.38), transparent 58%);
-		animation: float 12s ease-in-out infinite alternate;
-	}
-
-	.scroll-steps {
-		display: grid;
-		gap: 0.9rem;
-	}
-
-	.scroll-step {
-		position: relative;
-		padding: 1rem 1.1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		transition:
-			transform 200ms ease,
-			box-shadow 200ms ease,
-			border-color 200ms ease,
-			background 200ms ease;
-	}
-
-	.scroll-step:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.45);
-	}
-
-	.scroll-step.active {
-		border-color: rgba(99, 102, 241, 0.28);
-		box-shadow:
-			0 16px 42px -20px rgba(15, 23, 42, 0.45),
-			0 12px 32px -24px rgba(124, 247, 255, 0.3);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
-	}
-
-	.step-head {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.6rem;
-		margin-bottom: 0.35rem;
-	}
-
-	.step-index {
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.95rem;
-		color: rgba(15, 23, 42, 0.75);
-		letter-spacing: 0.15em;
-	}
-
-	.step-metric {
-		text-align: right;
-	}
-
-	.step-metric .metric-value {
-		font-size: 1.3rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.9);
-	}
-
-	.step-metric .metric-note {
-		font-size: 0.85rem;
-		color: rgba(15, 23, 42, 0.65);
-	}
-
-	.scroll-step h4 {
-		font-size: 1.1rem;
-		margin-bottom: 0.2rem;
-	}
-
-	.scroll-step p {
-		color: rgba(15, 23, 42, 0.72);
-		font-size: 0.95rem;
-	}
-
-	@keyframes pan {
-		0% {
-			transform: translate3d(0, 0, 0);
-		}
-
-		100% {
-			transform: translate3d(-60px, -60px, 0);
-		}
-	}
-
-	.sequencer-head {
-		display: flex;
-		justify-content: space-between;
-		gap: 1.5rem;
-		align-items: flex-start;
-		padding: 0 1.5rem;
-		max-width: 1100px;
-		margin: 0 auto 1.5rem;
-	}
-
-	.sequencer-head h2 {
-		font-size: clamp(2rem, 4vw, 2.6rem);
-	}
-
-	.sequencer-head p {
-		color: inherit;
-		opacity: 0.75;
-		max-width: 38rem;
-	}
-
-	.sequencer-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		align-items: flex-end;
-	}
-
-	.sequencer-chip {
-		border: 1px solid rgba(99, 102, 241, 0.25);
-		background: rgba(99, 102, 241, 0.08);
-		color: rgba(15, 23, 42, 0.7);
-		border-radius: 999px;
-		padding: 0.45rem 0.9rem;
-		font-size: 0.82rem;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-	}
-
-	.credibility-rail {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-top: 1rem;
-	}
-
-	.cred-chip {
-		padding: 0.55rem 0.9rem;
-		border-radius: 999px;
-		border: 1px solid rgba(99, 102, 241, 0.35);
-		background: rgba(99, 102, 241, 0.12);
-		font-size: 0.8rem;
-		font-weight: 600;
-		letter-spacing: 0.15em;
-		text-transform: uppercase;
-		color: inherit;
-		opacity: 0.82;
-	}
-
-	.system-card {
-		position: relative;
-		padding: 1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.88);
-		box-shadow: 0 14px 34px -22px rgba(15, 23, 42, 0.5);
-		overflow: hidden;
-		transition:
-			transform 200ms ease,
-			box-shadow 200ms ease,
-			border-color 200ms ease;
-	}
-
-	.system-card:hover {
-		transform: translateY(-3px);
-		border-color: rgba(99, 102, 241, 0.24);
-		box-shadow:
-			0 18px 42px -20px rgba(15, 23, 42, 0.55),
-			0 10px 28px -18px rgba(124, 247, 255, 0.2);
-	}
-
-	.system-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-		margin-bottom: 0.4rem;
-	}
-
-	.system-tag {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.35rem 0.8rem;
-		border-radius: 999px;
-		border: 1px solid rgba(99, 102, 241, 0.2);
-		background: rgba(99, 102, 241, 0.08);
-		font-size: 0.75rem;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-	}
-
-	.glint {
-		width: 14px;
-		height: 14px;
-		border-radius: 999px;
-		background: radial-gradient(circle, rgba(124, 247, 255, 0.9), rgba(99, 102, 241, 0.4));
-		box-shadow:
-			0 0 0 8px rgba(124, 247, 255, 0.18),
-			0 0 0 16px rgba(99, 102, 241, 0.08);
-		animation: pulse-spark 2.2s ease-in-out infinite;
-	}
-
-	.system-card h3 {
-		font-size: 1.1rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.9);
-	}
-
-	.system-card p {
-		color: rgba(15, 23, 42, 0.68);
-		font-size: 0.95rem;
-	}
-
-	.sys-stat {
-		padding: 0.9rem 1rem;
-		border-radius: 1rem;
-		background: rgba(255, 255, 255, 0.85);
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		box-shadow: 0 12px 26px -18px rgba(15, 23, 42, 0.35);
-	}
-
-	.stat-label {
-		font-size: 0.78rem;
-		letter-spacing: 0.2em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.55);
-	}
-
-	.stat-value {
-		font-size: 1.2rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.9);
-	}
-
-	.stat-note {
-		font-size: 0.9rem;
-		color: rgba(15, 23, 42, 0.68);
-	}
-
-	.ally-head {
-		display: grid;
-		gap: 1rem;
-		align-items: center;
-		justify-items: stretch;
-	}
-
-	.ally-strip {
-		position: relative;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		border-radius: 1rem;
-		overflow: hidden;
-		background: rgba(255, 255, 255, 0.9);
-	}
-
-	.ally-track {
-		display: inline-flex;
-		gap: 1.2rem;
-		align-items: center;
-		padding: 1rem 1.4rem;
-		min-width: max-content;
-		animation: ally-marquee 26s linear infinite;
-		text-transform: uppercase;
-		letter-spacing: 0.2em;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
-	.ally-track span {
-		padding: 0.35rem 0.7rem;
-		border-radius: 999px;
-		border: 1px solid rgba(99, 102, 241, 0.22);
-		background: rgba(99, 102, 241, 0.1);
-	}
-
-	@keyframes ally-marquee {
-		0% {
-			transform: translateX(0);
-		}
-
-		100% {
-			transform: translateX(-50%);
-		}
-	}
-
-	.persona-tabs {
-		display: inline-flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.persona-tab {
-		padding: 0.6rem 0.9rem;
-		border-radius: 0.9rem;
-		border: 1px solid rgba(15, 23, 42, 0.12);
-		background: rgba(255, 255, 255, 0.85);
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.8);
-		transition:
-			transform 160ms ease,
-			box-shadow 160ms ease,
-			border-color 160ms ease,
-			background 160ms ease;
-	}
-
-	.persona-tab.active {
-		border-color: rgba(99, 102, 241, 0.3);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(14, 165, 233, 0.12));
-		box-shadow: 0 10px 26px -18px rgba(15, 23, 42, 0.4);
-	}
-
-	.persona-tab:hover {
-		transform: translateY(-2px);
-	}
-
-	.persona-card {
-		margin-top: 1rem;
-		border-radius: 1.2rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		box-shadow: 0 18px 45px -26px rgba(15, 23, 42, 0.5);
-		padding: 1.2rem;
-		display: grid;
-		gap: 0.75rem;
-	}
-
-	.persona-top h3 {
-		font-size: 1.4rem;
-	}
-
-	.persona-list {
-		display: grid;
-		gap: 0.35rem;
-	}
-
-	.persona-list li {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.65rem;
-		align-items: baseline;
-		color: rgba(15, 23, 42, 0.78);
-	}
-
-	.persona-list span {
-		color: rgba(99, 102, 241, 0.9);
-		font-size: 0.8rem;
-	}
-
-	.hud {
-		border-radius: 1.3rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
-		padding: 1.2rem;
-		box-shadow: 0 18px 45px -24px rgba(15, 23, 42, 0.5);
-	}
-
-	.hud-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.hud-note {
-		color: rgba(15, 23, 42, 0.7);
-		font-size: 0.95rem;
-	}
-
-	.hud-grid {
-		display: grid;
-		gap: 0.7rem;
-		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-	}
-
-	.hud-tile {
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		padding: 0.9rem 1rem;
-		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.4);
-	}
-
-	.hud-label {
-		font-size: 0.78rem;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.58);
-	}
-
-	.hud-value {
-		font-size: 1.3rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.92);
-	}
-
-	.hud-sub {
-		font-size: 0.9rem;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
-	.mode-switcher {
-		display: inline-flex;
-		flex-wrap: wrap;
-		gap: 0.6rem;
-	}
-
-	.mode-tab {
-		padding: 0.65rem 1rem;
-		border-radius: 0.95rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.85);
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		transition:
-			transform 160ms ease,
-			box-shadow 160ms ease,
-			border-color 160ms ease,
-			background 160ms ease;
-	}
-
-	.mode-tab.active {
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(14, 165, 233, 0.12));
-		border-color: rgba(99, 102, 241, 0.3);
-		box-shadow: 0 12px 28px -18px rgba(15, 23, 42, 0.45);
-	}
-
-	.mode-tab:hover {
-		transform: translateY(-2px);
-	}
-
-	.mode-card {
-		border-radius: 1.4rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		box-shadow: 0 20px 50px -30px rgba(15, 23, 42, 0.55);
-		padding: 1.2rem;
-		display: grid;
-		gap: 0.8rem;
-	}
-
-	.mode-list {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	.mode-list li {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 0.6rem;
-		align-items: baseline;
-		color: rgba(15, 23, 42, 0.78);
-	}
-
-	.mode-list span {
-		color: rgba(99, 102, 241, 0.9);
-	}
-
-	.mode-footer {
-		display: flex;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		font-size: 0.88rem;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
-	.integration-rail {
-		position: relative;
-		overflow: hidden;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-	}
-
-	.integration-track {
-		display: inline-flex;
-		gap: 1rem;
-		align-items: center;
-		padding: 0.85rem 1.2rem;
-		min-width: max-content;
-		text-transform: uppercase;
-		letter-spacing: 0.16em;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.7);
-		animation: ally-marquee 28s linear infinite;
-	}
-
-	.integration-track span {
-		padding: 0.35rem 0.8rem;
-		border-radius: 0.9rem;
-		border: 1px solid rgba(99, 102, 241, 0.22);
-		background: rgba(99, 102, 241, 0.1);
-	}
-
-	.pipeline-meter {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.pipeline-track {
-		position: relative;
-		flex: 1;
-		height: 8px;
-		border-radius: 999px;
-		background: rgba(15, 23, 42, 0.1);
-		overflow: hidden;
-	}
-
-	.pipeline-fill {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(90deg, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.9));
-		transform-origin: left;
-		transform: scaleX(var(--progress));
-		transition: transform 320ms ease;
-	}
-
-	.pipeline-note {
-		font-size: 0.9rem;
-		color: rgba(15, 23, 42, 0.72);
-	}
-
-	.pipeline-chips {
-		display: flex;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-		margin-top: 0.5rem;
-	}
-
-	.pipeline-chips span {
-		padding: 0.4rem 0.75rem;
-		border-radius: 0.9rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.14em;
-	}
-
-	.pipeline-rail {
-		display: grid;
-		gap: 0.8rem;
-	}
-
-	.pipeline-step {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.85rem 1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.9);
-		transition:
-			transform 180ms ease,
-			box-shadow 180ms ease,
-			border-color 180ms ease,
-			background 180ms ease;
-	}
-
-	.pipeline-step:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.45);
-	}
-
-	.pipeline-step.active {
-		border-color: rgba(99, 102, 241, 0.25);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
-		box-shadow:
-			0 18px 42px -20px rgba(15, 23, 42, 0.45),
-			0 10px 28px -18px rgba(124, 247, 255, 0.2);
-	}
-
-	.step-left {
-		display: flex;
-		align-items: center;
-		gap: 0.8rem;
-	}
-
-	.step-dot {
-		width: 12px;
-		height: 12px;
-		border-radius: 999px;
-		background: radial-gradient(circle, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.8));
-		box-shadow:
-			0 0 0 6px rgba(99, 102, 241, 0.18),
-			0 0 0 12px rgba(14, 165, 233, 0.12);
-	}
-
-	.stage-status {
-		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
-	.writing-grid {
-		position: relative;
-		perspective: 1200px;
-	}
-
-	.writing-card {
-		position: relative;
-		padding: 1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		background: rgba(8, 10, 18, 0.9);
-		overflow: hidden;
-		transition:
-			transform 220ms ease,
-			border-color 220ms ease,
-			box-shadow 220ms ease;
-		color: #f8fbff;
-	}
-
-	.writing-card:hover {
-		transform: rotateX(4deg) rotateY(-4deg) translateY(-4px);
-		border-color: rgba(124, 247, 255, 0.3);
-		box-shadow:
-			0 24px 64px rgba(0, 0, 0, 0.45),
-			0 12px 32px rgba(124, 247, 255, 0.18);
-	}
-
-	.writing-card .noise {
-		position: absolute;
-		inset: -30%;
-		background: repeating-linear-gradient(
-				45deg,
-				rgba(124, 247, 255, 0.15),
-				rgba(124, 247, 255, 0.15) 2px,
-				transparent 3px,
-				transparent 6px
-			),
-			repeating-linear-gradient(
-				-35deg,
-				rgba(255, 70, 201, 0.14),
-				rgba(255, 70, 201, 0.14) 2px,
-				transparent 4px,
-				transparent 7px
-			);
-		filter: blur(10px);
-		opacity: 0.12;
-		transform: rotate(calc(var(--i) * 5deg));
-		transition: transform 240ms ease, opacity 240ms ease;
-	}
-
-	.writing-card:hover .noise {
-		transform: scale(1.1) rotate(calc(var(--i) * -6deg));
-		opacity: 0.18;
-	}
-
-    /* ... existing styles ... */
-	.signal-marquee {
-		min-width: 260px;
-		max-width: 360px;
-		overflow: hidden;
-		border-radius: 9999px;
-		border: 1px solid rgba(99, 102, 241, 0.2);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(14, 165, 233, 0.12));
-		box-shadow: 0 14px 35px -18px rgba(15, 23, 42, 0.35);
-		color: inherit;
-	}
-
-	.marquee-track {
-		display: inline-flex;
-		align-items: center;
-		gap: 2rem;
-		padding: 0.85rem 1.5rem;
-		animation: marquee-slide 18s linear infinite;
-		min-width: max-content;
-	}
-
-	.signal-marquee span {
-		font-size: 0.78rem;
-		font-weight: 700;
-		letter-spacing: 0.28em;
-		text-transform: uppercase;
-		opacity: 0.7;
-	}
-
-	@keyframes marquee-slide {
-		0% {
-			transform: translateX(0);
-		}
-
-		100% {
-			transform: translateX(-50%);
-		}
-	}
-
-	.signal-reel {
-		position: relative;
-		overflow: hidden;
-		border-radius: 1.5rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(14, 165, 233, 0.08));
-		box-shadow: 0 14px 36px -24px rgba(15, 23, 42, 0.5);
-	}
-
-	.reel-track {
-		display: grid;
-		grid-auto-rows: 1fr;
-		padding: 1rem 1.2rem;
-	}
-
-	.reel-item {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		align-items: center;
-		gap: 0.75rem;
-		padding: 0.75rem 0.6rem;
-		border-radius: 1rem;
-		color: rgba(15, 23, 42, 0.65);
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		transition:
-			transform 260ms ease,
-			color 260ms ease,
-			background 260ms ease,
-			box-shadow 260ms ease;
-	}
-
-	.reel-item.active {
-		background: rgba(255, 255, 255, 0.9);
-		color: rgba(15, 23, 42, 0.92);
-		transform: translateX(4px);
-		box-shadow: 0 12px 30px -20px rgba(15, 23, 42, 0.4);
-	}
-
-	.spark {
-		width: 0.65rem;
-		height: 0.65rem;
-		border-radius: 999px;
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(14, 165, 233, 0.9));
-		box-shadow:
-			0 0 0 6px rgba(99, 102, 241, 0.15),
-			0 0 0 12px rgba(14, 165, 233, 0.08);
-		animation: pulse-spark 2.4s ease-in-out infinite;
-	}
-
-	@keyframes pulse-spark {
-		0%,
-		100% {
-			transform: scale(1);
-			box-shadow:
-				0 0 0 6px rgba(99, 102, 241, 0.18),
-				0 0 0 12px rgba(14, 165, 233, 0.12);
-		}
-
-		50% {
-			transform: scale(1.08);
-			box-shadow:
-				0 0 0 9px rgba(99, 102, 241, 0.24),
-				0 0 0 16px rgba(14, 165, 233, 0.18);
-		}
-	}
-
-	.micro-card {
-		position: relative;
-		overflow: hidden;
-		border-radius: 1.1rem;
-		padding: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.86);
-		box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.4);
-		transition:
-			transform 200ms ease,
-			box-shadow 200ms ease,
-			border-color 200ms ease;
-	}
-
-	.micro-card:hover,
-	.micro-card:focus-within {
-		transform: translateY(-3px);
-		border-color: rgba(99, 102, 241, 0.25);
-		box-shadow: 0 16px 38px -22px rgba(15, 23, 42, 0.5);
-	}
-
-	.micro-glow {
-		position: absolute;
-		inset: -20% 5% 60% 5%;
-		background: radial-gradient(circle at center, rgba(99, 102, 241, 0.2), transparent 55%);
-		filter: blur(18px);
-		opacity: 0.9;
-	}
-
-	.action-tile {
-		display: block;
-		padding: 0.9rem 1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(226, 232, 240, 0.92));
-		box-shadow: 0 12px 32px -24px rgba(15, 23, 42, 0.5);
-		text-align: left;
-		transition:
-			transform 180ms ease,
-			box-shadow 180ms ease,
-			border-color 180ms ease;
-	}
-
-	.action-tile.primary {
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(14, 165, 233, 0.16));
-		border-color: rgba(99, 102, 241, 0.3);
-	}
-
-	.action-tile.secondary {
-		background: linear-gradient(135deg, rgba(14, 165, 233, 0.14), rgba(56, 189, 248, 0.12));
-		border-color: rgba(56, 189, 248, 0.24);
-	}
-
-	.action-tile.outline {
-		background: rgba(255, 255, 255, 0.78);
-		border-color: rgba(15, 23, 42, 0.16);
-	}
-
-	.action-tile:hover,
-	.action-tile:focus-visible {
-		transform: translateY(-3px);
-		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.55);
-		border-color: rgba(99, 102, 241, 0.35);
-	}
-
-	.faq-row {
-		width: 100%;
-		text-align: left;
-		padding: 1rem 1.1rem;
-		border-radius: 1rem;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		background: rgba(255, 255, 255, 0.82);
-		box-shadow: 0 12px 32px -24px rgba(15, 23, 42, 0.3);
-		transition:
-			transform 160ms ease,
-			box-shadow 160ms ease,
-			border-color 160ms ease;
-	}
-
-	.faq-row:hover,
-	.faq-row:focus-visible {
-		transform: translateY(-2px);
-		box-shadow: 0 16px 36px -22px rgba(15, 23, 42, 0.4);
-		border-color: rgba(99, 102, 241, 0.28);
-	}
-
-	.faq-answer {
-		margin-top: 0.5rem;
-		color: rgba(15, 23, 42, 0.72);
-		font-size: 0.95rem;
-	}
-
-	.faq-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 1.8rem;
-		height: 1.8rem;
-		border-radius: 999px;
-		background: rgba(99, 102, 241, 0.12);
-		color: rgba(15, 23, 42, 0.8);
-		font-weight: 700;
-	}
-
-	@media (max-width: 1024px) {
-		.hero-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.scroll-lab {
-			grid-template-columns: 1fr;
-		}
-
-		.scroll-viewport {
-			position: relative;
-			top: auto;
-		}
-
-		.sequencer-head {
-			flex-direction: column;
-			align-items: flex-start;
-			padding: 0 1rem;
-		}
-
-		.panel-head {
-			flex-direction: column;
-		}
-
-		.integration-track {
-			animation-duration: 22s;
-		}
-
-		.pipeline-rail {
-			order: 2;
-		}
-
-		.pipeline-meter {
-			order: 1;
-		}
-	}
-
-	@media (max-width: 640px) {
-		.hero-overlay {
-			padding: 1.25rem;
-		}
-
-		.hero-main,
-		.hero-panel {
-			padding: 1.1rem;
-		}
-
-		.mode-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.scroll-step {
-			font-size: 0.95rem;
-		}
-	}
-</style>
