@@ -3,10 +3,15 @@
 	import { experienceStore } from '$services/experience';
 	import { derived } from 'svelte/store';
 
-const isPlayingStore = derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
+	const isPlayingStore = derived(experienceStore, ($experience) => $experience.isAmbientAudioPlaying);
 
-let isPlaying = false;
-let audioElement: HTMLAudioElement | null = null;
+	let isPlaying = false;
+	let audioElement: HTMLAudioElement | null = null;
+	let canvas: HTMLCanvasElement | null = null;
+	let ctx: AudioContext | null = null;
+	let analyser: AnalyserNode | null = null;
+	let dataArray: Uint8Array | null = null;
+	let raf = 0;
 
 	// Host locally to avoid hotlink errors; place file in static/audio/...
 	const ambienceSrc = '/audio/cyberpunk-city-ambient.mp3';
@@ -24,6 +29,9 @@ onMount(() => {
 		if (value) {
 			audioElement
 				.play()
+				.then(() => {
+					if (ctx && ctx.state === 'suspended') ctx.resume();
+				})
 				.catch(() => experienceStore.toggleAmbientAudio());
 		} else {
 			audioElement.pause();
@@ -35,11 +43,70 @@ onMount(() => {
 		audioElement.loop = true;
 	}
 
-	return () => {
+	const cleanup = () => {
 		unsubscribe();
 		audioElement?.pause();
+		cancelAnimationFrame(raf);
+		analyser?.disconnect();
+		if (ctx) {
+			ctx.close();
+		}
 	};
+
+	setupVisualizer();
+
+	return cleanup;
 });
+
+function setupVisualizer() {
+	if (!audioElement || !canvas) return;
+	ctx = new AudioContext();
+	const source = ctx.createMediaElementSource(audioElement);
+	analyser = ctx.createAnalyser();
+	analyser.fftSize = 256;
+	source.connect(analyser);
+	analyser.connect(ctx.destination);
+	dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+	const c = canvas;
+	const dpr = Math.min(window.devicePixelRatio || 1, 2);
+	const resize = () => {
+		const { width, height } = c.getBoundingClientRect();
+		c.width = width * dpr;
+		c.height = height * dpr;
+	};
+	resize();
+
+	const draw = () => {
+		if (!analyser || !dataArray || !c) return;
+		analyser.getByteFrequencyData(dataArray);
+
+		const ctx2d = c.getContext('2d');
+		if (!ctx2d) return;
+		const { width, height } = c;
+		ctx2d.clearRect(0, 0, width, height);
+		const barCount = 36;
+		const slice = Math.floor(dataArray.length / barCount);
+
+		for (let i = 0; i < barCount; i++) {
+			const value = dataArray[i * slice];
+			const scaled = (value / 255) * (height * 0.5);
+			const x = (width / barCount) * i + 2;
+			const barW = width / barCount - 4;
+			const y = height - scaled - 8;
+			const gradient = ctx2d.createLinearGradient(x, y, x, height);
+			gradient.addColorStop(0, 'rgba(124,247,255,0.9)');
+			gradient.addColorStop(1, 'rgba(255,107,203,0.5)');
+			ctx2d.fillStyle = gradient;
+			ctx2d.fillRect(x, y, barW, scaled);
+			ctx2d.globalAlpha = 0.7;
+		}
+
+		raf = requestAnimationFrame(draw);
+	};
+
+	raf = requestAnimationFrame(draw);
+}
 </script>
 
 <button class="ambient-toggle" type="button" on:click={toggle}>
@@ -52,6 +119,7 @@ onMount(() => {
 </button>
 
 <audio bind:this={audioElement} src={ambienceSrc} preload="auto"></audio>
+<canvas bind:this={canvas} class="viz" aria-hidden="true"></canvas>
 
 <style>
 	.ambient-toggle {
