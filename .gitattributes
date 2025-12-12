@@ -8,3 +8,7 @@ mdsvex.config.js linguist-vendored
 
 docs/** linguist-documentation
 static/** linguist-vendored
+
+# Ignore vendored/generated outputs so JS-heavy deps 빼기
+node_modules/** linguist-vendored
+.svelte-kit/** linguist-generated
