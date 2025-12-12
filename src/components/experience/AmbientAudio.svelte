@@ -164,6 +164,18 @@ function setupVisualizer() {
 		white-space: nowrap;
 	}
 
+	.viz {
+		position: fixed;
+		right: 1.5rem;
+		bottom: 4.6rem;
+		width: 160px;
+		height: 56px;
+		pointer-events: none;
+		mix-blend-mode: screen;
+		opacity: 0.85;
+		filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+	}
+
 	@keyframes ripple {
 		0% {
 			transform: scale(0.6);
