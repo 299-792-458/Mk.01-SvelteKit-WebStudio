@@ -13,11 +13,19 @@ export interface ProjectContent extends WorkProject {
 		subheadline: string;
 		video?: string;
 	};
+	kpis?: { label: string; value: string; description?: string }[];
 	outcomes: string[];
+	services?: string[];
 	chapters: {
 		id: string;
 		title: string;
 		description: string;
+	}[];
+	timeline?: {
+		title: string;
+		timeframe?: string;
+		summary: string;
+		metric?: string;
 	}[];
 }
 
