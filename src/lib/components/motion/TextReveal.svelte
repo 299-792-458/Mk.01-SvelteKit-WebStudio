@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getMotionPreset, motionCurves, type MotionPreset } from '$styles/tokens/motion';
+	import { getMotionPreset, motionCurves, type MotionPreset } from '../../../styles/tokens/motion';
 
 	export let text = '';
 	export let type: 'word' | 'char' = 'word';
