@@ -7,10 +7,10 @@
 	export let padding: Padding = 'default';
 
 	const toneClasses: Record<Tone, string> = {
-		default: 'bg-base-100',
-		subtle: 'bg-base-200/40 dark:bg-base-200/20',
+		default: 'bg-base-100 text-base-content',
+		subtle: 'bg-base-200/40 text-base-content dark:bg-base-200/20',
 		contrast:
-			'bg-gradient-to-br from-primary/5 via-base-100 to-secondary/5 dark:from-primary/10 dark:via-base-200/10 dark:to-secondary/10'
+			'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 dark:from-primary/10 dark:via-base-200/10 dark:to-secondary/10'
 	};
 
 	const paddingClasses: Record<Padding, string> = {
