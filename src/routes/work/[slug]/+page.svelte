@@ -11,7 +11,13 @@
 	const projectContent = project.content;
 
 	let activeTimeline = 0;
-	const timeline = projectContent.timeline ?? [];
+	const timeline =
+		projectContent.timeline && projectContent.timeline.length > 0
+			? projectContent.timeline
+			: projectContent.chapters.map((chapter) => ({
+					title: chapter.title,
+					summary: chapter.description
+				}));
 </script>
 
 <PageSection id="project-hero" tone="contrast" padding="xl">
