@@ -18,6 +18,6 @@
 	};
 </script>
 
-<svelte:element this={as} class={`${variantClasses[variant]} ${paddingMap[padding]}`}>
+<svelte:element this={as} class={`${variantClasses[variant]} ${paddingMap[padding]} text-base-content`}>
 	<slot />
 </svelte:element>
