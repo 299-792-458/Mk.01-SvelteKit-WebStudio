@@ -24,11 +24,11 @@
 	<div class="space-y-6">
 		<span class="eyebrow text-secondary/80">Case studies</span>
 		<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-			Launch systems, product platforms, and narrative websites crafted by Mk.01.
+			Launch systems, product platforms, and narrative websites crafted to ship.
 		</h1>
 		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-			Every case study represents a blend of strategy, design systems, and expressive engineering.
-			Select filters to explore by industry or release year.
+			Every engagement blends strategy, systems, and expressive engineering. Filter by industry or
+			year to explore how the same codebase adapts to each brief.
 		</p>
 	</div>
 
