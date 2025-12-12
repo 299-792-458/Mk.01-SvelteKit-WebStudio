@@ -1,10 +1,10 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import daisyui from 'daisyui';
 import typography from '@tailwindcss/typography';
+import type { Config } from 'tailwindcss';
 
-/** @type {import('tailwindcss').Config} */
-export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+const config: Config = {
+	content: ['./src/**/*.{html,svelte,ts}'],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -124,16 +124,16 @@ export default {
 			},
 			{
 				'studio-pro-dark': {
-					primary: '#8B5CF6', 
+					primary: '#8B5CF6',
 					'primary-content': '#FFFFFF',
-					secondary: '#38BDF8', 
+					secondary: '#38BDF8',
 					'secondary-content': '#000000',
-					accent: '#F471B5', 
+					accent: '#F471B5',
 					'accent-content': '#000000',
-					neutral: '#0F172A', // Darker neutral
+					neutral: '#0F172A',
 					'neutral-content': '#E2E8F0',
-					'base-100': '#020617', // Almost black
-					'base-200': '#0B1120', // Deep Navy
+					'base-100': '#020617',
+					'base-200': '#0B1120',
 					'base-300': '#151e32',
 					'base-content': '#E2E8F0',
 					info: '#0EA5E9',
@@ -145,3 +145,5 @@ export default {
 		]
 	}
 };
+
+export default config;
