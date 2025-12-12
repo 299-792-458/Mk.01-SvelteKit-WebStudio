@@ -46,7 +46,7 @@
 		<div class="space-y-6">
 			<span class="eyebrow text-secondary/80">About Mk.01</span>
 			<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-				A Seoul-born studio crafting immersive product stories and fearless web experiments.
+				Seoul-born, globally distributed. We craft immersive product stories and fearless web experiments.
 			</h1>
 			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
 				Founded by Korea’s #3 ranked creative technologist, Mk.01 blends narrative design, motion
