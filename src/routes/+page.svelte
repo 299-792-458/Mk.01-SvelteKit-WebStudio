@@ -823,13 +823,13 @@ let scrollObserver: IntersectionObserver | null = null;
 		<Reveal type="fade" delay={0.12}>
 			<div class="hero-grid">
 				<div class="hero-main">
-					<p class="eyebrow text-cyan-100/80">Mk.01 / Ultimate Surface</p>
+					<p class="eyebrow text-cyan-100/80">Mk.01 / Universal surface</p>
 					<h1 class="hero-title">
-						A universal web flagship for portfolios, products, and labs.
+						One flagship site for hiring, launches, and live products.
 					</h1>
 					<p class="hero-sub">
-						Cinematic hero systems, product-grade UX, and speculative experiments in one build.
-						Recruiters, founders, and collaborators all land on the same living stage.
+						Cinematic hero systems, product-grade UX, and lab-caliber experiments—shipped from a
+						single codebase that sells the story and proves the skill.
 					</p>
 					<div class="hero-actions">
 						<a class="btn btn-primary btn-lg" href="#featured-work">Play the reel</a>
@@ -845,10 +845,10 @@ let scrollObserver: IntersectionObserver | null = null;
 					<div class="panel-head">
 						<div>
 							<p class="eyebrow text-secondary/80">Universal mode</p>
-							<h3>Built for hiring, launches, and in-flight products.</h3>
+							<h3>Portfolio, campaign, product—without switching stacks.</h3>
 							<p class="panel-sub">
-								One codebase that sells your story, shows real capability, and doubles as a
-								production-ready scaffold.
+								Same build powers case studies, launch beats, and in-flight product demos. Story-led,
+								performance-checked, ready to go live.
 							</p>
 						</div>
 						<div class="panel-chip">
