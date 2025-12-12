@@ -9,11 +9,17 @@
 		"headline": "A design system built to fuel weekly product launches.",
 		"subheadline": "Mk.01 partnered with Atlas Labs to craft a robust, accessible component library that unifies designers and engineers across six time zones."
 	},
+	"kpis": [
+		{ "label": "Adoption", "value": "12 squads", "description": "in 3 months" },
+		{ "label": "QA time", "value": "-60%", "description": "handoff" },
+		{ "label": "Accessibility", "value": "WCAG 2.1 AA", "description": "governance" }
+	],
 	"outcomes": [
 		"Component adoption across 12 product squads in three months.",
 		"60% reduction in handoff QA time.",
 		"Introduced accessibility governance resulting in WCAG 2.1 AA compliance."
 	],
+	"services": ["Design systems", "Tooling", "Accessibility", "Docs", "Enablement"],
 	"chapters": [
 		{
 			"id": "discovery",
@@ -29,6 +35,26 @@
 			"id": "scale",
 			"title": "Scaling & Enablement",
 			"description": "Hosted enablement sessions, built governance dashboards, and shipped automation to flag regressions."
+		}
+	],
+	"timeline": [
+		{
+			"title": "System Blueprint",
+			"timeframe": "Weeks 1-2",
+			"summary": "Audited 140+ components, defined naming/ownership model, and prioritized accessibility hotfixes.",
+			"metric": "80% coverage score"
+		},
+		{
+			"title": "Token + Library",
+			"timeframe": "Weeks 3-6",
+			"summary": "Rolled out token pipeline, Figma kits, Storybook docs, and visual regression automation.",
+			"metric": "-60% QA time"
+		},
+		{
+			"title": "Enablement",
+			"timeframe": "Weeks 7-9",
+			"summary": "Ran paired build sprints with 12 squads, shipped governance dashboards, and live office hours.",
+			"metric": "12 squads onboarded"
 		}
 	]
 }
