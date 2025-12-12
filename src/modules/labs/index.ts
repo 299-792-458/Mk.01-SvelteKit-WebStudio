@@ -8,6 +8,7 @@ export interface LabExperiment {
 	thumbnail: string;
 	tech: string[];
 	highlight: string;
+	accent?: string;
 	links: {
 		demo?: string;
 		source?: string;
@@ -23,6 +24,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/sonic-orbit.jpg',
 		tech: ['Three.js', 'WebAudio API', 'GPU Instancing'],
 		highlight: 'Transforms ambient soundscapes into orbital constellations.',
+		accent: '#7cf7ff',
 		links: getExperiment('sonic-orbit')?.links ?? {}
 	},
 	{
@@ -33,6 +35,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/holo-cascade.jpg',
 		tech: ['SvelteKit', 'GLSL', 'GSAP'],
 		highlight: 'Breathes life into hero sections with liquid light transitions.',
+		accent: '#ff6bcb',
 		links: getExperiment('holo-cascade')?.links ?? {}
 	},
 	{
@@ -43,6 +46,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/glyph-suite.jpg',
 		tech: ['Canvas API', 'Tone.js', 'Workers'],
 		highlight: 'Ships as a micro-SaaS companion for creative teams.',
+		accent: '#7cf7ff',
 		links: getExperiment('glyph-suite')?.links ?? {}
 	},
 	{
@@ -53,6 +57,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/sense-grid.jpg',
 		tech: ['Yjs', 'WebRTC', 'Svelte'],
 		highlight: 'Explores real-time narrative engines inside the browser.',
+		accent: '#5a9bff',
 		links: getExperiment('sense-grid')?.links ?? {}
 	},
 	{
@@ -63,6 +68,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/quantum-docs.jpg',
 		tech: ['OpenAI API', 'mdsvex', 'Cloudflare Workers'],
 		highlight: 'Currently powers internal handbooks and public case studies.',
+		accent: '#0ea5e9',
 		links: getExperiment('quantum-docs')?.links ?? {}
 	},
 	{
@@ -73,6 +79,7 @@ export const labExperiments: LabExperiment[] = [
 		thumbnail: '/images/labs/flicker-field.jpg',
 		tech: ['TensorFlow.js', 'WebGL', 'ffmpeg.wasm'],
 		highlight: 'Archived after shipping learnings into client R&D projects.',
+		accent: '#f97316',
 		links: getExperiment('flicker-field')?.links ?? {}
 	}
 ];
