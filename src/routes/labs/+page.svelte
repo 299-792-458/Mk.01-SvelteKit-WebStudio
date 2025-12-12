@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PageSection from '$lib/components/ui/PageSection.svelte';
+	import LabPreview from '$components/experience/LabPreview.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -36,6 +37,9 @@
 				<article class="lab-card">
 					<div class="media">
 						<div class="glow"></div>
+						<div class="preview">
+							<LabPreview accent={experiment.accent ?? '#7cf7ff'} glow="#ff6bcb" speed={1.1} />
+						</div>
 						<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" />
 					</div>
 				<div class="body">
@@ -104,6 +108,8 @@
 		transition:
 			transform 400ms ease,
 			filter 400ms ease;
+		position: relative;
+		z-index: 1;
 	}
 
 	.lab-card:hover img {
@@ -117,6 +123,15 @@
 		background: radial-gradient(circle at 20% 20%, rgba(255, 107, 203, 0.25), transparent 60%);
 		mix-blend-mode: screen;
 		pointer-events: none;
+		z-index: 2;
+	}
+
+	.preview {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		opacity: 0.85;
+		mix-blend-mode: screen;
 	}
 
 	.body {
