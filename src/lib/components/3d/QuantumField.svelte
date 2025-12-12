@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	export let density: 'high' | 'medium' | 'low' = 'high';
+
 	let container: HTMLElement;
 	let frameId: number;
 
@@ -64,21 +66,33 @@
 		scene.add(innerMesh);
 
 		// Particles
-		const particleCount = 150;
+		const particleCount = density === 'high' ? 220 : density === 'medium' ? 160 : 110;
 		const posArray = new Float32Array(particleCount * 3);
 		for (let i = 0; i < particleCount * 3; i++) {
-			posArray[i] = (Math.random() - 0.5) * 10;
+			posArray[i] = (Math.random() - 0.5) * 12;
 		}
 		const particlesGeo = new THREE.BufferGeometry();
 		particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 		const particlesMat = new THREE.PointsMaterial({
-			size: 0.05,
-			color: 0xf97316,
+			size: 0.06,
+			color: 0x7cf7ff,
 			transparent: true,
-			opacity: 0.6
+			opacity: 0.6,
+			sizeAttenuation: true
 		});
 		const particles = new THREE.Points(particlesGeo, particlesMat);
 		scene.add(particles);
+
+		// Energy rings
+		const ringGeo = new THREE.TorusGeometry(1.6, 0.02, 16, 120);
+		const ringMat = new THREE.MeshBasicMaterial({
+			color: 0x0ea5e9,
+			transparent: true,
+			opacity: 0.35
+		});
+		const ring = new THREE.Mesh(ringGeo, ringMat);
+		ring.rotation.x = Math.PI / 2;
+		scene.add(ring);
 
 		const clock = new THREE.Clock();
 
@@ -111,11 +125,15 @@
 			innerMesh.rotation.z = -targetX * 0.2;
 			
 			particles.rotation.y += delta * 0.02 + targetX * 0.05;
+			particles.rotation.x = Math.sin(elapsed * 0.18) * 0.15;
 
 			// Float effect
 			const floatY = Math.sin(elapsed * 0.5) * 0.2;
 			mesh.position.y = floatY;
 			innerMesh.position.y = floatY;
+			ring.position.y = floatY;
+			ring.scale.setScalar(1 + Math.sin(elapsed * 0.8) * 0.05);
+			ring.material.opacity = 0.3 + Math.sin(elapsed * 2) * 0.08;
 
 			camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
 			camera.position.y += (2 + mouseY * 0.2 - camera.position.y) * 0.05;
@@ -143,6 +161,7 @@
 			geometry.dispose();
 			innerGeo.dispose();
 			particlesGeo.dispose();
+			ringGeo.dispose();
 		};
 	});
 </script>
