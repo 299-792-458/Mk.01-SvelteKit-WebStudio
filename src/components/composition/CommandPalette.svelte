@@ -139,7 +139,12 @@
 							<li>
 								<a href={action.href} on:click={closePalette}>
 									<div class="meta">
-										<span class="label">{action.label}</span>
+										<div class="label-row">
+											<span class="label">{action.label}</span>
+											{#if action.type}
+												<span class={`pill ${action.accent ?? ''}`}>{action.type}</span>
+											{/if}
+										</div>
 										{#if action.description}
 											<span class="description">{action.description}</span>
 										{/if}
@@ -290,6 +295,13 @@
 		gap: 0.2rem;
 	}
 
+	.label-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
 	.label {
 		font-weight: 600;
 	}
@@ -297,6 +309,30 @@
 	.description {
 		font-size: 0.75rem;
 		color: rgba(226, 232, 255, 0.65);
+	}
+
+	.pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.2rem 0.55rem;
+		border-radius: 999px;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgba(226, 232, 255, 0.75);
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	.pill.lab {
+		border-color: rgba(124, 247, 255, 0.35);
+		color: #7cf7ff;
+	}
+
+	.pill.case {
+		border-color: rgba(255, 107, 203, 0.35);
+		color: #ff6bcb;
 	}
 
 	.accent {
