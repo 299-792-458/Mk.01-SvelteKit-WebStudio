@@ -3,6 +3,8 @@
 	import { derived } from 'svelte/store';
 	import { navigationConfig } from '$config/navigation.config';
 	import { experienceStore } from '$services/experience';
+	import { sampleProjects } from '$modules/work';
+	import { labExperiments } from '$modules/labs';
 
 	const sections = navigationConfig.commandPalette;
 
@@ -11,20 +13,56 @@
 
 	const isOpen = derived(experienceStore, ($experience) => $experience.isCommandPaletteOpen);
 
-	const allActions = sections.flatMap((section) =>
+	const navActions = sections.flatMap((section) =>
 		section.actions.map((action) => ({
 			section: section.title,
+			type: 'Navigation',
+			tags: [],
+			score: 0,
 			...action
 		}))
 	);
 
-	$: filteredActions =
-		query.trim().length === 0
-			? allActions
-			: allActions.filter((action) => {
-					const haystack = `${action.label} ${action.description ?? ''}`.toLowerCase();
-					return haystack.includes(query.trim().toLowerCase());
-				});
+	const projectActions = sampleProjects.map((project) => ({
+		section: 'Work',
+		type: 'Case study',
+		label: project.title,
+		description: project.summary,
+		href: `/work/${project.slug}`,
+		accent: 'case',
+		tags: project.tags,
+		score: 0
+	}));
+
+	const labActions = labExperiments.map((experiment) => ({
+		section: 'Labs',
+		type: 'Experiment',
+		label: experiment.title,
+		description: experiment.summary,
+		href: `/labs/${experiment.slug}`,
+		accent: 'lab',
+		tags: experiment.tech,
+		score: 0
+	}));
+
+	const searchable = [...navActions, ...projectActions, ...labActions];
+
+	function rankActions(term: string) {
+		const q = term.trim().toLowerCase();
+		if (!q) return searchable.slice(0, 14);
+
+		return searchable
+			.map((item) => {
+				const haystack = `${item.label} ${item.description ?? ''} ${item.section} ${item.tags?.join(' ')}`.toLowerCase();
+				const score = haystack.includes(q) ? 3 : q.split(/\s+/).reduce((acc, token) => acc + (haystack.includes(token) ? 1 : 0), 0);
+				return { ...item, score };
+			})
+			.filter((item) => item.score > 0)
+			.sort((a, b) => b.score - a.score)
+			.slice(0, 14);
+	}
+
+	$: filteredActions = rankActions(query);
 
 	function closePalette() {
 		experienceStore.closeCommandPalette();
