@@ -24,7 +24,7 @@ const related = data.related ?? [];
 
 <PageSection id="article-hero" tone="contrast" padding="compact">
 	<div class="space-y-6">
-		<a href="/blog" class="link-cta" sveltekit:prefetch>
+		<a href="/blog" class="link-cta" data-sveltekit-preload-data="hover">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="h-4 w-4 rotate-180"
@@ -44,7 +44,7 @@ const related = data.related ?? [];
 		<div class="space-y-3">
 			<div class="flex gap-4">
 				<span class="eyebrow text-secondary/80">Journal Entry</span>
-				<a href={`/blog/category/${data.category?.toLowerCase()}`} sveltekit:prefetch>
+				<a href={`/blog/category/${data.category?.toLowerCase()}`} data-sveltekit-preload-data="hover">
 					<span class="eyebrow text-accent/80">{data.category}</span>
 				</a>
 			</div>
@@ -106,7 +106,7 @@ const related = data.related ?? [];
 						<div class="space-y-2">
 							<span class="eyebrow text-accent/80">{post.category}</span>
 							<h3 class="text-xl font-semibold text-base-content hover:text-primary">
-								<a href={`/blog/${post.slug}`} sveltekit:prefetch>{post.title}</a>
+								<a href={`/blog/${post.slug}`} data-sveltekit-preload-data="hover">{post.title}</a>
 							</h3>
 							<p class="text-sm text-base-content/70 line-clamp-3">{post.description}</p>
 						</div>
@@ -117,7 +117,7 @@ const related = data.related ?? [];
 								<li class="rounded-full bg-primary/10 px-3 py-1">#{tag}</li>
 							{/each}
 						</ul>
-						<a href={`/blog/${post.slug}`} class="link-cta mt-4 inline-flex" sveltekit:prefetch>
+						<a href={`/blog/${post.slug}`} class="link-cta mt-4 inline-flex" data-sveltekit-preload-data="hover">
 							Read entry
 						</a>
 					</article>
