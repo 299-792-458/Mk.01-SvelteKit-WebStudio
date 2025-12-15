@@ -297,7 +297,7 @@
 		flex: 1;
 		height: 6px;
 		border-radius: 999px;
-		@apply bg-base-content/10;
+		background-color: oklch(var(--bc) / 0.1); /* bg-base-content/10 */
 		overflow: hidden;
 	}
 
