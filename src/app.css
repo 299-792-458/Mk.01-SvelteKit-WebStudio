@@ -7,10 +7,51 @@
 @layer base {
 	:root {
 		@apply scroll-smooth;
+		font-feature-settings: "ss01", "ss03", "cv05";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+	}
+
+	/* High-End Scrollbar */
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #050505;
+		border-left: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.15);
+		border-radius: 99px;
+		border: 2px solid #050505; /* Padding effect */
+		transition: background 0.2s ease;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: rgba(255, 255, 255, 0.3);
+	}
+
+	/* Selection */
+	::selection {
+		background: rgba(0, 255, 249, 0.25); /* Neon Cyan */
+		color: #fff;
+		text-shadow: 0 0 8px rgba(0, 255, 249, 0.5);
+	}
+
+	/* Focus Rings */
+	:focus-visible {
+		outline: 2px solid #00fff9;
+		outline-offset: 4px;
+		border-radius: 4px;
 	}
 
 	html {
 		@apply bg-base-100 text-base-content antialiased;
+		overflow-x: hidden; /* Prevent horizontal scroll from effects */
 	}
 
 	body {
@@ -22,6 +63,7 @@
 			radial-gradient(160% 160% at 50% 110%, rgba(248, 113, 113, 0.04), transparent);
 		background-attachment: fixed;
 		position: relative;
+		overflow-x: hidden;
 	}
 
 	body::before {
@@ -37,12 +79,7 @@
 		mix-blend-mode: overlay;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
+	h1, h2, h3, h4, h5, h6 {
 		@apply font-display font-semibold tracking-tight text-base-content;
 	}
 
@@ -59,9 +96,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		*,
-		*::before,
-		*::after {
+		*, *::before, *::after {
 			animation-duration: 0.01ms !important;
 			animation-iteration-count: 1 !important;
 			transition-duration: 0.01ms !important;
