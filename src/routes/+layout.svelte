@@ -50,6 +50,8 @@
 			: '';
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
 <svelte:head>
 	<title>{currentSeo.title}</title>
 	<meta name="description" content={currentSeo.description} />
@@ -71,7 +73,13 @@
 	{@html jsonLdMarkup}
 </svelte:head>
 
-{#if isLoaded && !$experienceStore.isPerformanceMode}
+{#if $experienceStore.isDevMode}
+	<div class="fixed top-4 right-4 z-[100] badge badge-error gap-2 shadow-xl animate-pulse font-mono text-xs">
+		DEV_MODE_ACTIVE
+	</div>
+{/if}
+
+{#if isLoaded && (!$experienceStore.isPerformanceMode || $experienceStore.isDevMode)}
 	<FPSCounter />
 {/if}
 
