@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { experienceStore } from '$services/experience';
+	import { get } from 'svelte/store';
 
 	export let text: string;
 	export let active = false;
@@ -10,8 +12,11 @@
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 
 	function scramble() {
-		let iterations = 0;
-		clearInterval(interval);
+		if (get(experienceStore).isPerformanceMode) {
+			display = text; // Show full text immediately
+			clearInterval(interval);
+			return;
+		}
 
 		interval = setInterval(() => {
 			display = text
