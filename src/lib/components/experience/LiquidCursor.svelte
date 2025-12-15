@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion';
+	import { experienceStore } from '$services/experience';
 
 	let coords = spring({ x: -100, y: -100 }, {
 		stiffness: 0.1,
@@ -14,6 +15,9 @@
 
 	let isHovering = false;
 	let isClicking = false;
+
+	// Reactive performance mode flag
+	$: $experienceStore.isPerformanceMode;
 
 	onMount(() => {
 		const onMouseMove = (e: MouseEvent) => {
@@ -56,6 +60,7 @@
 	});
 </script>
 
+{#if !$experienceStore.isPerformanceMode}
 <div 
 	class="liquid-cursor"
 	style:transform={`translate3d(${$coords.x}px, ${$coords.y}px, 0)`}
@@ -68,6 +73,7 @@
 		style:height={`${$size}px`}
 	></div>
 </div>
+{/if}
 
 <style>
 	.liquid-cursor {
