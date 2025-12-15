@@ -5,13 +5,18 @@
 	import SonicIdentity from '$lib/components/experience/SonicIdentity.svelte';
 	import FluidBackground from '$lib/components/experience/FluidBackground.svelte';
 	import LiquidCursor from '$lib/components/experience/LiquidCursor.svelte';
+	import Preloader from '$lib/components/experience/Preloader.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
+	import { fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	export let data: {
 		seo?: SeoResult;
 	};
+
+	let isLoaded = false;
 
 	function serializeJsonLd(payload: Record<string, unknown> | null) {
 		if (!payload) return '';
@@ -46,12 +51,34 @@
 	{@html jsonLdMarkup}
 </svelte:head>
 
+<Preloader bind:loaded={isLoaded} />
+
 <SmoothScroll>
 	<SonicIdentity>
 		<FluidBackground />
 		<LiquidCursor />
-		<AppShell>
-			<slot />
-		</AppShell>
+		{#if isLoaded}
+			<AppShell>
+				{#key $page.url.pathname}
+					<div 
+						in:fly={{ y: 20, duration: 600, delay: 200, easing: cubicOut }} 
+						out:fly={{ y: -20, duration: 400, easing: cubicOut }}
+						class="page-transition-wrap"
+					>
+						<slot />
+					</div>
+				{/key}
+			</AppShell>
+		{/if}
 	</SonicIdentity>
 </SmoothScroll>
+
+<style>
+	.page-transition-wrap {
+		/* Ensures transitions don't break layout flow */
+		width: 100%;
+		/* position: absolute;  <-- Careful with absolute, can break document flow/height.
+		   For simple crossfades, a grid wrapper might be better, or just rely on the delay to handle overlap implicitly.
+		   Here we use standard flow but cross-fade via delay. */
+	}
+</style>
