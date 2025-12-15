@@ -142,7 +142,9 @@
 		border-radius: 999px;
 		padding: 0.5rem 0.8rem;
 		font-size: 0.8rem;
-		@apply border border-base-content/10 bg-base-content/5 text-base-content/80;
+		border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+		background-color: oklch(var(--bc) / 0.05); /* bg-base-content/5 */
+		color: oklch(var(--bc) / 0.8); /* text-base-content/80 */
 		letter-spacing: 0.08em;
 	}
 
