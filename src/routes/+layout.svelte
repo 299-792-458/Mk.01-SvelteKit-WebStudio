@@ -4,6 +4,7 @@
 	import SmoothScroll from '$lib/components/layout/SmoothScroll.svelte';
 	import SonicIdentity from '$lib/components/experience/SonicIdentity.svelte';
 	import FluidBackground from '$lib/components/experience/FluidBackground.svelte';
+	import ArchitecturalGrid from '$lib/components/experience/ArchitecturalGrid.svelte';
 	import LiquidCursor from '$lib/components/experience/LiquidCursor.svelte';
 	import Preloader from '$lib/components/experience/Preloader.svelte';
 	import FPSCounter from '$lib/components/debug/FPSCounter.svelte';
@@ -88,6 +89,7 @@
 <SmoothScroll>
 	<SonicIdentity>
 		<FluidBackground />
+		<ArchitecturalGrid />
 		<LiquidCursor />
 		{#if isLoaded}
 			<AppShell>
