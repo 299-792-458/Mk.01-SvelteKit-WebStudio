@@ -319,7 +319,9 @@
 	.scroll-badges span {
 		padding: 0.45rem 0.9rem;
 		border-radius: 999px;
-		@apply border border-base-content/20 bg-base-content/5 text-xs uppercase tracking-widest;
+		border: 1px solid oklch(var(--bc) / 0.2); /* border-base-content/20 */
+		background-color: oklch(var(--bc) / 0.05); /* bg-base-content/5 */
+		@apply text-xs uppercase tracking-widest;
 	}
 
 	.scroll-holo {
