@@ -8,18 +8,21 @@
 	export let loaded = false;
 
 	let progress = 0;
-	let bootLines = [
-		'INITIALIZING CORE...',
-		'LOADING ASSETS...',
-		'CONNECTING TO NEURAL NET...',
-		'ESTABLISHING SECURE CONNECTION...',
-		'SYSTEM READY.'
-	];
-	let visibleLines: string[] = [];
-	let hasGlitch = !get(experienceStore).isPerformanceMode; // Initial state
+let bootLines = [
+	'INITIALIZING CORE...',
+	'LOADING ASSETS...',
+	'CONNECTING TO NEURAL NET...',
+	'ESTABLISHING SECURE CONNECTION...',
+	'SYSTEM READY.'
+];
+let visibleLines: string[] = [];
+let hasGlitch = !get(experienceStore).isPerformanceMode; // Initial state
+let failSafeTimeout: ReturnType<typeof setTimeout> | null = null;
+let interval: ReturnType<typeof setInterval> | null = null;
+let lineInterval: ReturnType<typeof setInterval> | null = null;
 
-	onMount(() => {
-		const interval = setInterval(() => {
+onMount(() => {
+		interval = setInterval(() => {
 			progress += Math.random() * 5;
 			if (progress >= 100) {
 				progress = 100;
@@ -30,9 +33,17 @@
 			}
 		}, 100);
 
+		// Ensure we never hang at 0% if JS timing glitches happen.
+		failSafeTimeout = setTimeout(() => {
+			progress = 100;
+			loaded = true;
+			if (interval) clearInterval(interval);
+			if (lineInterval) clearInterval(lineInterval);
+		}, 2500);
+
 		// Reveal boot lines
 		let lineIndex = 0;
-		const lineInterval = setInterval(() => {
+		lineInterval = setInterval(() => {
 			if (lineIndex < bootLines.length) {
 				visibleLines = [...visibleLines, bootLines[lineIndex]];
 				lineIndex++;
@@ -47,8 +58,9 @@
 		});
 
 		return () => {
-			clearInterval(interval);
-			clearInterval(lineInterval);
+			if (interval) clearInterval(interval);
+			if (lineInterval) clearInterval(lineInterval);
+			if (failSafeTimeout) clearTimeout(failSafeTimeout);
 			unsub();
 		};
 	});

@@ -50,7 +50,7 @@
 		// Fallback to ensure the preloader never hangs due to a missed bind.
 		loadTimeout = setTimeout(() => {
 			isLoaded = true;
-		}, 2400);
+		}, 2200);
 
 		return () => {
 			if (loadTimeout) clearTimeout(loadTimeout);
