@@ -2,7 +2,9 @@
 	display: grid;
 	gap: 1rem;
 	border-radius: 1.5rem;
-	@apply border border-base-content/10 bg-base-300 text-base-content shadow-2xl overflow-hidden relative;
+	border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+	background-color: oklch(var(--b3)); /* bg-base-300 */
+	@apply text-base-content shadow-2xl overflow-hidden relative;
 	isolation: isolate;
 	padding: clamp(1.3rem, 3vw, 2.2rem);
 }
