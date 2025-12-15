@@ -13,12 +13,30 @@
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
 	import { experienceStore } from '$services/experience';
+	import { onMount } from 'svelte';
 
 	export let data: {
 		seo?: SeoResult;
 	};
 
 	let isLoaded = false;
+	
+	// Konami Code Logic
+	const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+	let konamiIndex = 0;
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === konamiCode[konamiIndex]) {
+			konamiIndex++;
+			if (konamiIndex === konamiCode.length) {
+				experienceStore.toggleDevMode();
+				konamiIndex = 0;
+				// Optional: Play a success sound if SonicIdentity allows specific triggers
+			}
+		} else {
+			konamiIndex = 0;
+		}
+	}
 
 	function serializeJsonLd(payload: Record<string, unknown> | null) {
 		if (!payload) return '';
