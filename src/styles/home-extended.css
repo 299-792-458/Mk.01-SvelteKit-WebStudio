@@ -227,7 +227,9 @@
 
 .rail-card {
 	border-radius: 0.9rem;
-	@apply border border-base-content/10 bg-base-100/50 p-3 shadow-md;
+	border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+	background-color: oklch(var(--b1) / 0.5); /* bg-base-100/50 */
+	@apply text-base-content p-3 shadow-md;
 }
 
 .rail-top {
