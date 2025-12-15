@@ -370,7 +370,9 @@
 	position: relative;
 	padding: 0.95rem 1rem;
 	border-radius: 1rem;
-	@apply border border-base-content/10 bg-base-100/90 text-left transition-all duration-200 text-base-content shadow-sm;
+	border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+	background-color: oklch(var(--b1) / 0.9); /* bg-base-100/90 */
+	@apply text-left transition-all duration-200 text-base-content shadow-sm;
 }
 
 .holo-card:hover {
