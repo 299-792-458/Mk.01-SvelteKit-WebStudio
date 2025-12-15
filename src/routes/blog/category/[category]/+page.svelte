@@ -21,7 +21,7 @@
 </script>
 
 <div class="container mx-auto px-4 py-8">
-	<a href="/blog" class="text-blue-500 hover:underline" sveltekit:prefetch>&larr; Back to Blog</a>
+	<a href="/blog" class="text-blue-500 hover:underline" data-sveltekit-preload-data="hover">&larr; Back to Blog</a>
 	<h1 class="text-3xl font-bold my-4">Posts in category: {category}</h1>
 
 	<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -40,7 +40,7 @@
 						{/if}
 					</div>
 					<h3 class="text-xl font-semibold text-base-content hover:text-primary">
-						<a href={`/blog/${post.slug}`} sveltekit:prefetch>
+						<a href={`/blog/${post.slug}`} data-sveltekit-preload-data="hover">
 							{post.title}
 						</a>
 					</h3>
@@ -57,7 +57,7 @@
 					</ul>
 				{/if}
 
-				<a href={`/blog/${post.slug}`} class="link-cta mt-6" sveltekit:prefetch>
+				<a href={`/blog/${post.slug}`} class="link-cta mt-6" data-sveltekit-preload-data="hover">
 					Read article
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
