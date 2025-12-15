@@ -1,3 +1,0 @@
-import{Q as c}from"./BBE0ZLmY.js";function l(t){if(c){const e=new Error(`lifecycle_outside_component
-\`${t}(...)\` can only be used during component initialisation
-https://svelte.dev/e/lifecycle_outside_component`);throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/lifecycle_outside_component")}var n=null;function u(t){n=t}function p(t){return r("getContext").get(t)}function a(t,e){return r("setContext").set(t,e),e}function r(t){return n===null&&l(t),n.c??=new Map(s(n)||void 0)}function _(t){n={p:n,c:null,r:null},c&&(n.function=t,n.element=n.p?.element)}function f(){n=n.p}function s(t){let e=t.p;for(;e!==null;){const o=e.c;if(o!==null)return o;e=e.p}return null}export{n as a,f as b,a as c,p as g,_ as p,u as s};

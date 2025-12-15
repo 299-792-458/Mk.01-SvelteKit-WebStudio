@@ -101,7 +101,9 @@
 		gap: 1rem;
 		padding: clamp(1.5rem, 3vw, 2.5rem);
 		border-radius: 1.4rem;
-		@apply bg-base-100/60 border border-white/10 text-base-content shadow-2xl backdrop-blur-md;
+		border: 1px solid oklch(var(--n) / 0.1); /* border-white/10 equivalent */
+		background-color: oklch(var(--b1) / 0.6); /* bg-base-100/60 */
+		@apply text-base-content shadow-2xl backdrop-blur-md;
 		box-shadow:
 			0 30px 90px rgba(0, 0, 0, 0.45),
 			inset 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -149,7 +151,9 @@
 		gap: 1rem;
 		padding: clamp(1.4rem, 3vw, 2.2rem);
 		border-radius: 1.4rem;
-		@apply bg-base-200/40 border border-base-content/10 text-base-content backdrop-blur-md;
+		border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+		background-color: oklch(var(--b2) / 0.4); /* bg-base-200/40 */
+		@apply text-base-content backdrop-blur-md;
 		box-shadow:
 			0 20px 60px rgba(0, 0, 0, 0.2),
 			0 10px 30px rgba(124, 247, 255, 0.05);
