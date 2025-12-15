@@ -1,134 +1,183 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
 	import Surface from '$components/ui/Surface.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	const { experiment, relatedProject } = data;
 
-	const experiment = data.experiment;
-	const relatedProject = data.relatedProject;
+	// Mock "Tweakpane" controls for the lab
+	let controls = [
+		{ label: 'Intensity', value: 0.8, min: 0, max: 1, step: 0.01, type: 'range' },
+		{ label: 'Color Shift', value: 0.2, min: 0, max: 1, step: 0.01, type: 'range' },
+		{ label: 'Speed', value: 1.5, min: 0.1, max: 5, step: 0.1, type: 'range' },
+		{ label: 'Bloom', value: true, type: 'toggle' },
+		{ label: 'Grid Mode', value: 'Polar', options: ['Cartesian', 'Polar', 'Iso'], type: 'select' }
+	];
+
+	// Canvas ref (placeholder for actual WebGL)
+	let canvas: HTMLCanvasElement;
+	let ctx: CanvasRenderingContext2D | null;
+	let raf: number;
+	let time = 0;
+
+	onMount(() => {
+		if (canvas) {
+			ctx = canvas.getContext('2d');
+			const resize = () => {
+				canvas.width = canvas.parentElement?.clientWidth ?? 800;
+				canvas.height = canvas.parentElement?.clientHeight ?? 600;
+			};
+			window.addEventListener('resize', resize);
+			resize();
+
+			const animate = () => {
+				time += 0.01 * (controls.find(c => c.label === 'Speed')?.value as number ?? 1);
+				draw();
+				raf = requestAnimationFrame(animate);
+			};
+			animate();
+
+			return () => {
+				window.removeEventListener('resize', resize);
+				cancelAnimationFrame(raf);
+			};
+		}
+	});
+
+	function draw() {
+		if (!ctx) return;
+		const w = canvas.width;
+		const h = canvas.height;
+		const intensity = controls.find(c => c.label === 'Intensity')?.value as number ?? 0.5;
+		const colorShift = controls.find(c => c.label === 'Color Shift')?.value as number ?? 0;
+
+		ctx.fillStyle = '#050505'; // Dark background
+		ctx.fillRect(0, 0, w, h);
+
+		// Simulate "Lab" visual
+		ctx.lineWidth = 2;
+		const count = 20;
+		const cx = w / 2;
+		const cy = h / 2;
+
+		for (let i = 0; i < count; i++) {
+			const t = i / count;
+			const r = (Math.sin(time + t * Math.PI * 2) * 100 + 150) * intensity;
+			
+			ctx.beginPath();
+			ctx.strokeStyle = `hsl(${(time * 50 + t * 360 + colorShift * 100) % 360}, 70%, 60%)`;
+			ctx.globalAlpha = 1 - t;
+			ctx.arc(cx, cy, r * (1 - t * 0.5), 0, Math.PI * 2);
+			ctx.stroke();
+		}
+	}
 </script>
 
-<PageSection id="experiment-hero" tone="contrast" padding="xl">
-	<div class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end">
-		<div class="space-y-5">
-			<span class="eyebrow text-secondary/80">Lab experiment</span>
-			<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-				{experiment.title}
-			</h1>
-			<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">{experiment.summary}</p>
-			<ul class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.25em] text-base-content/60">
-				{#each experiment.tech as tech}
-					<li class="rounded-full bg-base-100/60 px-4 py-2 text-[0.7rem]">{tech}</li>
-				{/each}
-			</ul>
-			<div class="flex flex-wrap gap-3">
-				{#if experiment.links.demo}
-					<a
-						href={experiment.links.demo}
-						target="_blank"
-						rel="noreferrer"
-						class="btn btn-primary btn-lg"
-					>
-						Launch demo
-					</a>
-				{/if}
-				{#if experiment.links.source}
-					<a
-						href={experiment.links.source}
-						target="_blank"
-						rel="noreferrer"
-						class="btn btn-outline btn-lg"
-					>
-						View source
-					</a>
-				{/if}
+<div class="lab-layout h-screen overflow-hidden flex flex-col md:flex-row">
+	<!-- Main Viewport (Canvas) -->
+	<main class="flex-1 relative bg-black order-2 md:order-1">
+		<canvas bind:this={canvas} class="absolute inset-0 w-full h-full block"></canvas>
+		
+		<!-- Floating Header -->
+		<header class="absolute top-0 left-0 right-0 p-6 flex justify-between items-start pointer-events-none">
+			<div class="pointer-events-auto">
+				<a href="/labs" class="btn btn-sm btn-circle btn-ghost bg-base-100/10 backdrop-blur text-white mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+				</a>
+				<h1 class="text-4xl font-bold text-white drop-shadow-md">{experiment.title}</h1>
+				<p class="text-white/70 max-w-md mt-2 drop-shadow-sm">{experiment.summary}</p>
 			</div>
-	</div>
-	<div class="media">
-		<div class="glow"></div>
-		<img src={experiment.thumbnail} alt={experiment.title} loading="lazy" decoding="async" />
-	</div>
-</div>
-</PageSection>
+			
+			<div class="flex gap-2 pointer-events-auto">
+				<a href={experiment.links.source} target="_blank" class="btn btn-sm btn-outline text-white border-white/20 hover:bg-white/10">
+					View Source
+				</a>
+			</div>
+		</header>
+	</main>
 
-<PageSection id="experiment-detail">
-	<div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-		<Surface variant="panel" padding="md" as="article">
-			<h2 class="text-2xl font-semibold text-base-content">Concept</h2>
-			<p class="mt-3 text-base text-base-content/70">
-				{experiment.highlight}
-			</p>
-
-			<section class="mt-6 space-y-4">
-				<h3 class="text-lg font-semibold text-base-content">What we explored</h3>
-				<ul class="grid gap-3 text-sm text-base-content/70">
-					<li>Motion language experiments blending sound, scroll, and pointer data.</li>
-					<li>Performance profiling for shader-heavy experiences across mobile and desktop.</li>
-					<li>Framework for wrapping prototypes into production-ready SvelteKit modules.</li>
-				</ul>
-			</section>
-
-			<section class="mt-6 space-y-4">
-				<h3 class="text-lg font-semibold text-base-content">What’s next</h3>
-				<ul class="grid gap-3 text-sm text-base-content/70">
-					<li>Ship a component pack turning the best patterns into reusable primitives.</li>
-					<li>Host an open studio session to share process notes and code breakdowns.</li>
-					<li>Integrate the learnings into upcoming product launches and case studies.</li>
-				</ul>
-			</section>
-		</Surface>
-
-		<Surface variant="glass" padding="md" as="aside">
-			<h2 class="text-lg font-semibold text-base-content">Related work</h2>
-			{#if relatedProject}
-				<div class="mt-4 space-y-3">
-					<div class="rounded-xl overflow-hidden">
-						<img
-							src={relatedProject.coverImage ?? '/images/work/neon-metropolis-cover.jpg'}
-							alt={relatedProject.title}
-							class="aspect-video w-full object-cover"
-							loading="lazy"
-							decoding="async"
-						/>
-					</div>
-					<h3 class="text-xl font-semibold text-base-content">{relatedProject.title}</h3>
-					<ul class="flex flex-wrap gap-2 text-xs uppercase tracking-widest text-base-content/60">
-						{#each relatedProject.tags as tag}
-							<li class="rounded-full bg-base-100/70 px-3 py-1">#{tag}</li>
-						{/each}
-					</ul>
-					<a href={`/work/${relatedProject.slug}`} class="link-cta mt-4 inline-flex">
-						View case study
-					</a>
+	<!-- Sidebar Controls -->
+	<aside class="w-full md:w-80 bg-base-200 border-l border-base-content/10 p-6 flex flex-col gap-8 overflow-y-auto z-10 shadow-2xl order-1 md:order-2">
+		<div class="space-y-6">
+			<div>
+				<h2 class="text-xs uppercase tracking-widest text-base-content/50 mb-4">Parameters</h2>
+				<div class="space-y-5">
+					{#each controls as control}
+						<div class="control-group">
+							<div class="flex justify-between mb-2">
+								<label class="text-sm font-medium text-base-content/80">{control.label}</label>
+								<span class="text-xs font-mono text-primary">{control.value}</span>
+							</div>
+							
+							{#if control.type === 'range'}
+								<input 
+									type="range" 
+									min={control.min} 
+									max={control.max} 
+									step={control.step} 
+									bind:value={control.value}
+									class="range range-xs range-primary" 
+								/>
+							{:else if control.type === 'toggle'}
+								<input 
+									type="checkbox" 
+									bind:checked={control.value}
+									class="toggle toggle-sm toggle-primary" 
+								/>
+							{:else if control.type === 'select'}
+								<select bind:value={control.value} class="select select-bordered select-xs w-full">
+									{#each control.options as opt}
+										<option value={opt}>{opt}</option>
+									{/each}
+								</select>
+							{/if}
+						</div>
+					{/each}
 				</div>
-			{:else}
-				<p class="mt-4 text-sm text-base-content/70">More details coming soon.</p>
-			{/if}
-		</Surface>
-	</div>
-</PageSection>
+			</div>
+
+			<div class="divider"></div>
+
+			<div>
+				<h2 class="text-xs uppercase tracking-widest text-base-content/50 mb-4">Tech Stack</h2>
+				<div class="flex flex-wrap gap-2">
+					{#each experiment.tech as tech}
+						<span class="badge badge-outline badge-sm opacity-70">{tech}</span>
+					{/each}
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xs uppercase tracking-widest text-base-content/50 mb-2">Concept</h2>
+				<p class="text-sm text-base-content/70 leading-relaxed">
+					{experiment.highlight}
+				</p>
+			</div>
+		</div>
+
+		<div class="mt-auto pt-6 border-t border-base-content/10">
+			<p class="text-xs text-center text-base-content/40">
+				Mk.01 Lab Runtime v2.4.0
+			</p>
+		</div>
+	</aside>
+</div>
 
 <style>
-	.media {
-		position: relative;
-		border-radius: 1.6rem;
-		overflow: hidden;
-		min-height: 260px;
-		box-shadow: 0 25px 60px rgba(9, 11, 28, 0.5);
+	/* Custom scrollbar for sidebar */
+	aside::-webkit-scrollbar {
+		width: 6px;
 	}
-
-	.media img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
+	aside::-webkit-scrollbar-track {
+		background: transparent;
 	}
-
-	.glow {
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle at 10% 10%, rgba(255, 107, 203, 0.3), transparent 60%);
-		mix-blend-mode: screen;
+	aside::-webkit-scrollbar-thumb {
+		background: rgba(255, 255, 255, 0.1);
+		border-radius: 3px;
+	}
+	aside::-webkit-scrollbar-thumb:hover {
+		background: rgba(255, 255, 255, 0.2);
 	}
 </style>
