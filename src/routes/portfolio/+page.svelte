@@ -43,7 +43,7 @@
 							<li>#{tag}</li>
 						{/each}
 					</ul>
-					<a href={`/work/${project.slug}`} class="link-cta" sveltekit:prefetch>
+					<a href={`/work/${project.slug}`} class="link-cta" data-sveltekit-preload-data="hover">
 						View case study
 					</a>
 				</div>
