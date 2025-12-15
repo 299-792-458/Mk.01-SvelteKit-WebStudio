@@ -9,6 +9,8 @@
 	import ReactiveContact from '$lib/components/experience/ReactiveContact.svelte';
 	import PageSection from '$lib/components/ui/PageSection.svelte';
 	import Reveal from '$lib/components/motion/Reveal.svelte';
+	import Magnetic from '$lib/components/motion/Magnetic.svelte';
+	import ScrambleText from '$lib/components/motion/ScrambleText.svelte';
 	import '../styles/home.css';
 	import '../styles/home-extended.css';
 
@@ -825,15 +827,19 @@ let scrollObserver: IntersectionObserver | null = null;
 				<div class="hero-main">
 					<p class="eyebrow text-cyan-100/80">Mk.01 / Universal surface</p>
 					<h1 class="hero-title">
-						One flagship site for hiring, launches, and live products.
+						<ScrambleText text="One flagship site for hiring, launches, and live products." />
 					</h1>
 					<p class="hero-sub">
 						Cinematic hero systems, product-grade UX, and lab-caliber experiments—shipped from a
 						single codebase that sells the story and proves the skill.
 					</p>
 					<div class="hero-actions">
-						<a class="btn btn-primary btn-lg" href="#featured-work">Play the reel</a>
-						<a class="btn btn-ghost btn-lg hero-ghost" href="#contact">Book a slot</a>
+						<Magnetic>
+							<a class="btn btn-primary btn-lg" href="#featured-work">Play the reel</a>
+						</Magnetic>
+						<Magnetic>
+							<a class="btn btn-ghost btn-lg hero-ghost" href="#contact">Book a slot</a>
+						</Magnetic>
 					</div>
 					<div class="cred-row">
 						{#each credibility as proof}
