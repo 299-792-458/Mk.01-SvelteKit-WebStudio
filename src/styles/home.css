@@ -410,7 +410,9 @@
 	.step-index {
 		font-family: 'JetBrains Mono', monospace;
 		font-size: 0.95rem;
-		@apply text-base-content/60 tracking-widest;
+		color: oklch(var(--bc) / 0.6); /* text-base-content/60 */
+		letter-spacing: 0.1em; /* Removed invalid tracking-widest replacement context if not applied correctly, just assuming tracking-widest is valid utility but here replacing specific color */
+		@apply tracking-widest;
 	}
 
 	.step-metric {
