@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import Magnetic from '$lib/components/motion/Magnetic.svelte';
 	import { page } from '$app/stores';
 	import { fly, fade } from 'svelte/transition';
 
@@ -49,20 +50,22 @@
 		<!-- Desktop Links -->
 		<div class="hidden items-center gap-1 px-4 md:flex">
 			{#each navLinks as link}
-				<a
-					href={link.href}
-					class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 hover:text-primary {$page
-						.url.pathname === link.href
-						? 'bg-white/5 text-primary'
-						: 'text-base-content/80'}"
-				>
-					{link.label}
-					{#if $page.url.pathname === link.href}
-						<span
-							class="absolute bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"
-						></span>
-					{/if}
-				</a>
+				<Magnetic>
+					<a
+						href={link.href}
+						class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 hover:text-primary {$page
+							.url.pathname === link.href
+							? 'bg-white/5 text-primary'
+							: 'text-base-content/80'}"
+					>
+						{link.label}
+						{#if $page.url.pathname === link.href}
+							<span
+								class="absolute bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"
+							></span>
+						{/if}
+					</a>
+				</Magnetic>
 			{/each}
 		</div>
 
