@@ -282,7 +282,7 @@
 	}
 
 	.scroll-copy {
-		@apply text-base-content/80;
+		color: oklch(var(--bc) / 0.8); /* text-base-content/80 */
 		max-width: 34rem;
 	}
 
