@@ -11,6 +11,7 @@
 	import Reveal from '$lib/components/motion/Reveal.svelte';
 	import Magnetic from '$lib/components/motion/Magnetic.svelte';
 	import ScrambleText from '$lib/components/motion/ScrambleText.svelte';
+	import { tilt } from '$lib/components/motion/tilt';
 	import '../styles/home.css';
 	import '../styles/home-extended.css';
 
@@ -864,7 +865,7 @@ let scrollObserver: IntersectionObserver | null = null;
 					</div>
 					<div class="mode-grid">
 						{#each heroModes as mode}
-							<div class="mode-card">
+							<div class="mode-card" use:tilt={{ max: 10, scale: 1.02 }}>
 								<div class="mode-top">
 									<span class="mode-badge">{mode.badge}</span>
 									<span aria-hidden="true">↗</span>
@@ -1681,7 +1682,7 @@ let scrollObserver: IntersectionObserver | null = null;
 
 		<div class="grid gap-4 sm:grid-cols-2">
 			{#each systemsProof as system}
-				<div class="system-card">
+				<div class="system-card" use:tilt={{ max: 15, scale: 1.02, glare: true }}>
 					<div class="system-top">
 						<span class="system-tag">{system.tag}</span>
 						<span class="glint" aria-hidden="true"></span>
@@ -1945,7 +1946,7 @@ let scrollObserver: IntersectionObserver | null = null;
 	</div>
 	<div class="grid gap-4 md:grid-cols-3 auto-rows-[200px] writing-grid">
 		{#each liveSignals as signal, index}
-			<div class="writing-card">
+			<div class="writing-card" use:tilt={{ max: 20, scale: 1.05 }}>
 				<div class="noise" style={`--i:${index};`} aria-hidden="true"></div>
 				<p class="text-sm uppercase tracking-[0.24em] text-secondary/80">Signal</p>
 				<h3 class="text-xl font-semibold text-base-content">{signal}</h3>
