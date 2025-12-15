@@ -43,10 +43,11 @@
 		<!-- Filter Rail -->
 		<form class="flex flex-col gap-4 p-6 rounded-2xl bg-base-100/50 border border-base-content/10 backdrop-blur-md" method="get">
 			<div class="form-control w-full">
-				<label class="label">
+				<label class="label" for="search-input">
 					<span class="label-text text-xs uppercase tracking-widest font-bold text-base-content/60">Search</span>
 				</label>
 				<input
+					id="search-input"
 					type="search"
 					name="search"
 					placeholder="Find an article..."
@@ -56,10 +57,10 @@
 			</div>
 			
 			<div class="form-control w-full">
-				<label class="label">
+				<label class="label" for="category-select">
 					<span class="label-text text-xs uppercase tracking-widest font-bold text-base-content/60">Filter</span>
 				</label>
-				<select name="category" class="select select-bordered w-full bg-base-200/50" bind:value={selectedCategory}>
+				<select id="category-select" name="category" class="select select-bordered w-full bg-base-200/50" bind:value={selectedCategory}>
 					<option value="">All Categories</option>
 					{#each categories as category}
 						<option value={category.toLowerCase()}>{category}</option>
