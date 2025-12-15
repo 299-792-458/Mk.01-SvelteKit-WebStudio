@@ -6,11 +6,13 @@
 	import FluidBackground from '$lib/components/experience/FluidBackground.svelte';
 	import LiquidCursor from '$lib/components/experience/LiquidCursor.svelte';
 	import Preloader from '$lib/components/experience/Preloader.svelte';
+	import FPSCounter from '$lib/components/debug/FPSCounter.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { experienceStore } from '$services/experience';
 
 	export let data: {
 		seo?: SeoResult;
@@ -50,6 +52,10 @@
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html jsonLdMarkup}
 </svelte:head>
+
+{#if isLoaded && !$experienceStore.isPerformanceMode}
+	<FPSCounter />
+{/if}
 
 <Preloader bind:loaded={isLoaded} />
 
