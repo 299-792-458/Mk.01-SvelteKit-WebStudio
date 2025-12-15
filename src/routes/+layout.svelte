@@ -3,6 +3,8 @@
 	import AppShell from '$lib/components/layout/AppShell.svelte';
 	import SmoothScroll from '$lib/components/layout/SmoothScroll.svelte';
 	import SonicIdentity from '$lib/components/experience/SonicIdentity.svelte';
+	import FluidBackground from '$lib/components/experience/FluidBackground.svelte';
+	import LiquidCursor from '$lib/components/experience/LiquidCursor.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
@@ -46,6 +48,8 @@
 
 <SmoothScroll>
 	<SonicIdentity>
+		<FluidBackground />
+		<LiquidCursor />
 		<AppShell>
 			<slot />
 		</AppShell>
