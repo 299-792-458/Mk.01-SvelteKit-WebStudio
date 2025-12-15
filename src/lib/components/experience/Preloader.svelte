@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import { experienceStore } from '$services/experience';
+	import { get } from 'svelte/store';
 
 	export let loaded = false;
 
@@ -14,6 +16,7 @@
 		'SYSTEM READY.'
 	];
 	let visibleLines: string[] = [];
+	let hasGlitch = !get(experienceStore).isPerformanceMode; // Initial state
 
 	onMount(() => {
 		const interval = setInterval(() => {
@@ -38,9 +41,15 @@
 			}
 		}, 400);
 
+		// Subscribe to performance mode changes
+		const unsub = experienceStore.subscribe(state => {
+			hasGlitch = !state.isPerformanceMode;
+		});
+
 		return () => {
 			clearInterval(interval);
 			clearInterval(lineInterval);
+			unsub();
 		};
 	});
 </script>
@@ -49,7 +58,7 @@
 	<div class="preloader" out:fade={{ duration: 1000, easing: cubicOut }}>
 		<div class="content">
 			<div class="logo-wrap">
-				<div class="logo-glitch" data-text="Mk.01">Mk.01</div>
+				<div class="logo-glitch" class:no-glitch={!hasGlitch} data-text="Mk.01">Mk.01</div>
 			</div>
 			
 			<div class="terminal">
@@ -119,11 +128,23 @@
 		animation: glitch-anim-1 2s infinite linear alternate-reverse;
 	}
 
+	.logo-glitch.no-glitch::before {
+		animation: none;
+		clip: auto;
+		text-shadow: none;
+	}
+
 	.logo-glitch::after {
 		left: -2px;
 		text-shadow: -1px 0 #00fff9;
 		clip: rect(44px, 450px, 56px, 0);
 		animation: glitch-anim-2 2s infinite linear alternate-reverse;
+	}
+
+	.logo-glitch.no-glitch::after {
+		animation: none;
+		clip: auto;
+		text-shadow: none;
 	}
 
 	.terminal {
