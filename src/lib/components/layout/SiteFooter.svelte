@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Magnetic from '$lib/components/motion/Magnetic.svelte';
+
 	const links = [
 		{ title: 'Work', href: '/work' },
 		{ title: 'Labs', href: '/labs' },
@@ -33,7 +35,11 @@
 			<span class="col-label">Index</span>
 			<ul>
 				{#each links as link}
-					<li><a href={link.href} class="nav-link">{link.title}</a></li>
+					<li>
+						<Magnetic>
+							<a href={link.href} class="nav-link">{link.title}</a>
+						</Magnetic>
+					</li>
 				{/each}
 			</ul>
 		</nav>
@@ -43,7 +49,11 @@
 			<span class="col-label">Connect</span>
 			<ul>
 				{#each socials as social}
-					<li><a href={social.href} class="social-link" target="_blank" rel="noreferrer">{social.label}</a></li>
+					<li>
+						<Magnetic>
+							<a href={social.href} class="social-link" target="_blank" rel="noreferrer">{social.label}</a>
+						</Magnetic>
+					</li>
 				{/each}
 			</ul>
 		</div>
