@@ -1307,44 +1307,11 @@ let scrollObserver: IntersectionObserver | null = null;
 				<div class="arcade-pill">Live</div>
 			</div>
 
-			<div class="arcade-grid">
-				<div class="arcade-gauges">
-					{#each arcadeStats as stat}
-						<div class="gauge-card">
-							<div class="gauge-top">
-								<p class="gauge-label">{stat.label}</p>
-								<span class="gauge-dot" aria-hidden="true"></span>
+						<div class="arcade-grid">
+							<div class="deck-container col-span-2 min-h-[320px]">
+								<TelemetryDeck />
 							</div>
-							<h3 class="gauge-value">{stat.value}</h3>
-							<p class="gauge-note">{stat.note}</p>
-							<div class="gauge-track">
-								<div class="gauge-fill" style={`--progress:${Math.min(1, (stat.value.match(/\\d+/)?.[0] ?? 80) / 120)};`}></div>
-							</div>
-						</div>
-					{/each}
-				</div>
-
-				<div class="arcade-panel">
-					<div class="panel-gridlines"></div>
-					<div class="panel-beam beam-1"></div>
-					<div class="panel-beam beam-2"></div>
-					<div class="panel-orb orb-a"></div>
-					<div class="panel-orb orb-b"></div>
-					<div class="panel-scan"></div>
-					<div class="panel-meta">
-						<p class="eyebrow text-secondary/80">Auto orchestration</p>
-						<h3>Visual sweeps, perf budgets, and locale rehearsals.</h3>
-						<p>Every launch uses the same guardrails: motion caps, edge prefetch, a11y traps, and CI gates.</p>
-						<div class="panel-chips">
-							<span>Visual diff</span>
-							<span>Perf guard</span>
-							<span>Locale rehearsed</span>
-							<span>Edge ready</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						</div>		</div>
 	</PageSection>
 </Reveal>
 
