@@ -29,7 +29,7 @@
 		label: project.title,
 		description: project.summary,
 		href: `/work/${project.slug}`,
-		accent: 'case',
+		accent: 'secondary',
 		tags: project.tags,
 		score: 0
 	}));
@@ -40,7 +40,7 @@
 		label: experiment.title,
 		description: experiment.summary,
 		href: `/labs/${experiment.slug}`,
-		accent: 'lab',
+		accent: 'accent',
 		tags: experiment.tech,
 		score: 0
 	}));
@@ -114,43 +114,81 @@
 	}
 </script>
 
-	{#if $isOpen}
-		<div class="palette-overlay" role="dialog" aria-modal="true">
-			<button type="button" class="backdrop" on:click={closePalette} aria-label="Close palette"></button>
-		<div class="palette">
-			<header>
-				<input
-					bind:this={inputElement}
-					type="text"
-					placeholder="Search actions, pages, or ideas…"
-					bind:value={query}
-				/>
-				<button type="button" class="close" on:click={closePalette} aria-label="Close palette">
-					×
-				</button>
+{#if $isOpen}
+	<div class="fixed inset-0 z-[200] grid place-items-center p-4" role="dialog" aria-modal="true">
+		<!-- Backdrop -->
+		<button 
+			type="button" 
+			class="absolute inset-0 bg-base-300/60 backdrop-blur-md transition-opacity" 
+			on:click={closePalette} 
+			aria-label="Close palette"
+		></button>
+
+		<!-- Palette -->
+		<div class="relative z-10 w-full max-w-2xl overflow-hidden rounded-2xl border border-base-content/10 bg-base-100/95 shadow-2xl backdrop-blur-xl ring-1 ring-base-content/5">
+			
+			<!-- Header -->
+			<header class="border-b border-base-content/10 p-3">
+				<div class="relative flex items-center">
+					<svg class="pointer-events-none absolute left-4 h-5 w-5 text-base-content/50" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+					</svg>
+					<input
+						bind:this={inputElement}
+						type="text"
+						class="h-12 w-full bg-transparent pl-11 pr-4 text-base text-base-content placeholder-base-content/40 focus:outline-none"
+						placeholder="Search actions, pages, or ideas…"
+						bind:value={query}
+					/>
+					<button 
+						type="button" 
+						class="ml-2 rounded-lg p-2 text-base-content/50 hover:bg-base-content/10 hover:text-base-content" 
+						on:click={closePalette} 
+						aria-label="Close palette"
+					>
+						<span class="sr-only">Close</span>
+						<kbd class="font-sans text-xs">ESC</kbd>
+					</button>
+				</div>
 			</header>
 
-			<section>
+			<!-- Results -->
+			<section class="max-h-[60vh] overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-base-content/10 scrollbar-track-transparent">
 				{#if filteredActions.length === 0}
-					<p class="empty">No results yet. Try different keywords.</p>
+					<div class="flex flex-col items-center justify-center py-12 text-center text-base-content/60">
+						<p class="text-sm">No results found.</p>
+						<p class="mt-1 text-xs opacity-70">Try searching for 'Work', 'Labs', or 'About'.</p>
+					</div>
 				{:else}
-					<ul>
+					<ul class="space-y-1">
 						{#each filteredActions as action, index (action.href + index)}
 							<li>
-								<a href={action.href} on:click={closePalette}>
-									<div class="meta">
-										<div class="label-row">
-											<span class="label">{action.label}</span>
+								<a 
+									href={action.href} 
+									on:click={closePalette}
+									class="group flex items-center justify-between rounded-lg px-4 py-3 transition-colors hover:bg-base-content/5 focus:bg-base-content/5 focus:outline-none"
+								>
+									<div class="flex flex-col gap-0.5">
+										<div class="flex items-center gap-2">
+											<span class="font-medium text-base-content group-hover:text-primary transition-colors">{action.label}</span>
 											{#if action.type}
-												<span class={`pill ${action.accent ?? ''}`}>{action.type}</span>
+												<span class="rounded bg-base-content/10 px-1.5 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-base-content/70">
+													{action.type}
+												</span>
 											{/if}
 										</div>
 										{#if action.description}
-											<span class="description">{action.description}</span>
+											<span class="text-xs text-base-content/60 line-clamp-1">{action.description}</span>
 										{/if}
 									</div>
+
 									{#if action.accent}
-										<span class={`accent ${action.accent}`}>{action.accent}</span>
+										<div class={`badge badge-sm uppercase tracking-widest text-[0.6rem] font-bold ${
+											action.accent === 'secondary' ? 'badge-secondary' : 
+											action.accent === 'accent' ? 'badge-accent' : 'badge-ghost'
+										}`}>
+											{action.accent === 'secondary' ? 'Case' : action.accent === 'accent' ? 'Lab' : 'Nav'}
+										</div>
 									{/if}
 								</a>
 							</li>
@@ -159,238 +197,21 @@
 				{/if}
 			</section>
 
-			<footer>
-				<div>
-					<kbd>⌘</kbd>
-					<kbd>K</kbd>
-					<span>Open palette</span>
+			<!-- Footer -->
+			<footer class="hidden items-center justify-end gap-4 border-t border-base-content/10 bg-base-200/50 px-4 py-2 text-[0.65rem] font-medium uppercase tracking-widest text-base-content/50 sm:flex">
+				<div class="flex items-center gap-1.5">
+					<kbd class="rounded border border-base-content/20 bg-base-100 px-1.5 py-0.5 font-mono">⌘K</kbd>
+					<span>Open</span>
 				</div>
-				<div>
-					<kbd>⌘</kbd>
-					<kbd>⇧</kbd>
-					<kbd>K</kbd>
-					<span>Cycle theme</span>
+				<div class="flex items-center gap-1.5">
+					<kbd class="rounded border border-base-content/20 bg-base-100 px-1.5 py-0.5 font-mono">↑↓</kbd>
+					<span>Navigate</span>
 				</div>
-				<div>
-					<kbd>⌘</kbd>
-					<kbd>⌥</kbd>
-					<kbd>K</kbd>
-					<span>Ambient audio</span>
+				<div class="flex items-center gap-1.5">
+					<kbd class="rounded border border-base-content/20 bg-base-100 px-1.5 py-0.5 font-mono">⏎</kbd>
+					<span>Select</span>
 				</div>
 			</footer>
 		</div>
 	</div>
 {/if}
-
-<style>
-	.palette-overlay {
-		position: fixed;
-		inset: 0;
-		z-index: 200;
-		display: grid;
-		place-items: center;
-	}
-
-	.backdrop {
-		position: absolute;
-		inset: 0;
-		background: rgba(4, 9, 24, 0.75);
-		backdrop-filter: blur(18px);
-		appearance: none;
-		border: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.palette {
-		position: relative;
-		z-index: 2;
-		width: min(680px, 92vw);
-		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		background: radial-gradient(
-			120% 140% at 50% 0%,
-			rgba(47, 93, 255, 0.18),
-			rgba(9, 13, 31, 0.92)
-		);
-		box-shadow: 0 35px 90px rgba(5, 11, 35, 0.45);
-		display: grid;
-		gap: 0.35rem;
-		padding: 1.1rem 1.25rem 1rem;
-		color: rgba(226, 232, 255, 0.96);
-	}
-
-	header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	input {
-		flex: 1;
-		padding: 0.85rem 1rem;
-		border-radius: 14px;
-		border: 1px solid rgba(255, 255, 255, 0.14);
-		background: rgba(9, 13, 31, 0.55);
-		color: inherit;
-		font-size: 0.95rem;
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-	}
-
-	input::placeholder {
-		color: rgba(226, 232, 255, 0.55);
-	}
-
-	.close {
-		width: 2.4rem;
-		height: 2.4rem;
-		border-radius: 999px;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		background: rgba(255, 255, 255, 0.08);
-		color: inherit;
-		font-size: 1.4rem;
-		line-height: 1;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	section {
-		max-height: 340px;
-		overflow-y: auto;
-		padding-right: 0.25rem;
-	}
-
-	ul {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	li a {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.85rem 1rem;
-		border-radius: 14px;
-		text-decoration: none;
-		color: inherit;
-		background: rgba(255, 255, 255, 0.04);
-		border: 1px solid transparent;
-		transition:
-			transform 180ms ease,
-			border 180ms ease,
-			background 180ms ease;
-	}
-
-	li a:hover,
-	li a:focus-visible {
-		transform: translateX(4px);
-		border-color: rgba(255, 255, 255, 0.18);
-		background: rgba(47, 93, 255, 0.18);
-	}
-
-	.meta {
-		display: grid;
-		gap: 0.2rem;
-	}
-
-	.label-row {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		flex-wrap: wrap;
-	}
-
-	.label {
-		font-weight: 600;
-	}
-
-	.description {
-		font-size: 0.75rem;
-		color: rgba(226, 232, 255, 0.65);
-	}
-
-	.pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.3rem;
-		padding: 0.2rem 0.55rem;
-		border-radius: 999px;
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		font-size: 0.75rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: rgba(226, 232, 255, 0.75);
-		background: rgba(255, 255, 255, 0.04);
-	}
-
-	.pill.lab {
-		border-color: rgba(124, 247, 255, 0.35);
-		color: #7cf7ff;
-	}
-
-	.pill.case {
-		border-color: rgba(255, 107, 203, 0.35);
-		color: #ff6bcb;
-	}
-
-	.accent {
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
-		padding: 0.35rem 0.6rem;
-		border-radius: 999px;
-		color: rgba(9, 13, 31, 0.8);
-		font-weight: 600;
-	}
-
-	.accent.primary {
-		background: rgba(47, 93, 255, 0.75);
-	}
-
-	.accent.secondary {
-		background: rgba(255, 107, 203, 0.7);
-	}
-
-	.accent.contrast {
-		background: rgba(255, 255, 255, 0.8);
-	}
-
-	.empty {
-		text-align: center;
-		padding: 2rem 0;
-		color: rgba(226, 232, 255, 0.6);
-		font-size: 0.9rem;
-	}
-
-	footer {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		gap: 1.2rem;
-		font-size: 0.7rem;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
-		color: rgba(226, 232, 255, 0.5);
-	}
-
-	footer div {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	kbd {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.2rem 0.4rem;
-		border-radius: 6px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		background: rgba(9, 13, 31, 0.55);
-		font-family: 'JetBrains Mono', monospace;
-		font-size: 0.7rem;
-		color: rgba(226, 232, 255, 0.8);
-	}
-</style>
