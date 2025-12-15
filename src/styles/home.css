@@ -383,7 +383,9 @@
 		position: relative;
 		padding: 1rem 1.1rem;
 		border-radius: 1rem;
-		@apply border border-base-content/10 bg-base-100/80 transition-all duration-200 text-base-content;
+		border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+		background-color: oklch(var(--b1) / 0.8); /* bg-base-100/80 */
+		@apply transition-all duration-200 text-base-content;
 	}
 
 	.scroll-step:hover {
