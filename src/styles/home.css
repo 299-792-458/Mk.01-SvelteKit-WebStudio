@@ -218,7 +218,9 @@
 		justify-content: center;
 		padding: 0.35rem 0.7rem;
 		border-radius: 999px;
-		@apply border border-primary/20 bg-primary/10 text-primary-content text-[0.7rem] uppercase tracking-widest font-bold;
+		border: 1px solid oklch(var(--p) / 0.2); /* border-primary/20 */
+		background-color: oklch(var(--p) / 0.1); /* bg-primary/10 */
+		@apply text-primary-content text-[0.7rem] uppercase tracking-widest font-bold;
 	}
 
 	.metric-rail {
