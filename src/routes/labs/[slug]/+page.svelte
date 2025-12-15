@@ -83,7 +83,7 @@
 		<!-- Floating Header -->
 		<header class="absolute top-0 left-0 right-0 p-6 flex justify-between items-start pointer-events-none">
 			<div class="pointer-events-auto">
-				<a href="/labs" class="btn btn-sm btn-circle btn-ghost bg-base-100/10 backdrop-blur text-white mb-4">
+				<a href="/labs" aria-label="Back to Labs" class="btn btn-sm btn-circle btn-ghost bg-base-100/10 backdrop-blur text-white mb-4">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
 				</a>
 				<h1 class="text-4xl font-bold text-white drop-shadow-md">{experiment.title}</h1>
@@ -107,12 +107,13 @@
 					{#each controls as control}
 						<div class="control-group">
 							<div class="flex justify-between mb-2">
-								<label class="text-sm font-medium text-base-content/80">{control.label}</label>
+								<label for={`control-${control.label}`} class="text-sm font-medium text-base-content/80">{control.label}</label>
 								<span class="text-xs font-mono text-primary">{control.value}</span>
 							</div>
 							
 							{#if control.type === 'range'}
 								<input 
+									id={`control-${control.label}`}
 									type="range" 
 									min={control.min} 
 									max={control.max} 
@@ -122,12 +123,13 @@
 								/>
 							{:else if control.type === 'toggle'}
 								<input 
+									id={`control-${control.label}`}
 									type="checkbox" 
 									bind:checked={control.value}
 									class="toggle toggle-sm toggle-primary" 
 								/>
 							{:else if control.type === 'select'}
-								<select bind:value={control.value} class="select select-bordered select-xs w-full">
+								<select id={`control-${control.label}`} bind:value={control.value} class="select select-bordered select-xs w-full">
 									{#each control.options as opt}
 										<option value={opt}>{opt}</option>
 									{/each}
