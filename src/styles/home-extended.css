@@ -204,7 +204,9 @@
 	bottom: 10%;
 	padding: 1rem;
 	border-radius: 1rem;
-	@apply border border-base-content/10 bg-base-100/60 backdrop-blur-md shadow-lg;
+	border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+	background-color: oklch(var(--b1) / 0.6); /* bg-base-100/60 */
+	@apply text-base-content backdrop-blur-md shadow-lg;
 	line-height: 1.4;
 }
 
