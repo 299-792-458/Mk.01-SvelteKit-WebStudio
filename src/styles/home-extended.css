@@ -2,16 +2,9 @@
 	display: grid;
 	gap: 1rem;
 	border-radius: 1.5rem;
-	border: 1px solid rgba(15, 23, 42, 0.08);
-	background: linear-gradient(135deg, rgba(8, 10, 16, 0.95), rgba(9, 12, 22, 0.92));
-	color: #eaf4ff;
-	box-shadow:
-		0 26px 70px rgba(0, 0, 0, 0.5),
-		inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-	padding: clamp(1.3rem, 3vw, 2.2rem);
-	position: relative;
-	overflow: hidden;
+	@apply border border-base-content/10 bg-base-300 text-base-content shadow-2xl overflow-hidden relative;
 	isolation: isolate;
+	padding: clamp(1.3rem, 3vw, 2.2rem);
 }
 
 .action-theater::before {
@@ -25,11 +18,11 @@
 }
 
 .action-theater :is(h1, h2, h3, h4, h5, h6, p) {
-	color: #eaf4ff;
+	@apply text-base-content;
 }
 
 .action-theater p {
-	opacity: 0.86;
+	@apply text-base-content/80;
 }
 
 .action-head {
@@ -51,11 +44,7 @@
 .action-badges span {
 	padding: 0.45rem 0.9rem;
 	border-radius: 999px;
-	border: 1px solid rgba(124, 247, 255, 0.2);
-	background: rgba(255, 255, 255, 0.06);
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	font-size: 0.8rem;
+	@apply border border-primary/20 bg-primary/10 text-xs uppercase tracking-widest font-semibold;
 }
 
 .action-grid {
@@ -76,30 +65,16 @@
 	position: relative;
 	padding: 1rem;
 	border-radius: 1.1rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(255, 255, 255, 0.06);
-	backdrop-filter: blur(8px);
-	color: inherit;
-	text-align: left;
-	box-shadow: 0 16px 40px -22px rgba(0, 0, 0, 0.6);
-	transition:
-		transform 180ms ease,
-		box-shadow 180ms ease,
-		border-color 180ms ease,
-		background 180ms ease;
+	@apply border border-base-content/10 bg-base-100/50 backdrop-blur-md text-base-content transition-all duration-200 text-left shadow-md;
 }
 
 .cue-card:hover {
 	transform: translateY(-3px);
-	border-color: rgba(124, 247, 255, 0.26);
-	box-shadow:
-		0 18px 46px -20px rgba(0, 0, 0, 0.62),
-		0 10px 28px -16px rgba(124, 247, 255, 0.24);
+	@apply border-primary/30 shadow-lg;
 }
 
 .cue-card.active {
-	background: linear-gradient(135deg, rgba(124, 247, 255, 0.2), rgba(255, 70, 201, 0.12));
-	border-color: rgba(124, 247, 255, 0.36);
+	@apply border-primary/40 bg-primary/10 shadow-xl;
 }
 
 .cue-top {
@@ -118,11 +93,11 @@
 	font-size: 0.8rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	color: rgba(232, 244, 255, 0.76);
+	@apply text-base-content/60;
 }
 
 .cue-copy {
-	color: rgba(232, 244, 255, 0.8);
+	@apply text-base-content/80;
 	font-size: 0.95rem;
 }
 
@@ -148,23 +123,17 @@
 	position: relative;
 	min-height: 240px;
 	border-radius: 1.1rem;
-	border: 1px solid rgba(124, 247, 255, 0.14);
-	overflow: hidden;
-	background: radial-gradient(circle at 20% 30%, rgba(124, 247, 255, 0.18), transparent 55%),
-		radial-gradient(circle at 80% 60%, rgba(255, 70, 201, 0.14), transparent 55%),
-		linear-gradient(140deg, rgba(8, 10, 18, 0.92), rgba(10, 14, 22, 0.9));
-	box-shadow:
-		inset 0 0 0 1px rgba(255, 255, 255, 0.04),
-		0 16px 42px -24px rgba(0, 0, 0, 0.6);
-	color: #eaf4ff;
+	@apply border border-base-content/10 bg-base-300 shadow-inner overflow-hidden text-base-content;
+	background: radial-gradient(circle at 20% 30%, rgba(124, 247, 255, 0.1), transparent 55%),
+		radial-gradient(circle at 80% 60%, rgba(255, 70, 201, 0.1), transparent 55%);
 }
 
 .stage-gridlines {
 	position: absolute;
 	inset: 12% 14%;
 	background-image:
-		linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-		linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+		linear-gradient(to right, rgba(124, 247, 255, 0.08) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(124, 247, 255, 0.08) 1px, transparent 1px);
 	background-size: 72px 72px;
 	mask-image: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent 70%);
 	animation: pan 22s linear infinite;
@@ -231,10 +200,7 @@
 	bottom: 10%;
 	padding: 1rem;
 	border-radius: 1rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(0, 0, 0, 0.35);
-	backdrop-filter: blur(6px);
-	box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.55);
+	@apply border border-base-content/10 bg-base-100/60 backdrop-blur-md shadow-lg;
 	line-height: 1.4;
 }
 
@@ -244,7 +210,7 @@
 }
 
 .stage-cta p {
-	color: rgba(232, 244, 255, 0.9);
+	@apply text-base-content/90;
 }
 
 .rail-grid {
@@ -255,25 +221,21 @@
 
 .rail-card {
 	border-radius: 0.9rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(255, 255, 255, 0.06);
-	padding: 0.85rem;
-	box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.55);
+	@apply border border-base-content/10 bg-base-100/50 p-3 shadow-md;
 }
 
 .rail-top {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	color: rgba(232, 244, 255, 0.9);
-	font-weight: 600;
+	@apply text-base-content/90 font-semibold;
 }
 
 .rail-track {
 	position: relative;
 	height: 8px;
 	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.12);
+	@apply bg-base-content/10;
 	overflow: hidden;
 	margin-top: 0.35rem;
 }
@@ -281,7 +243,7 @@
 .rail-fill {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(90deg, rgba(124, 247, 255, 0.9), rgba(255, 70, 201, 0.8));
+	@apply bg-gradient-to-r from-primary to-accent;
 	transform-origin: left;
 	transform: scaleX(var(--progress));
 	transition: transform 300ms ease;
@@ -291,8 +253,7 @@
 	position: relative;
 	overflow: hidden;
 	border-radius: 1rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(255, 255, 255, 0.06);
+	@apply border border-base-content/10 bg-base-100/50;
 }
 
 .ribbon-track {
@@ -307,18 +268,14 @@
 .ribbon-card {
 	min-width: 180px;
 	border-radius: 0.9rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: linear-gradient(135deg, rgba(124, 247, 255, 0.12), rgba(255, 70, 201, 0.12));
-	padding: 0.65rem 0.9rem;
-	box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.55);
-	color: #eaf4ff;
+	@apply border border-primary/20 bg-primary/10 p-3 shadow-md text-base-content;
 }
 
 .ribbon-label {
 	font-size: 0.78rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	opacity: 0.8;
+	@apply text-base-content/80;
 }
 
 .ribbon-value {
@@ -328,7 +285,7 @@
 
 .ribbon-note {
 	font-size: 0.9rem;
-	opacity: 0.75;
+	@apply text-base-content/70;
 }
 
 @media (max-width: 1024px) {
@@ -361,9 +318,7 @@
 	gap: 1rem;
 	padding: clamp(1.2rem, 3vw, 2rem);
 	border-radius: 1.4rem;
-	border: 1px solid rgba(15, 23, 42, 0.08);
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(236, 242, 249, 0.9));
-	box-shadow: 0 22px 58px -30px rgba(15, 23, 42, 0.45);
+	@apply border border-base-content/10 bg-base-200 text-base-content shadow-xl;
 }
 
 .holo-head {
@@ -371,7 +326,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-	color: rgba(15, 23, 42, 0.92);
+	@apply text-base-content;
 	max-width: 1180px;
 }
 
@@ -384,11 +339,7 @@
 .holo-badges span {
 	padding: 0.45rem 0.9rem;
 	border-radius: 999px;
-	border: 1px solid rgba(99, 102, 241, 0.2);
-	background: rgba(99, 102, 241, 0.1);
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	font-size: 0.8rem;
+	@apply border border-primary/20 bg-primary/10 text-xs uppercase tracking-widest;
 }
 
 .holo-grid {
@@ -407,27 +358,16 @@
 	position: relative;
 	padding: 0.95rem 1rem;
 	border-radius: 1rem;
-	border: 1px solid rgba(15, 23, 42, 0.08);
-	background: rgba(255, 255, 255, 0.88);
-	text-align: left;
-	transition:
-		transform 180ms ease,
-		border-color 180ms ease,
-		box-shadow 180ms ease,
-		background 180ms ease;
+	@apply border border-base-content/10 bg-base-100/90 text-left transition-all duration-200 text-base-content shadow-sm;
 }
 
 .holo-card:hover {
 	transform: translateY(-2px) rotate(-0.5deg);
-	box-shadow: 0 16px 38px -22px rgba(15, 23, 42, 0.45);
+	@apply border-primary/30 shadow-lg;
 }
 
 .holo-card.active {
-	border-color: rgba(99, 102, 241, 0.32);
-	background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(14, 165, 233, 0.12));
-	box-shadow:
-		0 18px 46px -22px rgba(15, 23, 42, 0.55),
-		0 12px 26px -16px rgba(99, 102, 241, 0.24);
+	@apply border-primary/40 bg-primary/10 shadow-xl;
 }
 
 .holo-top {
@@ -444,15 +384,11 @@
 .holo-badge {
 	padding: 0.35rem 0.7rem;
 	border-radius: 999px;
-	border: 1px solid rgba(99, 102, 241, 0.24);
-	background: rgba(99, 102, 241, 0.08);
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	font-size: 0.75rem;
+	@apply border border-primary/20 bg-primary/10 text-xs uppercase tracking-widest;
 }
 
 .holo-copy {
-	color: rgba(15, 23, 42, 0.7);
+	@apply text-base-content/70;
 	margin-top: 0.2rem;
 }
 
@@ -473,22 +409,14 @@
 	position: relative;
 	min-height: 240px;
 	border-radius: 1.1rem;
-	border: 1px solid rgba(15, 23, 42, 0.1);
-	overflow: hidden;
-	background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.14), transparent 55%),
-		radial-gradient(circle at 80% 60%, rgba(14, 165, 233, 0.14), transparent 55%),
-		linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.92));
-	box-shadow: 0 18px 46px -26px rgba(15, 23, 42, 0.45);
-	color: rgba(15, 23, 42, 0.9);
+	@apply border border-base-content/10 bg-base-100 shadow-inner overflow-hidden text-base-content;
 }
 
 .holo-plane {
 	position: absolute;
 	inset: 18% 16%;
 	border-radius: 1rem;
-	border: 1px solid rgba(15, 23, 42, 0.08);
-	background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(14, 165, 233, 0.12));
-	box-shadow: 0 16px 40px -24px rgba(15, 23, 42, 0.35);
+	@apply border border-base-content/10 bg-base-200 shadow-xl;
 	filter: drop-shadow(0 20px 32px rgba(15, 23, 42, 0.18));
 	transition: transform 240ms ease;
 }
@@ -497,14 +425,14 @@
 	inset: 22% 10% auto auto;
 	height: 46%;
 	animation: float 16s ease-in-out infinite;
-	background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(14, 165, 233, 0.16));
+	@apply bg-base-300;
 }
 
 .holo-plane.plane-c {
 	inset: auto 16% 14% 8%;
 	height: 28%;
 	animation: drift 18s ease-in-out infinite;
-	background: linear-gradient(135deg, rgba(14, 165, 233, 0.16), rgba(255, 70, 201, 0.12));
+	@apply bg-base-200;
 }
 
 .holo-visual:hover .plane-a {
@@ -568,22 +496,14 @@
 	bottom: 10%;
 	padding: 1rem;
 	border-radius: 1rem;
-	border: 1px solid rgba(15, 23, 42, 0.1);
-	background: rgba(255, 255, 255, 0.8);
-	box-shadow: 0 12px 30px -22px rgba(15, 23, 42, 0.3);
-	color: rgba(15, 23, 42, 0.9);
+	@apply border border-base-content/10 bg-base-100/90 shadow-md text-base-content;
 }
 
 .arcade {
 	display: grid;
 	gap: 1rem;
 	border-radius: 1.5rem;
-	border: 1px solid rgba(124, 247, 255, 0.12);
-	background: linear-gradient(135deg, rgba(8, 10, 16, 0.95), rgba(10, 13, 22, 0.9));
-	color: #eaf4ff;
-	box-shadow:
-		0 26px 70px rgba(0, 0, 0, 0.5),
-		inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+	@apply border border-base-content/10 bg-base-300 text-base-content shadow-2xl;
 	padding: clamp(1.3rem, 3vw, 2.2rem);
 	isolation: isolate;
 }
@@ -593,18 +513,14 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-	color: #eaf4ff;
+	@apply text-base-content;
 	max-width: 1180px;
 }
 
 .arcade-pill {
 	padding: 0.5rem 1rem;
 	border-radius: 999px;
-	border: 1px solid rgba(124, 247, 255, 0.28);
-	background: rgba(124, 247, 255, 0.1);
-	text-transform: uppercase;
-	letter-spacing: 0.2em;
-	font-weight: 700;
+	@apply border border-primary/30 bg-primary/10 text-primary-content text-xs uppercase tracking-widest font-bold;
 }
 
 .arcade-grid {
@@ -622,11 +538,7 @@
 
 .gauge-card {
 	border-radius: 1rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(255, 255, 255, 0.06);
-	padding: 0.9rem;
-	box-shadow: 0 12px 32px -22px rgba(0, 0, 0, 0.55);
-	color: #eaf4ff;
+	@apply border border-base-content/10 bg-base-100/50 p-4 shadow-md text-base-content;
 }
 
 .gauge-top {
@@ -639,7 +551,7 @@
 	text-transform: uppercase;
 	letter-spacing: 0.2em;
 	font-size: 0.82rem;
-	color: rgba(232, 244, 255, 0.8);
+	@apply text-base-content/60;
 }
 
 .gauge-dot {
@@ -660,7 +572,7 @@
 }
 
 .gauge-note {
-	color: rgba(232, 244, 255, 0.86);
+	@apply text-base-content/70;
 	font-size: 0.95rem;
 }
 
@@ -668,7 +580,7 @@
 	position: relative;
 	height: 8px;
 	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.12);
+	@apply bg-base-content/10;
 	overflow: hidden;
 	margin-top: 0.55rem;
 }
@@ -676,7 +588,7 @@
 .gauge-fill {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(90deg, rgba(124, 247, 255, 0.9), rgba(255, 70, 201, 0.8));
+	@apply bg-gradient-to-r from-primary to-accent;
 	transform-origin: left;
 	transform: scaleX(var(--progress));
 	transition: transform 300ms ease;
@@ -685,12 +597,7 @@
 .arcade-panel {
 	position: relative;
 	border-radius: 1.2rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: rgba(6, 8, 16, 0.7);
-	backdrop-filter: blur(10px);
-	padding: 1.2rem;
-	overflow: hidden;
-	box-shadow: 0 18px 52px -22px rgba(0, 0, 0, 0.6);
+	@apply border border-base-content/10 bg-base-100/50 backdrop-blur-md p-5 overflow-hidden shadow-xl;
 }
 
 .panel-gridlines {
@@ -764,7 +671,7 @@
 	z-index: 1;
 	display: grid;
 	gap: 0.35rem;
-	color: #eaf4ff;
+	@apply text-base-content;
 	max-width: 520px;
 }
 
@@ -777,11 +684,7 @@
 .panel-chips span {
 	padding: 0.4rem 0.75rem;
 	border-radius: 0.9rem;
-	border: 1px solid rgba(124, 247, 255, 0.22);
-	background: rgba(255, 255, 255, 0.08);
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	font-size: 0.78rem;
+	@apply border border-primary/20 bg-primary/10 text-xs uppercase tracking-widest;
 }
 
 @media (max-width: 1024px) {
