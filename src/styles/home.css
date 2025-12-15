@@ -427,7 +427,7 @@
 
 	.step-metric .metric-note {
 		font-size: 0.85rem;
-		@apply text-base-content/60;
+		color: oklch(var(--bc) / 0.6); /* text-base-content/60 */
 	}
 
 	.scroll-step h4 {
