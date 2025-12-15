@@ -17,13 +17,15 @@
 				const prefersDark =
 					typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
 
-				const initial = stored && allowed.includes(stored)
-					? stored
-					: stored && stored in mapLegacy
-						? mapLegacy[stored as keyof typeof mapLegacy]
-						: prefersDark
-							? 'studio-dark'
-							: 'studio-light';
+				let initial = 'studio-light';
+
+				if (stored && allowed.includes(stored)) {
+					initial = stored;
+				} else if (stored && Object.prototype.hasOwnProperty.call(mapLegacy, stored)) {
+					initial = mapLegacy[stored];
+				} else if (prefersDark) {
+					initial = 'studio-dark';
+				}
 
 				document.documentElement.dataset.theme = initial;
 			})();
