@@ -2,6 +2,7 @@
 	import '../app.css';
 	import AppShell from '$lib/components/layout/AppShell.svelte';
 	import SmoothScroll from '$lib/components/layout/SmoothScroll.svelte';
+	import SonicIdentity from '$lib/components/experience/SonicIdentity.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
@@ -44,7 +45,9 @@
 </svelte:head>
 
 <SmoothScroll>
-	<AppShell>
-		<slot />
-	</AppShell>
+	<SonicIdentity>
+		<AppShell>
+			<slot />
+		</AppShell>
+	</SonicIdentity>
 </SmoothScroll>
