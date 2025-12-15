@@ -1,5 +1,8 @@
 <script lang="ts">
 	import PageSection from '$lib/components/ui/PageSection.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
+	import ScrambleText from '$lib/components/motion/ScrambleText.svelte';
+	import { tilt } from '$lib/components/motion/tilt';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -23,48 +26,48 @@
 <PageSection id="work-hero" tone="contrast" padding="xl">
 	<div class="space-y-6">
 		<span class="eyebrow text-secondary/80">Case studies</span>
-		<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-			Launch systems, product platforms, and narrative websites crafted to ship.
+		<h1 class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl leading-[0.9]">
+			<ScrambleText text="Systems designed to ship." speed={40} />
 		</h1>
-		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
+		<p class="max-w-3xl text-lg text-base-content/70 sm:text-xl leading-relaxed">
 			Every engagement blends strategy, systems, and expressive engineering. Filter by industry or
 			year to explore how the same codebase adapts to each brief.
 		</p>
 	</div>
 
-	<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-		<div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg">
-			<p class="text-4xl font-semibold text-base-content">17+</p>
-			<p class="mt-1 text-xs uppercase tracking-widest text-base-content/60">
+	<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 pt-8">
+		<div class="p-6 rounded-2xl border border-base-content/10 bg-base-100/50 backdrop-blur-md" use:tilt={{ max: 5, scale: 1.02 }}>
+			<p class="text-5xl font-bold text-base-content tracking-tighter">17+</p>
+			<p class="mt-2 text-xs uppercase tracking-[0.25em] text-base-content/50 font-bold">
 				Global collaborators
 			</p>
 		</div>
-		<div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg">
-			<p class="text-4xl font-semibold text-base-content">48</p>
-			<p class="mt-1 text-xs uppercase tracking-widest text-base-content/60">
-				Experiments in production
+		<div class="p-6 rounded-2xl border border-base-content/10 bg-base-100/50 backdrop-blur-md" use:tilt={{ max: 5, scale: 1.02 }}>
+			<p class="text-5xl font-bold text-base-content tracking-tighter">48</p>
+			<p class="mt-2 text-xs uppercase tracking-[0.25em] text-base-content/50 font-bold">
+				Experiments live
 			</p>
 		</div>
-		<div class="rounded-2xl border border-base-200/60 bg-base-100/80 p-6 shadow-lg">
-			<p class="text-4xl font-semibold text-base-content">92</p>
-			<p class="mt-1 text-xs uppercase tracking-widest text-base-content/60">Average client NPS</p>
+		<div class="p-6 rounded-2xl border border-base-content/10 bg-base-100/50 backdrop-blur-md" use:tilt={{ max: 5, scale: 1.02 }}>
+			<p class="text-5xl font-bold text-base-content tracking-tighter">92</p>
+			<p class="mt-2 text-xs uppercase tracking-[0.25em] text-base-content/50 font-bold">Client NPS</p>
 		</div>
 	</div>
 </PageSection>
 
-<PageSection id="work-filters">
-	<div class="flex flex-wrap gap-3">
-		<label class="filter">
-			<span class="filter-label">Industry</span>
-			<select bind:value={selectedIndustry} class="select select-bordered">
+<PageSection id="work-filters" padding="compact">
+	<div class="flex flex-wrap gap-4 p-4 rounded-xl border border-base-content/10 bg-base-200/30 backdrop-blur-sm">
+		<label class="flex flex-col gap-1.5">
+			<span class="text-[0.65rem] uppercase tracking-widest font-bold text-base-content/50">Industry</span>
+			<select bind:value={selectedIndustry} class="select select-sm select-bordered bg-base-100/50 min-w-[160px]">
 				{#each industries as industry}
 					<option value={industry}>{industry}</option>
 				{/each}
 			</select>
 		</label>
-		<label class="filter">
-			<span class="filter-label">Year</span>
-			<select bind:value={selectedYear} class="select select-bordered">
+		<label class="flex flex-col gap-1.5">
+			<span class="text-[0.65rem] uppercase tracking-widest font-bold text-base-content/50">Year</span>
+			<select bind:value={selectedYear} class="select select-sm select-bordered bg-base-100/50 min-w-[120px]">
 				{#each years as year}
 					<option value={year}>{year}</option>
 				{/each}
@@ -76,38 +79,43 @@
 <PageSection id="work-grid">
 	{#if filteredProjects.length === 0}
 		<div
-			class="rounded-2xl border border-dashed border-base-200/70 bg-base-100/80 p-10 text-center text-base-content/70"
+			class="py-20 rounded-3xl border border-dashed border-base-content/20 bg-base-100/30 text-center"
 		>
-			No projects match those filters yet. Try another combination.
+			<span class="text-4xl block mb-4 opacity-50">∅</span>
+			<p class="text-lg text-base-content/70">No projects found in this sector.</p>
+			<button class="btn btn-link mt-2" on:click={() => { selectedIndustry = 'All'; selectedYear = 'All'; }}>Reset Filters</button>
 		</div>
 	{:else}
-		<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+		<div class="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
 			{#each filteredProjects as project (project.slug)}
-				<article class="work-card">
-					<div class="media">
-						<img
-							src={project.coverImage ?? `/images/work/${project.slug}-cover.jpg`}
-							alt={project.title}
-							loading="lazy"
-							decoding="async"
-							width="960"
-							height="640"
-						/>
-					</div>
-					<div class="body">
-						<div class="chips">
-							<span>{project.industry}</span>
-							<span>{project.year}</span>
+				<article class="group" use:tilt={{ max: 8, scale: 1.02, glare: true }}>
+					<a href={`/work/${project.slug}`} class="block space-y-5">
+						<div class="rounded-2xl overflow-hidden shadow-2xl relative aspect-[4/3]">
+							<Image
+								src={project.coverImage ?? `/images/work/${project.slug}-cover.jpg`}
+								alt={project.title}
+								className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+							/>
+							<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
 						</div>
-						<h2>{project.title}</h2>
-						<p>{project.summary ?? project.description}</p>
-						<ul class="tags">
-							{#each project.tags as tag}
-								<li>#{tag}</li>
-							{/each}
-						</ul>
-						<a href={`/work/${project.slug}`} class="link-cta">View project</a>
-					</div>
+						
+						<div class="space-y-2">
+							<div class="flex justify-between items-center text-xs uppercase tracking-widest font-bold text-base-content/50">
+								<span>{project.industry}</span>
+								<span class="text-primary">{project.year}</span>
+							</div>
+							<h2 class="text-2xl font-bold text-base-content group-hover:text-primary transition-colors">{project.title}</h2>
+							<p class="text-base text-base-content/70 line-clamp-2">{project.summary ?? project.description}</p>
+							
+							<div class="flex flex-wrap gap-2 pt-2">
+								{#each project.tags.slice(0, 3) as tag}
+									<span class="px-2 py-1 rounded-md bg-base-content/5 text-[0.65rem] uppercase tracking-wider text-base-content/60 border border-base-content/5">
+										#{tag}
+									</span>
+								{/each}
+							</div>
+						</div>
+					</a>
 				</article>
 			{/each}
 		</div>
@@ -115,101 +123,21 @@
 </PageSection>
 
 <PageSection id="work-labs" tone="subtle">
-	<div class="space-y-6 text-center">
-		<span class="eyebrow text-secondary/80">From the labs</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">Experiments that inspired these launches.</h2>
+	<div class="space-y-8 text-center max-w-3xl mx-auto mb-12">
+		<span class="eyebrow text-secondary/80">R&D Pipeline</span>
+		<h2 class="text-4xl font-bold">Experiments that fuel the work.</h2>
 	</div>
 
 	<div class="grid gap-6 md:grid-cols-3">
 		{#each labs as experiment}
-			<div class="surface-card h-full">
-				<h3 class="text-lg font-semibold text-base-content">{experiment.title}</h3>
+			<a href={`/labs/${experiment.slug}`} class="p-6 rounded-2xl border border-base-content/10 bg-base-100/60 hover:border-primary/30 transition-colors group block" use:tilt={{ max: 3, scale: 1.01 }}>
+				<h3 class="text-xl font-bold text-base-content group-hover:text-primary transition-colors">{experiment.title}</h3>
 				<p class="mt-2 text-sm text-base-content/70">{experiment.summary}</p>
-				<a href={`/labs/${experiment.slug}`} class="link-cta mt-4 inline-flex"> Read experiment </a>
-			</div>
+				<span class="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-base-content/50 group-hover:text-primary transition-colors">
+					Access Data
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+				</span>
+			</a>
 		{/each}
 	</div>
 </PageSection>
-
-<style>
-	.work-card {
-		display: grid;
-		gap: 1.25rem;
-		border-radius: 1.6rem;
-		overflow: hidden;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		background: linear-gradient(150deg, rgba(9, 13, 31, 0.92), rgba(47, 93, 255, 0.18));
-		box-shadow: 0 25px 60px rgba(5, 11, 28, 0.35);
-	}
-
-	.media {
-		position: relative;
-		overflow: hidden;
-		border-radius: 1.4rem 1.4rem 0 0;
-	}
-
-	.media img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-		transition:
-			transform 400ms ease,
-			filter 400ms ease;
-	}
-
-	.work-card:hover .media img {
-		transform: scale(1.05);
-		filter: saturate(130%);
-	}
-
-	.body {
-		display: grid;
-		gap: 0.7rem;
-		padding: 0 1.6rem 1.6rem;
-		color: rgba(226, 232, 255, 0.92);
-	}
-
-	.chips {
-		display: flex;
-		gap: 0.5rem;
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.22em;
-		color: rgba(226, 232, 255, 0.6);
-	}
-
-	h2 {
-		font-size: 1.4rem;
-		font-weight: 600;
-	}
-
-	p {
-		font-size: 0.95rem;
-		color: rgba(226, 232, 255, 0.72);
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		font-size: 0.75rem;
-		color: rgba(226, 232, 255, 0.65);
-	}
-
-	.filter {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	.filter-label {
-		font-size: 0.62rem;
-		text-transform: uppercase;
-		letter-spacing: 0.28em;
-		color: rgba(15, 18, 40, 0.58);
-	}
-
-	.filter .select {
-		margin: 0;
-	}
-</style>
