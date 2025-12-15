@@ -4,6 +4,7 @@
 	import Surface from '$components/ui/Surface.svelte';
 	import Reveal from '$lib/components/motion/Reveal.svelte';
 	import TextReveal from '$lib/components/motion/TextReveal.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -141,10 +142,10 @@
 					<source src={projectContent.hero.video} type="video/mp4" />
 				</video>
 			{:else}
-				<img
+				<Image
 					src={`/images/work/${project.slug}-hero.jpg`}
 					alt={project.title}
-					class="w-full h-full object-cover"
+					className="w-full h-full object-cover"
 				/>
 			{/if}
 			<div class="absolute inset-0 bg-gradient-to-t from-base-100/90 via-transparent to-transparent pointer-events-none"></div>
