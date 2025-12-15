@@ -169,7 +169,7 @@
 	}
 
 	.panel-sub {
-		@apply text-base-content/60;
+		color: oklch(var(--bc) / 0.6); /* text-base-content/60 */
 		max-width: 30rem;
 	}
 
