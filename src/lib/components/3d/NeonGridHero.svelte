@@ -4,6 +4,7 @@
 	import * as THREE from 'three';
 	import { pointer, viewport, quality } from '$lib/stores/interaction';
 	import { get } from 'svelte/store';
+	import { experienceStore } from '$services/experience'; // Import experienceStore
 
 	let container: HTMLDivElement | null = null;
 	let renderer: THREE.WebGLRenderer;
@@ -12,6 +13,7 @@
 	let clock: THREE.Clock;
 	let grid: THREE.Points | null = null;
 	let raf = 0;
+	let animationActive = true; // Control animation loop
 
 	// Shader for glowing points
 	const vertexShader = `
@@ -143,16 +145,41 @@
 
 	onMount(() => {
 		if (!browser) return;
-		init();
-		animate();
+
+		// Initial check for performance mode
+		if (get(experienceStore).isPerformanceMode) {
+			animationActive = false;
+		} else {
+			init();
+			animate();
+		}
 
 		const unsubViewport = viewport.subscribe(() => resize());
 		const unsubQuality = quality.subscribe((value) => buildGrid(value));
+		const unsubExperience = experienceStore.subscribe(state => {
+			if (state.isPerformanceMode !== !animationActive) {
+				animationActive = !state.isPerformanceMode;
+				if (animationActive) {
+					init(); // Re-initialize if entering normal mode
+					animate();
+				} else {
+					cancelAnimationFrame(raf);
+					renderer?.dispose();
+					grid?.geometry?.dispose();
+					(grid?.material as THREE.Material)?.dispose();
+					container?.replaceChildren();
+					scene = null as any; // Clear references
+					grid = null;
+				}
+			}
+		});
+
 
 		return () => {
 			cancelAnimationFrame(raf);
 			unsubViewport();
 			unsubQuality();
+			unsubExperience();
 			renderer?.dispose();
 			grid?.geometry?.dispose();
 			(grid?.material as THREE.Material)?.dispose();
@@ -161,7 +188,9 @@
 	});
 </script>
 
+{#if animationActive}
 <div class="hero-canvas" bind:this={container} aria-hidden="true"></div>
+{/if}
 
 <style>
 	.hero-canvas {
