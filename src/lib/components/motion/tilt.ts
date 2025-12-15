@@ -4,9 +4,13 @@
 </script>
 
 <script context="module" lang="ts">
+	import { experienceStore } from '$services/experience';
+	import { get } from 'svelte/store';
+
 	export function tilt(node: HTMLElement, options: { max?: number, scale?: number, glare?: boolean } = {}) {
-		const { max = 15, scale = 1.05, glare = true } = options;
-		let bounds: DOMRect;
+		if (get(experienceStore).isPerformanceMode) {
+			return { destroy() {} }; // Do nothing if performance mode is active
+		}
 
 		// Create Glare Element
 		let glareEl: HTMLDivElement;
