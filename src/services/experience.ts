@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { appConfig, type ExperienceConfig } from '$config/app.config';
+import { browser } from '$app/environment';
 
 type ThemeMode = 'day' | 'night' | 'aurora';
 
@@ -7,21 +8,42 @@ interface ExperienceState {
 	theme: ThemeMode;
 	isCommandPaletteOpen: boolean;
 	isAmbientAudioPlaying: boolean;
-	isPerformanceMode: boolean; // Added for performance control
+	isPerformanceMode: boolean;
+	isDevMode: boolean; // Hidden dev mode
 }
 
 const defaultState: ExperienceState = {
 	theme: 'day',
 	isCommandPaletteOpen: false,
 	isAmbientAudioPlaying: false,
-	isPerformanceMode: false // Default to full effects
+	isPerformanceMode: false,
+	isDevMode: false
 };
 
 function createExperienceStore(config: ExperienceConfig) {
-	const state = writable<ExperienceState>({
+	// Load from localStorage if available
+	const storedState = browser ? JSON.parse(localStorage.getItem('mk01_experience') || '{}') : {};
+	
+	const initialState: ExperienceState = {
 		...defaultState,
-		theme: config.defaultTheme === 'system' ? 'day' : config.defaultTheme
-	});
+		...storedState,
+		theme: storedState.theme || (config.defaultTheme === 'system' ? 'day' : config.defaultTheme),
+		// Always reset transient states
+		isCommandPaletteOpen: false 
+	};
+
+	const state = writable<ExperienceState>(initialState);
+
+	// Persist changes
+	if (browser) {
+		state.subscribe((value) => {
+			const { isCommandPaletteOpen, ...persistable } = value;
+			localStorage.setItem('mk01_experience', JSON.stringify(persistable));
+			
+			// Sync theme with DOM for immediate CSS effect
+			document.documentElement.dataset.theme = value.theme === 'aurora' ? 'studio-pro-dark' : value.theme === 'night' ? 'studio-dark' : 'studio-light';
+		});
+	}
 
 	return {
 		subscribe: state.subscribe,
@@ -54,6 +76,11 @@ function createExperienceStore(config: ExperienceConfig) {
 			state.update((current) => ({
 				...current,
 				isPerformanceMode: !current.isPerformanceMode
+			})),
+		toggleDevMode: () =>
+			state.update((current) => ({
+				...current,
+				isDevMode: !current.isDevMode
 			}))
 	};
 }
