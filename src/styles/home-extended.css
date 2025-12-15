@@ -423,7 +423,9 @@
 	position: relative;
 	min-height: 240px;
 	border-radius: 1.1rem;
-	@apply border border-base-content/10 bg-base-100 shadow-inner overflow-hidden text-base-content;
+	border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
+	background-color: oklch(var(--b1)); /* bg-base-100 */
+	@apply text-base-content shadow-inner overflow-hidden;
 }
 
 .holo-plane {
