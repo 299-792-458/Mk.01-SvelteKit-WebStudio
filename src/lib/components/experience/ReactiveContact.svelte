@@ -49,7 +49,7 @@
 	</div>
 	<label class="field">
 		<span>Message</span>
-		<textarea rows="4" bind:value={message} placeholder="Tell me about the launch, product, or experiment." />
+		<textarea rows="4" bind:value={message} placeholder="Tell me about the launch, product, or experiment."></textarea>
 		<div class="field-glow"></div>
 	</label>
 	<button class="cta" on:click|preventDefault={submit} disabled={status !== 'idle'}>
