@@ -8,6 +8,7 @@
 	import LiquidCursor from '$lib/components/experience/LiquidCursor.svelte';
 	import Preloader from '$lib/components/experience/Preloader.svelte';
 	import FPSCounter from '$lib/components/debug/FPSCounter.svelte';
+	import ScrollProgress from '$lib/components/ui/ScrollProgress.svelte';
 	import { siteConfig } from '$lib/config/site';
 	import { buildSeo, type SeoResult } from '$lib/utils/seo';
 	import { page } from '$app/stores';
