@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { experienceStore } from '$services/experience';
+	import { get } from 'svelte/store';
 
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
 	let raf: number;
+	let animationActive = true;
 
 	// Simulated Data Streams
 	const historySize = 60;
@@ -136,7 +139,8 @@
 			resize();
 
 			const animate = () => {
-				if (!ctx) return;
+				if (!ctx || !animationActive) return;
+
 				const { width, height } = canvas.getBoundingClientRect();
 				ctx.clearRect(0, 0, width, height);
 
@@ -164,11 +168,38 @@
 
 				raf = requestAnimationFrame(animate);
 			};
-			animate();
+			
+			// Initial check and setup
+			if (!get(experienceStore).isPerformanceMode) {
+				animate();
+			} else {
+				animationActive = false;
+			}
+
+			// Subscribe to performance mode changes
+			const unsub = experienceStore.subscribe(state => {
+				if (state.isPerformanceMode !== !animationActive) {
+					animationActive = !state.isPerformanceMode;
+					if (animationActive) {
+						// Resume animation
+						if (!raf) animate();
+					} else {
+						// Stop animation and clear canvas
+						cancelAnimationFrame(raf);
+						raf = 0;
+						if (ctx) {
+							const { width, height } = canvas.getBoundingClientRect();
+							ctx.clearRect(0, 0, width, height);
+						}
+					}
+				}
+			});
+
 
 			return () => {
 				window.removeEventListener('resize', resize);
 				cancelAnimationFrame(raf);
+				unsub();
 			};
 		}
 	});
