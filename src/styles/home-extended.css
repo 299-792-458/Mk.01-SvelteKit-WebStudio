@@ -24,7 +24,7 @@
 }
 
 .action-theater p {
-	@apply text-base-content/80;
+	color: oklch(var(--bc) / 0.8);
 }
 
 .action-head {
@@ -101,7 +101,7 @@
 }
 
 .cue-copy {
-	@apply text-base-content/80;
+	color: oklch(var(--bc) / 0.8);
 	font-size: 0.95rem;
 }
 
@@ -285,7 +285,7 @@
 	font-size: 0.78rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	@apply text-base-content/80;
+	color: oklch(var(--bc) / 0.8);
 }
 
 .ribbon-value {

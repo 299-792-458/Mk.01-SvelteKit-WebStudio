@@ -27,12 +27,13 @@
  */
 declare module '$env/static/private' {
 	export const NVM_INC: string;
+	export const CODEX_SANDBOX_NETWORK_DISABLED: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
 	export const NVM_CD_FLAGS: string;
-	export const SHELL: string;
 	export const TERM: string;
+	export const SHELL: string;
 	export const CATALINA_HOME: string;
 	export const TMPDIR: string;
 	export const HOMEBREW_REPOSITORY: string;
@@ -48,8 +49,8 @@ declare module '$env/static/private' {
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
-	export const PAGER: string;
 	export const PATH: string;
+	export const CODEX_SANDBOX: string;
 	export const npm_package_json: string;
 	export const _: string;
 	export const npm_config_userconfig: string;
@@ -63,6 +64,7 @@ declare module '$env/static/private' {
 	export const LANG: string;
 	export const npm_config_npm_version: string;
 	export const XPC_FLAGS: string;
+	export const CODEX_MANAGED_BY_NPM: string;
 	export const npm_config_node_gyp: string;
 	export const npm_package_version: string;
 	export const XPC_SERVICE_NAME: string;
@@ -72,14 +74,11 @@ declare module '$env/static/private' {
 	export const npm_config_cache: string;
 	export const LOGNAME: string;
 	export const npm_lifecycle_script: string;
-	export const GEMINI_CLI: string;
 	export const NVM_BIN: string;
 	export const npm_config_user_agent: string;
-	export const HOMEBREW_CELLAR: string;
 	export const INFOPATH: string;
+	export const HOMEBREW_CELLAR: string;
 	export const OSLogRateLimit: string;
-	export const GIT_PAGER: string;
-	export const GEMINI_CLI_NO_RELAUNCH: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
@@ -114,12 +113,13 @@ declare module '$env/static/public' {
 declare module '$env/dynamic/private' {
 	export const env: {
 		NVM_INC: string;
+		CODEX_SANDBOX_NETWORK_DISABLED: string;
 		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;
 		NVM_CD_FLAGS: string;
-		SHELL: string;
 		TERM: string;
+		SHELL: string;
 		CATALINA_HOME: string;
 		TMPDIR: string;
 		HOMEBREW_REPOSITORY: string;
@@ -135,8 +135,8 @@ declare module '$env/dynamic/private' {
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
-		PAGER: string;
 		PATH: string;
+		CODEX_SANDBOX: string;
 		npm_package_json: string;
 		_: string;
 		npm_config_userconfig: string;
@@ -150,6 +150,7 @@ declare module '$env/dynamic/private' {
 		LANG: string;
 		npm_config_npm_version: string;
 		XPC_FLAGS: string;
+		CODEX_MANAGED_BY_NPM: string;
 		npm_config_node_gyp: string;
 		npm_package_version: string;
 		XPC_SERVICE_NAME: string;
@@ -159,14 +160,11 @@ declare module '$env/dynamic/private' {
 		npm_config_cache: string;
 		LOGNAME: string;
 		npm_lifecycle_script: string;
-		GEMINI_CLI: string;
 		NVM_BIN: string;
 		npm_config_user_agent: string;
-		HOMEBREW_CELLAR: string;
 		INFOPATH: string;
+		HOMEBREW_CELLAR: string;
 		OSLogRateLimit: string;
-		GIT_PAGER: string;
-		GEMINI_CLI_NO_RELAUNCH: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;

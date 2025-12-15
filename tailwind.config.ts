@@ -7,12 +7,24 @@ const config: Config = {
 	content: ['./src/**/*.{html,svelte,ts}'],
 	theme: {
 		extend: {
-			fontFamily: {
-				display: ['Syne', '"Space Grotesk"', ...defaultTheme.fontFamily.sans],
-				sans: ['Manrope', 'Inter', ...defaultTheme.fontFamily.sans],
-				mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono]
-			},
 			colors: {
+				// Map daisyUI CSS variables so `/opacity` color utilities are generated.
+				primary: 'oklch(var(--p) / <alpha-value>)',
+				'primary-content': 'oklch(var(--pc) / <alpha-value>)',
+				secondary: 'oklch(var(--s) / <alpha-value>)',
+				'secondary-content': 'oklch(var(--sc) / <alpha-value>)',
+				accent: 'oklch(var(--a) / <alpha-value>)',
+				'accent-content': 'oklch(var(--ac) / <alpha-value>)',
+				neutral: 'oklch(var(--n) / <alpha-value>)',
+				'neutral-content': 'oklch(var(--nc) / <alpha-value>)',
+				'base-100': 'oklch(var(--b1) / <alpha-value>)',
+				'base-200': 'oklch(var(--b2) / <alpha-value>)',
+				'base-300': 'oklch(var(--b3) / <alpha-value>)',
+				'base-content': 'oklch(var(--bc) / <alpha-value>)',
+				info: 'oklch(var(--in) / <alpha-value>)',
+				success: 'oklch(var(--su) / <alpha-value>)',
+				warning: 'oklch(var(--wa) / <alpha-value>)',
+				error: 'oklch(var(--er) / <alpha-value>)',
 				brand: {
 					primary: '#6366F1',
 					secondary: '#0EA5E9',
@@ -20,6 +32,11 @@ const config: Config = {
 					ink: '#0F172A',
 					slate: '#1E293B'
 				}
+			},
+			fontFamily: {
+				display: ['Syne', '"Space Grotesk"', ...defaultTheme.fontFamily.sans],
+				sans: ['Manrope', 'Inter', ...defaultTheme.fontFamily.sans],
+				mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono]
 			},
 			spacing: {
 				'section-compact': '3rem',
