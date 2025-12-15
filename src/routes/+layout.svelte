@@ -95,26 +95,36 @@
 		<LiquidCursor />
 		{#if isLoaded}
 			<AppShell>
-				{#key $page.url.pathname}
-					<div 
-						in:fly={{ y: 20, duration: 600, delay: 200, easing: cubicOut }} 
-						out:fly={{ y: -20, duration: 400, easing: cubicOut }}
-						class="page-transition-wrap"
-					>
-						<slot />
-					</div>
-				{/key}
+				<div class="transition-grid">
+					{#key $page.url.pathname}
+						<div 
+							in:fly={{ y: 20, duration: 600, delay: 200, easing: cubicOut }} 
+							out:fly={{ y: -20, duration: 400, easing: cubicOut }}
+							class="transition-item"
+						>
+							<slot />
+						</div>
+					{/key}
+				</div>
 			</AppShell>
 		{/if}
 	</SonicIdentity>
 </SmoothScroll>
 
 <style>
-	.page-transition-wrap {
-		/* Ensures transitions don't break layout flow */
+	.transition-grid {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: 100%;
 		width: 100%;
-		/* position: absolute;  <-- Careful with absolute, can break document flow/height.
-		   For simple crossfades, a grid wrapper might be better, or just rely on the delay to handle overlap implicitly.
-		   Here we use standard flow but cross-fade via delay. */
+		min-height: 100vh;
+		overflow-x: hidden; /* Prevent horizontal scroll during transitions */
+	}
+
+	.transition-item {
+		grid-row: 1;
+		grid-column: 1;
+		width: 100%;
+		min-height: 100vh; /* Ensure full height */
 	}
 </style>
