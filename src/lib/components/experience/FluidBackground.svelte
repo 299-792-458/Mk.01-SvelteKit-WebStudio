@@ -3,6 +3,7 @@
 	import * as THREE from 'three';
 	import { browser } from '$app/environment';
 	import { experienceStore } from '$services/experience';
+	import { get } from 'svelte/store'; // Import get for initial state
 
 	let container: HTMLDivElement;
 	let renderer: THREE.WebGLRenderer;
@@ -11,6 +12,7 @@
 	let material: THREE.ShaderMaterial;
 	let mesh: THREE.Mesh;
 	let raf: number;
+	let animationActive = true; // Control animation loop
 
 	// Shader code for a smooth, evolving fluid/aurora effect
 	const vertexShader = `
@@ -161,6 +163,7 @@
 		};
 
 		const animate = (time: number) => {
+			if (!animationActive) return; // Stop animation if not active
 			raf = requestAnimationFrame(animate);
 			if (material) {
 				material.uniforms.uTime.value = time * 0.001;
@@ -168,15 +171,42 @@
 			renderer.render(scene, camera);
 		};
 
-		init();
-		animate(0);
+		// Initial check for performance mode
+		if (get(experienceStore).isPerformanceMode) {
+			animationActive = false;
+			renderer?.dispose();
+			container.replaceChildren();
+		} else {
+			init();
+			animate(0);
+		}
 
-		// Subscribe to theme store
+		// Subscribe to theme and performance mode store
 		const unsub = experienceStore.subscribe(state => {
 			if (!material) return;
+
+			// Handle theme change
 			if (state.theme === 'day') material.uniforms.uTheme.value = 0.0;
 			else if (state.theme === 'night') material.uniforms.uTheme.value = 1.0;
 			else if (state.theme === 'aurora') material.uniforms.uTheme.value = 2.0;
+
+			// Handle performance mode change
+			if (state.isPerformanceMode !== !animationActive) {
+				animationActive = !state.isPerformanceMode;
+				if (animationActive) {
+					// Re-initialize and start animation if entering normal mode
+					init();
+					animate(0);
+				} else {
+					// Stop animation and dispose resources if entering performance mode
+					cancelAnimationFrame(raf);
+					renderer?.dispose();
+					container.replaceChildren();
+					scene = null as any; // Clear references
+					mesh = null as any;
+					material = null as any;
+				}
+			}
 		});
 
 		return () => {
@@ -187,6 +217,7 @@
 			renderer?.dispose();
 			geometry?.dispose();
 			material?.dispose();
+			container?.replaceChildren();
 		};
 	});
 </script>
