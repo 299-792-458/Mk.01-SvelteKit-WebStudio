@@ -1,5 +1,7 @@
 <script lang="ts">
 	import PageSection from '$lib/components/ui/PageSection.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
+	import { tilt } from '$lib/components/motion/tilt';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -7,11 +9,13 @@
 	const { posts, pageNumber, totalPages, searchTerm, categories, tags, categoryFilter, tagFilter } = data;
 	let search = searchTerm;
 	let selectedCategory = categoryFilter;
-	let selectedTag = tagFilter;
+	
+	const featuredPost = posts[0];
+	const remainingPosts = posts.slice(1);
 
 	const dateFormatter = new Intl.DateTimeFormat('en', {
 		year: 'numeric',
-		month: 'short',
+		month: 'long',
 		day: 'numeric'
 	});
 
@@ -25,146 +29,159 @@
 </script>
 
 <PageSection id="journal-hero" tone="contrast" padding="xl">
-	<div class="space-y-6">
-		<span class="eyebrow text-secondary/80">Journal</span>
-		<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-			Inside the Mk.01 studio.
-		</h1>
-		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-			Notes on design systems, web experiences, experiments, and the lessons learned while building
-			in public. Grab a coffee and explore the process.
-		</p>
+	<div class="grid lg:grid-cols-[1fr_minmax(300px,0.5fr)] gap-12 items-end">
+		<div class="space-y-6">
+			<span class="eyebrow text-secondary/80">Studio Journal</span>
+			<h1 class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl leading-[0.9]">
+				Thoughts on code, craft, and chaos.
+			</h1>
+			<p class="max-w-2xl text-lg text-base-content/70 sm:text-xl">
+				A collection of field notes from the edge of web engineering. Deep dives into design systems, shader experiments, and the business of building digital products.
+			</p>
+		</div>
 
-		<form class="mt-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_180px_180px_auto]" method="get">
-			<input
-				type="search"
-				name="search"
-				placeholder="Search articles..."
-				class="input input-bordered w-full max-w-xs"
-				bind:value={search}
-			/>
-			<label class="flex flex-col gap-2 text-sm text-base-content/70">
-				<span class="font-medium text-base-content">Category</span>
-				<select name="category" class="select select-bordered" bind:value={selectedCategory}>
-					<option value="">All categories</option>
+		<!-- Filter Rail -->
+		<form class="flex flex-col gap-4 p-6 rounded-2xl bg-base-100/50 border border-base-content/10 backdrop-blur-md" method="get">
+			<div class="form-control w-full">
+				<label class="label">
+					<span class="label-text text-xs uppercase tracking-widest font-bold text-base-content/60">Search</span>
+				</label>
+				<input
+					type="search"
+					name="search"
+					placeholder="Find an article..."
+					class="input input-bordered w-full bg-base-200/50"
+					bind:value={search}
+				/>
+			</div>
+			
+			<div class="form-control w-full">
+				<label class="label">
+					<span class="label-text text-xs uppercase tracking-widest font-bold text-base-content/60">Filter</span>
+				</label>
+				<select name="category" class="select select-bordered w-full bg-base-200/50" bind:value={selectedCategory}>
+					<option value="">All Categories</option>
 					{#each categories as category}
 						<option value={category.toLowerCase()}>{category}</option>
 					{/each}
 				</select>
-			</label>
-			<label class="flex flex-col gap-2 text-sm text-base-content/70">
-				<span class="font-medium text-base-content">Tag</span>
-				<select name="tag" class="select select-bordered" bind:value={selectedTag}>
-					<option value="">All tags</option>
-					{#each tags as tag}
-						<option value={tag.toLowerCase()}>{tag}</option>
-					{/each}
-				</select>
-			</label>
-			<div class="flex items-end gap-2">
-				<button class="btn btn-primary" type="submit">Apply</button>
-				<a href="/blog" class="btn btn-ghost">Reset</a>
+			</div>
+
+			<div class="flex gap-2 mt-2">
+				<button class="btn btn-primary flex-1" type="submit">Filter</button>
+				<a href="/blog" class="btn btn-ghost flex-1">Clear</a>
 			</div>
 		</form>
-
-		{#if tags.length}
-			<div class="mt-4 flex flex-wrap gap-2 text-xs">
-				{#each tags.slice(0, 12) as tag}
-					<a
-						href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}${searchTerm ? `&search=${encodeURIComponent(searchTerm)}` : ''}${categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ''}`}
-						class={`badge badge-outline ${tag.toLowerCase() === tagFilter ? 'badge-primary' : ''}`}
-						sveltekit:prefetch
-					>
-						#{tag}
-					</a>
-				{/each}
-				{#if tags.length > 12}
-					<span class="text-[0.7rem] uppercase tracking-[0.22em] text-base-content/50">
-						+{tags.length - 12} more tags
-					</span>
-				{/if}
-			</div>
-		{/if}
 	</div>
 </PageSection>
 
+{#if !searchTerm && !categoryFilter && !tagFilter && featuredPost}
+	<PageSection id="featured-post" padding="compact">
+		<div class="mb-8 flex items-center gap-4">
+			<span class="h-px w-8 bg-primary/50"></span>
+			<span class="text-xs uppercase tracking-[0.3em] text-primary font-bold">Featured Article</span>
+		</div>
+		
+		<a href={`/blog/${featuredPost.slug}`} class="group relative block rounded-3xl overflow-hidden aspect-[21/9] shadow-2xl" use:tilt={{ max: 5, scale: 1.01 }}>
+			<div class="absolute inset-0 z-0">
+				<!-- Using generic placeholder if no image, can be replaced with real data later -->
+				<Image 
+					src={featuredPost.coverImage || `/images/blog/${featuredPost.slug}.jpg`} 
+					alt={featuredPost.title}
+					className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+				/>
+				<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+			</div>
+			
+			<div class="absolute bottom-0 left-0 p-8 md:p-12 z-10 max-w-4xl space-y-4">
+				<div class="flex flex-wrap gap-3">
+					<span class="badge badge-primary border-none bg-primary/20 text-primary-content backdrop-blur">
+						{featuredPost.category}
+					</span>
+					<span class="badge badge-ghost backdrop-blur text-white/80">
+						{featuredPost.readingTime} min read
+					</span>
+				</div>
+				<h2 class="text-3xl md:text-5xl font-bold text-white leading-tight group-hover:text-primary transition-colors duration-300">
+					{featuredPost.title}
+				</h2>
+				<p class="text-lg md:text-xl text-white/80 line-clamp-2 max-w-2xl">
+					{featuredPost.description}
+				</p>
+			</div>
+		</a>
+	</PageSection>
+{/if}
+
 <PageSection id="all-posts">
-	<div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-		{#each posts as post}
-			<article class="surface-card flex h-full flex-col justify-between">
-				<div class="space-y-3">
-					<div class="flex justify-between">
-						<a href={`/blog/category/${post.category?.toLowerCase()}`} sveltekit:prefetch>
-							<span class="eyebrow text-accent/80">{post.category}</span>
-						</a>
-					</div>
-					<div
-						class="flex items-center gap-3 text-xs uppercase tracking-widest text-base-content/60"
-					>
+	<div class="grid gap-x-8 gap-y-12 md:grid-cols-2 xl:grid-cols-3">
+		{#each (searchTerm || categoryFilter || tagFilter ? posts : remainingPosts) as post}
+			<article class="group flex flex-col h-full gap-4">
+				<a href={`/blog/${post.slug}`} class="block rounded-2xl overflow-hidden aspect-[16/10] relative shadow-lg" use:tilt={{ max: 8, scale: 1.02 }}>
+					<Image 
+						src={post.coverImage || `/images/blog/${post.slug}.jpg`} 
+						alt={post.title}
+						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+					/>
+					<div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+				</a>
+
+				<div class="space-y-3 flex-1 flex flex-col">
+					<div class="flex items-center justify-between text-xs uppercase tracking-widest text-base-content/50 font-bold">
 						<span>{formatDate(post.date)}</span>
-						{#if post.readingTime}
-							<span>{post.readingTime} min read</span>
-						{/if}
+						<span class="text-primary/80">{post.category}</span>
 					</div>
-					<h3 class="text-xl font-semibold text-base-content hover:text-primary">
-						<a href={`/blog/${post.slug}`} sveltekit:prefetch>
+					
+					<h3 class="text-2xl font-bold leading-tight group-hover:text-primary transition-colors duration-200">
+						<a href={`/blog/${post.slug}`}>
 							{post.title}
 						</a>
 					</h3>
-					<p class="text-sm text-base-content/70">{post.description}</p>
+					
+					<p class="text-base text-base-content/70 line-clamp-3 leading-relaxed flex-1">
+						{post.description}
+					</p>
+
+					<div class="pt-4 flex items-center justify-between border-t border-base-content/10">
+						<div class="flex gap-2">
+							{#each post.tags?.slice(0, 2) ?? [] as tag}
+								<span class="text-[0.65rem] uppercase tracking-wider px-2 py-1 rounded bg-base-200 text-base-content/60">
+									#{tag}
+								</span>
+							{/each}
+						</div>
+						<span class="text-xs font-mono text-base-content/40">
+							{post.readingTime} min
+						</span>
+					</div>
 				</div>
-
-				{#if post.tags?.length}
-					<ul
-						class="mt-6 flex flex-wrap gap-2 text-[0.65rem] uppercase tracking-widest text-primary/70"
-					>
-						{#each post.tags.slice(0, 4) as tag}
-							<li class="rounded-full bg-primary/10 px-3 py-1">#{tag}</li>
-						{/each}
-					</ul>
-				{/if}
-
-				<a href={`/blog/${post.slug}`} class="link-cta mt-6" sveltekit:prefetch>
-					Read article
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-4 w-4"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M17 8l4 4m0 0l-4 4m4-4H3"
-						/>
-					</svg>
-				</a>
 			</article>
 		{/each}
 	</div>
 
 	{#if posts.length === 0}
-		<div class="text-center">
-			<h2 class="text-2xl font-semibold">No posts found</h2>
-			<p class="mt-2 text-base-content/70">Try a different search term.</p>
+		<div class="py-20 text-center border rounded-3xl border-dashed border-base-content/20">
+			<span class="text-4xl">∅</span>
+			<h2 class="mt-4 text-2xl font-bold">Signal Lost</h2>
+			<p class="mt-2 text-base-content/70">No articles found matching your query.</p>
+			<a href="/blog" class="btn btn-outline mt-6">Clear Filters</a>
 		</div>
 	{/if}
 
-	<div class="mt-8 flex justify-center">
-		<div class="btn-group">
-			<a
-				href={`/blog?page=${pageNumber - 1}${searchTerm ? `&search=${searchTerm}` : ''}${categoryFilter ? `&category=${categoryFilter}` : ''}${tagFilter ? `&tag=${tagFilter}` : ''}`}
-				class="btn"
-				disabled={pageNumber <= 1}>«</a
-			>
-			<button class="btn">Page {pageNumber} of {totalPages}</button>
-			<a
-				href={`/blog?page=${pageNumber + 1}${searchTerm ? `&search=${searchTerm}` : ''}${categoryFilter ? `&category=${categoryFilter}` : ''}${tagFilter ? `&tag=${tagFilter}` : ''}`}
-				class="btn"
-				disabled={pageNumber >= totalPages}>»</a
-			>
+	{#if totalPages > 1}
+		<div class="mt-16 flex justify-center">
+			<div class="join grid grid-cols-2 shadow-xl">
+				<a
+					href={`/blog?page=${pageNumber - 1}`}
+					class="join-item btn btn-outline"
+					class:btn-disabled={pageNumber <= 1}>Previous</a
+				>
+				<a
+					href={`/blog?page=${pageNumber + 1}`}
+					class="join-item btn btn-outline"
+					class:btn-disabled={pageNumber >= totalPages}>Next</a
+				>
+			</div>
 		</div>
-	</div>
+	{/if}
 </PageSection>
