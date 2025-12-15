@@ -178,7 +178,9 @@
 		gap: 0.1rem;
 		padding: 0.75rem 1rem;
 		border-radius: 1rem;
-		@apply bg-primary/10 border border-primary/20 text-base-content/80;
+		background-color: oklch(var(--p) / 0.1); /* bg-primary/10 */
+		border: 1px solid oklch(var(--p) / 0.2); /* border-primary/20 */
+		color: oklch(var(--bc) / 0.8); /* text-base-content/80 */
 		text-align: right;
 		min-width: 140px;
 	}
