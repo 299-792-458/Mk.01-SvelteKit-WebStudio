@@ -123,25 +123,24 @@ const config: Config = {
 				}
 			},
 			{
-				'studio-pro-dark': {
-					primary: '#8B5CF6',
-					'primary-content': '#FFFFFF',
-					secondary: '#38BDF8',
-					'secondary-content': '#000000',
-					accent: '#F471B5',
-					'accent-content': '#000000',
-					neutral: '#0F172A',
-					'neutral-content': '#E2E8F0',
-					'base-100': '#020617',
-					'base-200': '#0B1120',
-					'base-300': '#151e32',
-					'base-content': '#E2E8F0',
-					info: '#0EA5E9',
-					success: '#22C55E',
-					warning: '#FACC15',
-					error: '#F87171'
-				}
-			}
+				          "studio-pro-dark": {
+				            "primary": "#38BDF8", // Light Blue
+				            "primary-content": "#0F172A", // Dark Slate (High Contrast)
+				            "secondary": "#818CF8", // Indigo
+				            "secondary-content": "#FFFFFF", // White (Fixed Contrast)
+				            "accent": "#F471B5", // Pink
+				            "accent-content": "#FFFFFF", // White (Fixed Contrast)
+				            "neutral": "#1E293B", // Slate 800
+				            "neutral-content": "#94A3B8", // Slate 400
+				            "base-100": "#0F172A", // Slate 900
+				            "base-200": "#1E293B", // Slate 800
+				            "base-300": "#334155", // Slate 700
+				            "base-content": "#F8FAFC", // Slate 50
+				            "info": "#38BDF8",
+				            "success": "#34D399",
+				            "warning": "#FBBF24",
+				            "error": "#FB7185",
+				          },			}
 		]
 	}
 };
