@@ -81,10 +81,11 @@
 	</div>
 {/if}
 
-{#if isLoaded && (!$experienceStore.isPerformanceMode || $experienceStore.isDevMode)}
+{#if isLoaded && !$experienceStore.isPerformanceMode}
 	<FPSCounter />
 {/if}
 
+<ScrollProgress />
 <Preloader bind:loaded={isLoaded} />
 
 <SmoothScroll>
