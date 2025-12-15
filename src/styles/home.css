@@ -394,7 +394,9 @@
 	}
 
 	.scroll-step.active {
-		@apply border-primary/30 bg-primary/5 shadow-xl;
+		border: 1px solid oklch(var(--p) / 0.3); /* border-primary/30 */
+		background-color: oklch(var(--p) / 0.05); /* bg-primary/5 */
+		@apply shadow-xl;
 	}
 
 	.step-head {
