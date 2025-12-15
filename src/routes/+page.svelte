@@ -11,6 +11,7 @@
 	import Reveal from '$lib/components/motion/Reveal.svelte';
 	import Magnetic from '$lib/components/motion/Magnetic.svelte';
 	import ScrambleText from '$lib/components/motion/ScrambleText.svelte';
+	import TelemetryDeck from '$lib/components/experience/TelemetryDeck.svelte';
 	import { tilt } from '$lib/components/motion/tilt';
 	import '../styles/home.css';
 	import '../styles/home-extended.css';
