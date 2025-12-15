@@ -241,7 +241,7 @@
 		font-size: 0.74rem;
 		letter-spacing: 0.22em;
 		text-transform: uppercase;
-		@apply text-base-content/50;
+		color: oklch(var(--bc) / 0.5); /* text-base-content/50 */
 	}
 
 	.metric-value {
