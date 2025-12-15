@@ -7,12 +7,14 @@ interface ExperienceState {
 	theme: ThemeMode;
 	isCommandPaletteOpen: boolean;
 	isAmbientAudioPlaying: boolean;
+	isPerformanceMode: boolean; // Added for performance control
 }
 
 const defaultState: ExperienceState = {
 	theme: 'day',
 	isCommandPaletteOpen: false,
-	isAmbientAudioPlaying: false
+	isAmbientAudioPlaying: false,
+	isPerformanceMode: false // Default to full effects
 };
 
 function createExperienceStore(config: ExperienceConfig) {
@@ -47,6 +49,11 @@ function createExperienceStore(config: ExperienceConfig) {
 			state.update((current) => ({
 				...current,
 				isAmbientAudioPlaying: !current.isAmbientAudioPlaying
+			})),
+		togglePerformanceMode: () =>
+			state.update((current) => ({
+				...current,
+				isPerformanceMode: !current.isPerformanceMode
 			}))
 	};
 }
