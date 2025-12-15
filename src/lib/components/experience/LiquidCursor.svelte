@@ -15,6 +15,7 @@
 
 	let isHovering = false;
 	let isClicking = false;
+	let isHidden = false; // New state for hiding cursor
 
 	// Reactive performance mode flag
 	$: $experienceStore.isPerformanceMode;
@@ -37,6 +38,15 @@
 		// Delegate hover detection for performance
 		const onMouseOver = (e: MouseEvent) => {
 			const target = e.target as HTMLElement;
+			
+			// Hide on text inputs
+			if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+				isHidden = true;
+				isHovering = false;
+				return;
+			}
+			isHidden = false;
+
 			if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
 				isHovering = true;
 				size.set(24);
@@ -69,6 +79,7 @@
 		class="cursor-blob" 
 		class:hovering={isHovering}
 		class:clicking={isClicking}
+		class:hidden={isHidden}
 		style:width={`${$size}px`}
 		style:height={`${$size}px`}
 	></div>
@@ -90,8 +101,14 @@
 		background: white;
 		border-radius: 50%;
 		transform: translate(-50%, -50%);
-		transition: opacity 0.3s ease;
+		transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 		box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	}
+
+	.cursor-blob.hidden {
+		opacity: 0;
+		width: 0 !important;
+		height: 0 !important;
 	}
 
 	.hovering {
