@@ -22,6 +22,7 @@
 	};
 
 	let isLoaded = false;
+	let loadTimeout: ReturnType<typeof setTimeout> | null = null;
 	
 	// Konami Code Logic
 	const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -44,6 +45,17 @@
 		if (!payload) return '';
 		return JSON.stringify(payload).replace(/</g, '\\u003C');
 	}
+
+	onMount(() => {
+		// Fallback to ensure the preloader never hangs due to a missed bind.
+		loadTimeout = setTimeout(() => {
+			isLoaded = true;
+		}, 2400);
+
+		return () => {
+			if (loadTimeout) clearTimeout(loadTimeout);
+		};
+	});
 
 	$: currentSeo = data?.seo ?? buildSeo({ path: $page.url.pathname });
 	$: jsonLdMarkup =
