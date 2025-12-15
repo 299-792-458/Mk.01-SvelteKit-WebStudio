@@ -45,7 +45,17 @@
 		score: 0
 	}));
 
-	const searchable = [...navActions, ...projectActions, ...labActions];
+	const searchable = [...navActions, ...projectActions, ...labActions, {
+		section: 'Settings',
+		type: 'Action',
+		label: 'Toggle Performance Mode',
+		description: 'Reduce animations for better performance',
+		href: '#', // Handled by action, not navigation
+		accent: 'ghost',
+		tags: ['settings', 'performance', 'animations'],
+		score: 0,
+		action: () => experienceStore.togglePerformanceMode()
+	}];
 
 	function rankActions(term: string) {
 		const q = term.trim().toLowerCase();
@@ -81,6 +91,13 @@
 				return;
 			}
 			experienceStore.openCommandPalette();
+		}
+
+		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'p') {
+			event.preventDefault();
+			experienceStore.togglePerformanceMode();
+			closePalette(); // Close palette after toggling performance mode
+			return;
 		}
 
 		if (event.key === 'Escape') {
@@ -164,8 +181,14 @@
 						{#each filteredActions as action, index (action.href + index)}
 							<li>
 								<a 
-									href={action.href} 
-									on:click={closePalette}
+									href={action.href !== '#' ? action.href : undefined} 
+									on:click={(e) => {
+										if (action.action) {
+											e.preventDefault();
+											action.action();
+										}
+										closePalette();
+									}}
 									class="group flex items-center justify-between rounded-lg px-4 py-3 transition-colors hover:bg-base-content/5 focus:bg-base-content/5 focus:outline-none"
 								>
 									<div class="flex flex-col gap-0.5">
@@ -185,9 +208,9 @@
 									{#if action.accent}
 										<div class={`badge badge-sm uppercase tracking-widest text-[0.6rem] font-bold ${
 											action.accent === 'secondary' ? 'badge-secondary' : 
-											action.accent === 'accent' ? 'badge-accent' : 'badge-ghost'
+											action.accent === 'accent' ? 'badge-accent' : action.accent === 'ghost' ? 'badge-ghost' : ''
 										}`}>
-											{action.accent === 'secondary' ? 'Case' : action.accent === 'accent' ? 'Lab' : 'Nav'}
+											{action.accent === 'secondary' ? 'Case' : action.accent === 'accent' ? 'Lab' : action.accent === 'ghost' ? 'Action' : 'Nav'}
 										</div>
 									{/if}
 								</a>
@@ -210,6 +233,10 @@
 				<div class="flex items-center gap-1.5">
 					<kbd class="rounded border border-base-content/20 bg-base-100 px-1.5 py-0.5 font-mono">⏎</kbd>
 					<span>Select</span>
+				</div>
+				<div class="flex items-center gap-1.5">
+					<kbd class="rounded border border-base-content/20 bg-base-100 px-1.5 py-0.5 font-mono">⌘P</kbd>
+					<span>Perf Mode</span>
 				</div>
 			</footer>
 		</div>
