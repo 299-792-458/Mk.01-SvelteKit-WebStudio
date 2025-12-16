@@ -15,6 +15,19 @@
   mix-blend-mode: screen;
 }
 
+:root:not([data-theme="studio-light"]) .hero-beams {
+  /* Dark mode default */
+  opacity: 0.65;
+  mix-blend-mode: screen;
+}
+
+:root[data-theme="studio-light"] .hero-beams {
+  /* Light mode adjustments */
+  opacity: 0.2; /* Much softer */
+  mix-blend-mode: multiply; /* Darken for subtle shadow effect */
+  filter: blur(1px) grayscale(50%);
+}
+
 .hero-beams .beam {
   position: absolute;
   width: 28vw;
@@ -28,6 +41,15 @@
   );
   animation: sweep 12s linear infinite;
   border-radius: 999px;
+}
+
+:root[data-theme="studio-light"] .hero-beams .beam {
+  background: linear-gradient(
+    90deg,
+    rgba(150, 150, 150, 0), /* Desaturate for light mode */
+    rgba(150, 150, 150, 0.1), /* Desaturate for light mode */
+    rgba(150, 150, 150, 0)
+  );
 }
 
 .hero-beams .beam-1 {
