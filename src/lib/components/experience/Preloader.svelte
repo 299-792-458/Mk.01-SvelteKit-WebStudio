@@ -16,12 +16,17 @@ let bootLines = [
 	'SYSTEM READY.'
 ];
 let visibleLines: string[] = [];
-let hasGlitch = !get(experienceStore).isPerformanceMode; // Initial state
+let hasGlitch = false; // Initialize to safe default
 let failSafeTimeout: ReturnType<typeof setTimeout> | null = null;
 let interval: ReturnType<typeof setInterval> | null = null;
 let lineInterval: ReturnType<typeof setInterval> | null = null;
 
 	onMount(() => {
+		// Safe store subscription
+		const unsub = experienceStore.subscribe(state => {
+			hasGlitch = !state.isPerformanceMode;
+		});
+
 		// Start progress immediately
 		interval = setInterval(() => {
 			progress += Math.random() * 5;
