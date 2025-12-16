@@ -34,11 +34,11 @@
 		>
 			<div class="timeline-glow" aria-hidden="true"></div>
 			<div class="flex items-center justify-between">
-				<p class="text-xs uppercase tracking-[0.3em] text-cyan-200/80">{item.year}</p>
+				<p class="text-xs uppercase tracking-[0.3em] text-primary/80">{item.year}</p>
 				<span class="chip">orbit</span>
 			</div>
-			<h3 class="text-xl font-semibold text-white">{item.title}</h3>
-			<p class="mt-2 text-sm text-white/70">{item.detail}</p>
+			<h3 class="text-xl font-semibold text-base-content">{item.title}</h3>
+			<p class="mt-2 text-sm text-base-content/70">{item.detail}</p>
 		</div>
 	{/each}
 </div>
