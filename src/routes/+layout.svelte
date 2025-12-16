@@ -85,10 +85,6 @@
 	</div>
 {/if}
 
-{#if isLoaded && !$experienceStore.isPerformanceMode}
-	<FPSCounter />
-{/if}
-
 <ScrollProgress />
 
 <SmoothScroll>
