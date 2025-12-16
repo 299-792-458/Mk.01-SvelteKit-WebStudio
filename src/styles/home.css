@@ -1437,8 +1437,17 @@
 .hud {
   border-radius: 1.3rem;
   border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
-  background-color: oklch(var(--p) / 0.05); /* bg-primary/5 */
   @apply shadow-xl p-5;
+}
+
+:root:not([data-theme="studio-light"]) .hud {
+  background-color: oklch(var(--p) / 0.05); /* bg-primary/5 */
+}
+
+:root[data-theme="studio-light"] .hud {
+  background-color: oklch(var(--b1)); /* bg-base-100 */
+  border-color: oklch(var(--b2));
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
 }
 
 .hud-header {
@@ -1463,8 +1472,16 @@
 .hud-tile {
   border-radius: 1rem;
   border: 1px solid oklch(var(--bc) / 0.1); /* border-base-content/10 */
-  background-color: oklch(var(--b1) / 0.9); /* bg-base-100/90 */
   @apply p-4 shadow-sm;
+}
+
+:root:not([data-theme="studio-light"]) .hud-tile {
+  background-color: oklch(var(--b1) / 0.9); /* bg-base-100/90 */
+}
+
+:root[data-theme="studio-light"] .hud-tile {
+  background-color: oklch(var(--b2) / 0.3); /* bg-base-200/30 */
+  border-color: oklch(var(--b2));
 }
 
 .hud-label {
