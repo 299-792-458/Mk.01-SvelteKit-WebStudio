@@ -150,8 +150,8 @@
 			{/if}
 			<div class="absolute inset-0 bg-gradient-to-t from-base-100/90 via-transparent to-transparent pointer-events-none"></div>
 			<div class="absolute bottom-8 left-8 right-8 text-center md:text-left">
-				<h2 class="text-2xl md:text-4xl font-bold text-white mb-2">{projectContent.hero.headline}</h2>
-				<p class="text-white/80 text-lg">{projectContent.hero.subheadline}</p>
+				<h2 class="text-2xl md:text-4xl font-bold text-base-content mb-2">{projectContent.hero.headline}</h2>
+				<p class="text-base-content/80 text-lg">{projectContent.hero.subheadline}</p>
 			</div>
 		</div>
 	</section>
