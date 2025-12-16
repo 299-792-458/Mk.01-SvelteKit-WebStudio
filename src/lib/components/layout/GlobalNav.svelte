@@ -37,12 +37,12 @@
 <div class="pointer-events-none fixed inset-x-0 top-6 z-50 flex justify-center px-4">
 	<nav
 		bind:this={navElement}
-		class="pointer-events-auto relative flex items-center gap-2 rounded-full border border-white/10 bg-base-100/60 p-2 shadow-glow backdrop-blur-surface transition-all duration-500 hover:scale-[1.01] hover:bg-base-100/80 supports-[backdrop-filter]:bg-base-100/40"
+		class="pointer-events-auto relative flex items-center gap-2 rounded-full border border-base-content/10 bg-base-100/60 p-2 shadow-glow backdrop-blur-surface transition-all duration-500 hover:scale-[1.01] hover:bg-base-100/80 supports-[backdrop-filter]:bg-base-100/40"
 	>
 		<!-- Logo -->
 		<a
 			href="/"
-			class="group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-lg transition-transform duration-300 hover:rotate-12"
+			class="group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-primary-content shadow-lg transition-transform duration-300 hover:rotate-12"
 		>
 			<span class="font-display font-bold">M</span>
 		</a>
@@ -53,9 +53,9 @@
 				<Magnetic>
 					<a
 						href={link.href}
-						class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 hover:text-primary {$page
+						class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-base-content/5 hover:text-primary {$page
 							.url.pathname === link.href
-							? 'bg-white/5 text-primary'
+							? 'bg-primary/10 text-primary'
 							: 'text-base-content/80'}"
 					>
 						{link.label}
