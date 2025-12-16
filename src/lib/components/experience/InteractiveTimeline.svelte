@@ -90,10 +90,6 @@
 		justify-content: center;
 		padding: 0.25rem 0.55rem;
 		border-radius: 999px;
-		background: rgba(124, 247, 255, 0.12);
-		color: rgba(124, 247, 255, 0.9);
-		font-size: 0.65rem;
-		text-transform: uppercase;
-		letter-spacing: 0.18em;
+		@apply bg-primary/10 text-primary text-[0.65rem] uppercase tracking-widest font-bold;
 	}
 </style>
