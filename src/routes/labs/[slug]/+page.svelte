@@ -83,15 +83,15 @@
 		<!-- Floating Header -->
 		<header class="absolute top-0 left-0 right-0 p-6 flex justify-between items-start pointer-events-none">
 			<div class="pointer-events-auto">
-				<a href="/labs" aria-label="Back to Labs" class="btn btn-sm btn-circle btn-ghost bg-base-100/10 backdrop-blur text-white mb-4">
+				<a href="/labs" aria-label="Back to Labs" class="btn btn-sm btn-circle btn-ghost bg-base-100/10 backdrop-blur text-base-content mb-4">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
 				</a>
-				<h1 class="text-4xl font-bold text-white drop-shadow-md">{experiment.title}</h1>
-				<p class="text-white/70 max-w-md mt-2 drop-shadow-sm">{experiment.summary}</p>
+				<h1 class="text-4xl font-bold text-base-content drop-shadow-md">{experiment.title}</h1>
+				<p class="text-base-content/70 max-w-md mt-2 drop-shadow-sm">{experiment.summary}</p>
 			</div>
 			
 			<div class="flex gap-2 pointer-events-auto">
-				<a href={experiment.links.source} target="_blank" class="btn btn-sm btn-outline text-white border-white/20 hover:bg-white/10">
+				<a href={experiment.links.source} target="_blank" class="btn btn-sm btn-outline text-base-content border-base-content/20 hover:bg-base-content/10">
 					View Source
 				</a>
 			</div>

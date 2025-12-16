@@ -8,9 +8,9 @@
 
 	const toneClasses: Record<Tone, string> = {
 		default: 'bg-base-100 text-base-content',
-		subtle: 'bg-base-200/40 text-base-content dark:bg-base-200/20',
+		subtle: 'bg-base-200/50 text-base-content',
 		contrast:
-			'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 dark:from-primary/10 dark:via-base-200/10 dark:to-secondary/10'
+			'bg-base-200 text-base-content border-y border-base-content/5'
 	};
 
 	const paddingClasses: Record<Padding, string> = {
