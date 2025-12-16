@@ -21,23 +21,26 @@ const defaultState: ExperienceState = {
 };
 
 function createExperienceStore(config: ExperienceConfig) {
-	// Load from localStorage if available, but guard against corrupted data.
-	const storedState = (() => {
-		if (!browser) return {};
-		try {
-			const raw = localStorage.getItem('mk01_experience');
-			if (!raw) return {};
-			return JSON.parse(raw);
-		} catch (err) {
-			console.warn('Resetting mk01_experience store due to storage access or parse error', err);
-			try {
-				localStorage.removeItem('mk01_experience');
-			} catch (e) {
-				// Ignore if we can't remove
-			}
-			return {};
-		}
-	})();
+  // Load from localStorage if available, but guard against corrupted data.
+  const storedState = (() => {
+    if (!browser) return {};
+    try {
+      const raw = localStorage.getItem("mk01_experience");
+      if (!raw) return {};
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn(
+        "Resetting mk01_experience store due to storage access or parse error",
+        err,
+      );
+      try {
+        localStorage.removeItem("mk01_experience");
+      } catch (e) {
+        // Ignore if we can't remove
+      }
+      return {};
+    }
+  })();
 
   const initialState: ExperienceState = {
     ...defaultState,
