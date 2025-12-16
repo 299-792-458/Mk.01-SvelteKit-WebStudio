@@ -21,7 +21,7 @@
 		seo?: SeoResult;
 	};
 
-	let isLoaded = false;
+	let isLoaded = true;
 	let loadTimeout: ReturnType<typeof setTimeout> | null = null;
 	
 	// Konami Code Logic
@@ -98,16 +98,14 @@
 {/if}
 
 <ScrollProgress />
-<Preloader bind:loaded={isLoaded} />
 
 <SmoothScroll>
 	<SonicIdentity>
 		<FluidBackground />
 		<ArchitecturalGrid />
 		<LiquidCursor />
-		{#if isLoaded}
-			<AppShell>
-				<div class="transition-grid">
+		<AppShell>
+			<div class="transition-grid">
 					{#key $page.url.pathname}
 						<div 
 							in:fly={{ y: 20, duration: 600, delay: 200, easing: cubicOut }} 
@@ -117,9 +115,8 @@
 							<slot />
 						</div>
 					{/key}
-				</div>
-			</AppShell>
-		{/if}
+			</div>
+		</AppShell>
 	</SonicIdentity>
 </SmoothScroll>
 
