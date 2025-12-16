@@ -1189,28 +1189,7 @@ let scrollObserver: IntersectionObserver | null = null;
 	</PageSection>
 </Reveal>
 
-<Reveal type="slide" delay={0.24}>
-	<PageSection id="arcade" tone="contrast">
-		<div class="arcade">
-			<div class="arcade-head">
-				<div>
-					<span class="eyebrow text-secondary/80">Telemetry arcade</span>
-					<h2 class="text-3xl font-semibold sm:text-4xl">Launch metrics rendered like a game HUD.</h2>
-					<p class="text-base text-base-content/70 sm:text-lg">
-						Bursts, gauges, and ribbons animate to prove the build is more than visuals—CI runs, perf
-						budgets, locale rehearsals, and visual diff sweeps all glow here.
-					</p>
-				</div>
-				<div class="arcade-pill">Live</div>
-			</div>
 
-						<div class="arcade-grid">
-							<div class="deck-container col-span-2 min-h-[320px]">
-								<TelemetryDeck />
-							</div>
-						</div>		</div>
-	</PageSection>
-</Reveal>
 
 <Reveal type="fade" delay={0.2}>
 	<HeroSequencer {identity} {metrics} showcases={data.showcases ?? []} />
