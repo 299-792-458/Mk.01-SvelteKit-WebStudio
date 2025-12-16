@@ -38,9 +38,7 @@
 
   /* Cinematic Selection */
   ::selection {
-    background: rgba(0, 255, 249, 0.3);
-    color: #fff;
-    text-shadow: 0 0 10px rgba(0, 255, 249, 0.6);
+    @apply bg-primary/30 text-base-content;
   }
 
   /* High-Precision Focus */
