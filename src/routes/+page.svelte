@@ -814,82 +814,36 @@ let scrollObserver: IntersectionObserver | null = null;
 
 </script>
 
-<div class="hero-wrap">
-	<NeonGridHero />
-	<div class="hero-beams" aria-hidden="true">
-		<span class="beam beam-1"></span>
-		<span class="beam beam-2"></span>
-		<span class="beam beam-3"></span>
-		<span class="beam beam-4"></span>
-		<span class="beam beam-5"></span>
-	</div>
-	<div class="hero-overlay">
-		<Reveal type="fade" delay={0.12}>
-			<div class="hero-grid">
-				<div class="hero-main">
-					<p class="eyebrow text-base-content/70">Mk.01 / Universal surface</p>
-					<h1 class="hero-title">
-						<ScrambleText text="One flagship site for hiring, launches, and live products." />
-					</h1>
-					<p class="hero-sub">
-						Cinematic hero systems, product-grade UX, and lab-caliber experiments—shipped from a
-						single codebase that sells the story and proves the skill.
-					</p>
-					<div class="hero-actions">
-						<Magnetic>
-							<a class="btn btn-primary btn-lg" href="#featured-work">Play the reel</a>
-						</Magnetic>
-						<Magnetic>
-							<a class="btn btn-ghost btn-lg hero-ghost" href="#contact">Book a slot</a>
-						</Magnetic>
-					</div>
-					<div class="cred-row">
-						{#each credibility as proof}
-							<span class="cred-pill">{proof}</span>
-						{/each}
-					</div>
-				</div>
-				<div class="hero-panel">
-					<div class="panel-head">
-						<div>
-							<p class="eyebrow text-secondary/80">Universal mode</p>
-							<h3>Portfolio, campaign, product—without switching stacks.</h3>
-							<p class="panel-sub">
-								Same build powers case studies, launch beats, and in-flight product demos. Story-led,
-								performance-checked, ready to go live.
-							</p>
-						</div>
-						<div class="panel-chip">
-							<span>Currently shipping</span>
-							<strong>{metrics.experimentsShipped}</strong>
-						</div>
-					</div>
-					<div class="mode-grid">
-						{#each heroModes as mode}
-							<div class="mode-card" use:tilt={{ max: 10, scale: 1.02 }}>
-								<div class="mode-top">
-									<span class="mode-badge">{mode.badge}</span>
-									<span aria-hidden="true">↗</span>
-								</div>
-								<h4>{mode.title}</h4>
-								<p>{mode.description}</p>
-							</div>
-						{/each}
-					</div>
-					<div class="metric-rail">
-						{#each heroMetrics as metric}
-							<div class="metric-chip">
-								<p class="metric-label">{metric.label}</p>
-								<p class="metric-value">{metric.value}</p>
-								<p class="metric-note">{metric.note}</p>
-							</div>
-						{/each}
-					</div>
-				</div>
+<PageSection id="hero" tone="default" padding="xl">
+	<div class="mx-auto max-w-4xl text-center space-y-8 py-12 md:py-20">
+		<Reveal type="fade" delay={0.1}>
+			<p class="eyebrow text-primary">Mk.01 / Universal Surface</p>
+		</Reveal>
+		
+		<Reveal type="slide" delay={0.2}>
+			<h1 class="font-display text-6xl md:text-8xl font-bold tracking-tight text-base-content leading-[0.95]">
+				Mk.01 Studio
+			</h1>
+		</Reveal>
+
+		<Reveal type="slide" delay={0.3}>
+			<div class="text-2xl md:text-3xl text-base-content/60 font-medium h-[1.5em]">
+				<ScrambleText text="Digital flagships that feel inevitable." speed={50} />
+			</div>
+		</Reveal>
+
+		<Reveal type="fade" delay={0.4}>
+			<div class="flex flex-wrap justify-center gap-4 pt-4">
+				<Magnetic>
+					<a href="/work" class="btn btn-primary btn-lg rounded-full px-8">View Work</a>
+				</Magnetic>
+				<Magnetic>
+					<a href="#contact" class="btn btn-outline btn-lg rounded-full px-8">Start Project</a>
+				</Magnetic>
 			</div>
 		</Reveal>
 	</div>
-</div>
+</PageSection>
 
 <Reveal type="slide" delay={0.18}>
 	<div class="sequencer-head">
