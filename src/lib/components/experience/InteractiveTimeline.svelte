@@ -56,13 +56,8 @@
 		position: relative;
 		padding: 1rem 1.1rem;
 		border-radius: 1.2rem;
-		background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(17, 24, 39, 0.9));
-		border: 1px solid rgba(124, 247, 255, 0.2);
-		box-shadow:
-			0 20px 60px rgba(0, 0, 0, 0.45),
-			inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+		@apply bg-base-200/90 text-base-content border border-base-content/10 shadow-lg backdrop-blur-md;
 		transform: translateZ(calc(var(--z) * 0.4px)) rotateY(calc(var(--rotation)));
-		backdrop-filter: blur(10px);
 		transition:
 			transform 240ms ease,
 			border-color 240ms ease,
@@ -71,10 +66,7 @@
 
 	.timeline-card:hover {
 		transform: translateZ(calc(var(--z) * 0.6px)) rotateY(calc(var(--rotation) * -1.2)) translateY(-2px);
-		border-color: rgba(255, 70, 201, 0.35);
-		box-shadow:
-			0 24px 64px rgba(255, 70, 201, 0.18),
-			0 10px 32px rgba(124, 247, 255, 0.12);
+		@apply border-primary/30 shadow-xl;
 	}
 
 	.timeline-glow {
