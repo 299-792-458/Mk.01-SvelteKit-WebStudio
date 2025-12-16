@@ -1812,8 +1812,6 @@ let scrollObserver: IntersectionObserver | null = null;
 </PageSection>
 </Reveal>
 
-</Reveal>
-
 <Reveal type="fade" delay={0.15}>
 <PageSection id="writing" tone="subtle">
 	<div class="space-y-3">
