@@ -27,13 +27,13 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    @apply bg-base-content/10;
     border-radius: 99px;
     transition: background 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    @apply bg-base-content/20;
   }
 
   /* Cinematic Selection */
