@@ -1,99 +1,111 @@
-import { writable } from 'svelte/store';
-import { appConfig, type ExperienceConfig } from '$config/app.config';
-import { browser } from '$app/environment';
+import { writable } from "svelte/store";
+import { appConfig, type ExperienceConfig } from "$config/app.config";
+import { browser } from "$app/environment";
 
-type ThemeMode = 'day' | 'night' | 'aurora';
+type ThemeMode = "day" | "night" | "aurora";
 
 interface ExperienceState {
-	theme: ThemeMode;
-	isCommandPaletteOpen: boolean;
-	isAmbientAudioPlaying: boolean;
-	isPerformanceMode: boolean;
-	isDevMode: boolean; // Hidden dev mode
+  theme: ThemeMode;
+  isCommandPaletteOpen: boolean;
+  isAmbientAudioPlaying: boolean;
+  isPerformanceMode: boolean;
+  isDevMode: boolean; // Hidden dev mode
 }
 
 const defaultState: ExperienceState = {
-	theme: 'day',
-	isCommandPaletteOpen: false,
-	isAmbientAudioPlaying: false,
-	isPerformanceMode: false,
-	isDevMode: false
+  theme: "day",
+  isCommandPaletteOpen: false,
+  isAmbientAudioPlaying: false,
+  isPerformanceMode: false,
+  isDevMode: false,
 };
 
 function createExperienceStore(config: ExperienceConfig) {
-	// Load from localStorage if available, but guard against corrupted data.
-	const storedState = (() => {
-		if (!browser) return {};
-		const raw = localStorage.getItem('mk01_experience');
-		if (!raw) return {};
-		try {
-			return JSON.parse(raw);
-		} catch (err) {
-			console.warn('Resetting mk01_experience store due to parse error', err);
-			localStorage.removeItem('mk01_experience');
-			return {};
-		}
-	})();
-	
-	const initialState: ExperienceState = {
-		...defaultState,
-		...storedState,
-		theme: storedState.theme || (config.defaultTheme === 'system' ? 'day' : config.defaultTheme),
-		// Always reset transient states
-		isCommandPaletteOpen: false 
-	};
+  // Load from localStorage if available, but guard against corrupted data.
+  const storedState = (() => {
+    if (!browser) return {};
+    const raw = localStorage.getItem("mk01_experience");
+    if (!raw) return {};
+    try {
+      return JSON.parse(raw);
+    } catch (err) {
+      console.warn("Resetting mk01_experience store due to parse error", err);
+      localStorage.removeItem("mk01_experience");
+      return {};
+    }
+  })();
 
-	const state = writable<ExperienceState>(initialState);
+  const initialState: ExperienceState = {
+    ...defaultState,
+    ...storedState,
+    theme:
+      storedState.theme ||
+      (config.defaultTheme === "system" ? "day" : config.defaultTheme),
+    // Always reset transient states
+    isCommandPaletteOpen: false,
+  };
 
-	// Persist changes
-	if (browser) {
-		state.subscribe((value) => {
-			const { isCommandPaletteOpen, ...persistable } = value;
-			localStorage.setItem('mk01_experience', JSON.stringify(persistable));
-			
-			// Sync theme with DOM for immediate CSS effect
-			document.documentElement.dataset.theme = value.theme === 'aurora' ? 'studio-pro-dark' : value.theme === 'night' ? 'studio-dark' : 'studio-light';
-		});
-	}
+  const state = writable<ExperienceState>(initialState);
 
-	return {
-		subscribe: state.subscribe,
-		setTheme: (value: ThemeMode) =>
-			state.update((current) => ({
-				...current,
-				theme: value
-			})),
-		toggleTheme: () =>
-			state.update((current) => ({
-				...current,
-				theme: current.theme === 'day' ? 'night' : current.theme === 'night' ? 'aurora' : 'day'
-			})),
-		openCommandPalette: () =>
-			state.update((current) => ({
-				...current,
-				isCommandPaletteOpen: true
-			})),
-		closeCommandPalette: () =>
-			state.update((current) => ({
-				...current,
-				isCommandPaletteOpen: false
-			})),
-		toggleAmbientAudio: () =>
-			state.update((current) => ({
-				...current,
-				isAmbientAudioPlaying: !current.isAmbientAudioPlaying
-			})),
-		togglePerformanceMode: () =>
-			state.update((current) => ({
-				...current,
-				isPerformanceMode: !current.isPerformanceMode
-			})),
-		toggleDevMode: () =>
-			state.update((current) => ({
-				...current,
-				isDevMode: !current.isDevMode
-			}))
-	};
+  // Persist changes
+  if (browser) {
+    state.subscribe((value) => {
+      const { isCommandPaletteOpen, ...persistable } = value;
+      localStorage.setItem("mk01_experience", JSON.stringify(persistable));
+
+      // Sync theme with DOM for immediate CSS effect
+      document.documentElement.dataset.theme =
+        value.theme === "aurora"
+          ? "studio-pro-dark"
+          : value.theme === "night"
+            ? "studio-dark"
+            : "studio-light";
+    });
+  }
+
+  return {
+    subscribe: state.subscribe,
+    setTheme: (value: ThemeMode) =>
+      state.update((current) => ({
+        ...current,
+        theme: value,
+      })),
+    toggleTheme: () =>
+      state.update((current) => ({
+        ...current,
+        theme:
+          current.theme === "day"
+            ? "night"
+            : current.theme === "night"
+              ? "aurora"
+              : "day",
+      })),
+    openCommandPalette: () =>
+      state.update((current) => ({
+        ...current,
+        isCommandPaletteOpen: true,
+      })),
+    closeCommandPalette: () =>
+      state.update((current) => ({
+        ...current,
+        isCommandPaletteOpen: false,
+      })),
+    toggleAmbientAudio: () =>
+      state.update((current) => ({
+        ...current,
+        isAmbientAudioPlaying: !current.isAmbientAudioPlaying,
+      })),
+    togglePerformanceMode: () =>
+      state.update((current) => ({
+        ...current,
+        isPerformanceMode: !current.isPerformanceMode,
+      })),
+    toggleDevMode: () =>
+      state.update((current) => ({
+        ...current,
+        isDevMode: !current.isDevMode,
+      })),
+  };
 }
 
 export const experienceStore = createExperienceStore(appConfig.experience);

@@ -1,16 +1,16 @@
 // @ts-nocheck
-import type { PageLoad } from './$types';
+import type { PageLoad } from "./$types";
 
-import { buildSeo } from '$lib/utils/seo';
+import { buildSeo } from "$lib/utils/seo";
 
 export const load = () => {
-	return {
-		seo: buildSeo({
-			title: 'Mk.01 Studio Stack',
-			description:
-				'The technology stack Mk.01 Studio uses to deliver high-performance, cinematic web experiences.',
-			path: '/stack'
-		})
-	};
+  return {
+    seo: buildSeo({
+      title: "Mk.01 Studio Stack",
+      description:
+        "The technology stack Mk.01 Studio uses to deliver high-performance, cinematic web experiences.",
+      path: "/stack",
+    }),
+  };
 };
 ;null as any as PageLoad;

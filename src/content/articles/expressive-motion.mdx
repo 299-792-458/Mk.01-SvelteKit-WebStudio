@@ -1,18 +1,19 @@
 ---
-title: 'Expressive Motion Systems for the Modern Web'
-excerpt: 'Designing motion languages that scale across pages, devices, and levels of immersion.'
+title: "Expressive Motion Systems for the Modern Web"
+excerpt: "Designing motion languages that scale across pages, devices, and levels of immersion."
 date: 2024-02-19
-readingTime: '8 min'
+readingTime: "8 min"
 tags:
   - Motion
   - Systems Design
   - SvelteKit
-coverImage: '/images/blog/expressive-motion-cover.jpg'
+coverImage: "/images/blog/expressive-motion-cover.jpg"
 ---
 
 <lead>
-	Motion is the connective tissue between intention and interaction. When used with care it
-	transcends decoration and becomes guidance, storytelling, and delight.
+  Motion is the connective tissue between intention and interaction. When used
+  with care it transcends decoration and becomes guidance, storytelling, and
+  delight.
 </lead>
 
 We approach motion like we approach typography: as a system. It requires scales, tokens, choreography guidelines, and tooling that makes the right move the default move.
@@ -36,15 +37,15 @@ We approach motion like we approach typography: as a system. It requires scales,
 ### Toolkit
 
 ```ts
-import { timeline } from 'motion';
+import { timeline } from "motion";
 
 timeline([
-	['.hero-headline', { opacity: [0, 1], y: [40, 0] }, { duration: 0.8 }],
-	[
-		'.hero-orbs',
-		{ scale: [0.6, 1], filter: ['blur(12px)', 'blur(0px)'] },
-		{ at: '<', duration: 1.6 }
-	]
+  [".hero-headline", { opacity: [0, 1], y: [40, 0] }, { duration: 0.8 }],
+  [
+    ".hero-orbs",
+    { scale: [0.6, 1], filter: ["blur(12px)", "blur(0px)"] },
+    { at: "<", duration: 1.6 },
+  ],
 ]);
 ```
 

@@ -1,11 +1,11 @@
 {
-	"slug": "flicker-field",
-	"title": "Flicker Field",
-	"summary": "Neural style transfer filmic pipeline bringing AI art direction to product launches.",
-	"tech": ["TensorFlow.js", "WebGL", "ffmpeg.wasm"],
-	"status": "archived",
-	"links": {
-		"demo": "https://mk1.dev/experiments/flicker-field",
-		"source": "https://github.com/your-handle/flicker-field"
-	}
+  "slug": "flicker-field",
+  "title": "Flicker Field",
+  "summary": "Neural style transfer filmic pipeline bringing AI art direction to product launches.",
+  "tech": ["TensorFlow.js", "WebGL", "ffmpeg.wasm"],
+  "status": "archived",
+  "links": {
+    "demo": "https://mk1.dev/experiments/flicker-field",
+    "source": "https://github.com/your-handle/flicker-field"
+  }
 }

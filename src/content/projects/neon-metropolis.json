@@ -1,61 +1,65 @@
 {
-	"slug": "neon-metropolis",
-	"title": "Neon Metropolis Launchverse",
-	"summary": "Immersive launch experience blending WebGL atmospherics with interactive storytelling chapters.",
-	"year": "2024",
-	"industry": "Entertainment",
-	"tags": ["WebGL", "Motion", "Narrative UX"],
-	"hero": {
-		"headline": "A futuristic cityscape that responds to every interaction.",
-		"subheadline": "Mk.01 crafted the reveal for the Neon Metropolis platform, turning the browser into an experiential stage.",
-		"video": "/video/neon-metropolis-teaser.mp4"
-	},
-	"kpis": [
-		{ "label": "Retention", "value": "+38%", "description": "launch day" },
-		{ "label": "Press", "value": "15 outlets", "description": "global coverage" },
-		{ "label": "NPS", "value": "92", "description": "attendees" }
-	],
-	"outcomes": [
-		"Launch day retention +38% compared to prior releases.",
-		"Global press coverage from 15 media outlets.",
-		"High net promoter score (92) from launch attendees."
-	],
-	"services": ["WebGL", "Narrative UX", "Performance", "Audio-reactive motion"],
-	"chapters": [
-		{
-			"id": "strategy",
-			"title": "Strategy & Narrative Blueprint",
-			"description": "We mapped the city districts to user funnels, aligning each to a storytelling beat and key business metric."
-		},
-		{
-			"id": "experience",
-			"title": "Experience Design",
-			"description": "Procedural skyline built with Three.js, volumetric shaders, and reactive audio; scroll timeline orchestrated via GSAP."
-		},
-		{
-			"id": "delivery",
-			"title": "Delivery & Optimization",
-			"description": "Implemented intelligent asset streaming, edge caching, and progressive loading cues reaching 92 Lighthouse performance."
-		}
-	],
-	"timeline": [
-		{
-			"title": "Narrative Map",
-			"timeframe": "Weeks 1-2",
-			"summary": "District-to-funnel mapping, story beats, and interactive checkpoints for the launch universe.",
-			"metric": "Aligned KPIs per beat"
-		},
-		{
-			"title": "Procedural City",
-			"timeframe": "Weeks 3-5",
-			"summary": "Three.js skyline, volumetric fog, audio-reactive shaders, and scroll-driven camera rails.",
-			"metric": "92 perf score"
-		},
-		{
-			"title": "Launch Ops",
-			"timeframe": "Weeks 6-7",
-			"summary": "Edge caching, progressive streaming, and real-time telemetry overlays for exec dashboards.",
-			"metric": "+38% retention"
-		}
-	]
+  "slug": "neon-metropolis",
+  "title": "Neon Metropolis Launchverse",
+  "summary": "Immersive launch experience blending WebGL atmospherics with interactive storytelling chapters.",
+  "year": "2024",
+  "industry": "Entertainment",
+  "tags": ["WebGL", "Motion", "Narrative UX"],
+  "hero": {
+    "headline": "A futuristic cityscape that responds to every interaction.",
+    "subheadline": "Mk.01 crafted the reveal for the Neon Metropolis platform, turning the browser into an experiential stage.",
+    "video": "/video/neon-metropolis-teaser.mp4"
+  },
+  "kpis": [
+    { "label": "Retention", "value": "+38%", "description": "launch day" },
+    {
+      "label": "Press",
+      "value": "15 outlets",
+      "description": "global coverage"
+    },
+    { "label": "NPS", "value": "92", "description": "attendees" }
+  ],
+  "outcomes": [
+    "Launch day retention +38% compared to prior releases.",
+    "Global press coverage from 15 media outlets.",
+    "High net promoter score (92) from launch attendees."
+  ],
+  "services": ["WebGL", "Narrative UX", "Performance", "Audio-reactive motion"],
+  "chapters": [
+    {
+      "id": "strategy",
+      "title": "Strategy & Narrative Blueprint",
+      "description": "We mapped the city districts to user funnels, aligning each to a storytelling beat and key business metric."
+    },
+    {
+      "id": "experience",
+      "title": "Experience Design",
+      "description": "Procedural skyline built with Three.js, volumetric shaders, and reactive audio; scroll timeline orchestrated via GSAP."
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery & Optimization",
+      "description": "Implemented intelligent asset streaming, edge caching, and progressive loading cues reaching 92 Lighthouse performance."
+    }
+  ],
+  "timeline": [
+    {
+      "title": "Narrative Map",
+      "timeframe": "Weeks 1-2",
+      "summary": "District-to-funnel mapping, story beats, and interactive checkpoints for the launch universe.",
+      "metric": "Aligned KPIs per beat"
+    },
+    {
+      "title": "Procedural City",
+      "timeframe": "Weeks 3-5",
+      "summary": "Three.js skyline, volumetric fog, audio-reactive shaders, and scroll-driven camera rails.",
+      "metric": "92 perf score"
+    },
+    {
+      "title": "Launch Ops",
+      "timeframe": "Weeks 6-7",
+      "summary": "Edge caching, progressive streaming, and real-time telemetry overlays for exec dashboards.",
+      "metric": "+38% retention"
+    }
+  ]
 }

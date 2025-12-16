@@ -1,11 +1,11 @@
 {
-	"slug": "glyph-suite",
-	"title": "Glyph Suite",
-	"summary": "Parametric typography generator mapping sound and cursor input into responsive logomarks.",
-	"tech": ["Canvas API", "Tone.js", "Web Workers"],
-	"status": "production",
-	"links": {
-		"demo": "https://mk1.dev/experiments/glyph-suite",
-		"source": "https://github.com/your-handle/glyph-suite"
-	}
+  "slug": "glyph-suite",
+  "title": "Glyph Suite",
+  "summary": "Parametric typography generator mapping sound and cursor input into responsive logomarks.",
+  "tech": ["Canvas API", "Tone.js", "Web Workers"],
+  "status": "production",
+  "links": {
+    "demo": "https://mk1.dev/experiments/glyph-suite",
+    "source": "https://github.com/your-handle/glyph-suite"
+  }
 }

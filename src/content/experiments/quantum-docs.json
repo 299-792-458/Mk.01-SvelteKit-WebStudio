@@ -1,11 +1,11 @@
 {
-	"slug": "quantum-docs",
-	"title": "Quantum Docs",
-	"summary": "Living documentation platform with AI-assisted examples and interactive sandboxes.",
-	"tech": ["OpenAI API", "mdsvex", "Cloudflare Workers"],
-	"status": "production",
-	"links": {
-		"demo": "https://mk1.dev/experiments/quantum-docs",
-		"source": "https://github.com/your-handle/quantum-docs"
-	}
+  "slug": "quantum-docs",
+  "title": "Quantum Docs",
+  "summary": "Living documentation platform with AI-assisted examples and interactive sandboxes.",
+  "tech": ["OpenAI API", "mdsvex", "Cloudflare Workers"],
+  "status": "production",
+  "links": {
+    "demo": "https://mk1.dev/experiments/quantum-docs",
+    "source": "https://github.com/your-handle/quantum-docs"
+  }
 }

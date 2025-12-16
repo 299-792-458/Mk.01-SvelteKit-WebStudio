@@ -1,60 +1,66 @@
 {
-	"slug": "flowstate",
-	"title": "Flowstate Mindful Productivity",
-	"summary": "A mindful productivity platform using biometric feedback to adapt motion, focus, and ritual guidance.",
-	"year": "2024",
-	"industry": "Health & Wellness",
-	"tags": ["Product Design", "Mobile", "Animation"],
-	"hero": {
-		"headline": "Crafting calming productivity with adaptive motion cues.",
-		"subheadline": "Flowstate blends biofeedback, motion design, and ritual planning into a beautifully immersive product."
-	},
-	"kpis": [
-		{ "label": "DAU lift", "value": "+46%", "description": "post-launch" },
-		{ "label": "NPS", "value": "72", "description": "customer advocacy" },
-		{ "label": "App Store", "value": "4.9★", "description": "10k+ reviews" }
-	],
-	"outcomes": [
-		"Daily active usage increased by 46% post-launch.",
-		"App Store rating climbed to 4.9 with 10k+ reviews.",
-		"Motion language adopted by internal design system guidelines."
-	],
-	"services": ["Product design", "Motion direction", "Mobile", "AI assistance", "Design systems"],
-	"chapters": [
-		{
-			"id": "research",
-			"title": "Research & Synthesis",
-			"description": "Interviewed neuroscientists and focus coaches to translate rituals into interactive patterns."
-		},
-		{
-			"id": "motion",
-			"title": "Motion Language",
-			"description": "Defined easing, rhythm, and choreography aligned to heart rate variability and breathing cycles."
-		},
-		{
-			"id": "delivery",
-			"title": "Delivery",
-			"description": "Built Svelte Native prototypes, automated QA with Playwright, and orchestrated launch comms."
-		}
-	],
-	"timeline": [
-		{
-			"title": "Signals & Rituals",
-			"timeframe": "Weeks 1-2",
-			"summary": "Mapped biomarker inputs to motion states; prototyped in Svelte to tune easing to breathing cadence.",
-			"metric": "+18% onboarding completion"
-		},
-		{
-			"title": "Motion Language",
-			"timeframe": "Weeks 3-5",
-			"summary": "Defined motion tokens, haptics, and color temperature to stabilize focus rituals across flows.",
-			"metric": "-32% perceived friction"
-		},
-		{
-			"title": "Pilot & Launch",
-			"timeframe": "Weeks 6-8",
-			"summary": "A/B tested rituals, tuned latency budgets, and rolled out with guided breathing + audio-reactive cues.",
-			"metric": "+46% DAU lift"
-		}
-	]
+  "slug": "flowstate",
+  "title": "Flowstate Mindful Productivity",
+  "summary": "A mindful productivity platform using biometric feedback to adapt motion, focus, and ritual guidance.",
+  "year": "2024",
+  "industry": "Health & Wellness",
+  "tags": ["Product Design", "Mobile", "Animation"],
+  "hero": {
+    "headline": "Crafting calming productivity with adaptive motion cues.",
+    "subheadline": "Flowstate blends biofeedback, motion design, and ritual planning into a beautifully immersive product."
+  },
+  "kpis": [
+    { "label": "DAU lift", "value": "+46%", "description": "post-launch" },
+    { "label": "NPS", "value": "72", "description": "customer advocacy" },
+    { "label": "App Store", "value": "4.9★", "description": "10k+ reviews" }
+  ],
+  "outcomes": [
+    "Daily active usage increased by 46% post-launch.",
+    "App Store rating climbed to 4.9 with 10k+ reviews.",
+    "Motion language adopted by internal design system guidelines."
+  ],
+  "services": [
+    "Product design",
+    "Motion direction",
+    "Mobile",
+    "AI assistance",
+    "Design systems"
+  ],
+  "chapters": [
+    {
+      "id": "research",
+      "title": "Research & Synthesis",
+      "description": "Interviewed neuroscientists and focus coaches to translate rituals into interactive patterns."
+    },
+    {
+      "id": "motion",
+      "title": "Motion Language",
+      "description": "Defined easing, rhythm, and choreography aligned to heart rate variability and breathing cycles."
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery",
+      "description": "Built Svelte Native prototypes, automated QA with Playwright, and orchestrated launch comms."
+    }
+  ],
+  "timeline": [
+    {
+      "title": "Signals & Rituals",
+      "timeframe": "Weeks 1-2",
+      "summary": "Mapped biomarker inputs to motion states; prototyped in Svelte to tune easing to breathing cadence.",
+      "metric": "+18% onboarding completion"
+    },
+    {
+      "title": "Motion Language",
+      "timeframe": "Weeks 3-5",
+      "summary": "Defined motion tokens, haptics, and color temperature to stabilize focus rituals across flows.",
+      "metric": "-32% perceived friction"
+    },
+    {
+      "title": "Pilot & Launch",
+      "timeframe": "Weeks 6-8",
+      "summary": "A/B tested rituals, tuned latency budgets, and rolled out with guided breathing + audio-reactive cues.",
+      "metric": "+46% DAU lift"
+    }
+  ]
 }

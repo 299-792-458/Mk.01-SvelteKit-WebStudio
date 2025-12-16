@@ -1,11 +1,11 @@
 {
-	"slug": "sonic-orbit",
-	"title": "Sonic Orbit",
-	"summary": "Audio-reactive particle system that translates soundscapes into orbital choreography.",
-	"tech": ["Three.js", "WebAudio API", "GPU Instancing"],
-	"status": "prototype",
-	"links": {
-		"demo": "https://mk1.dev/experiments/sonic-orbit",
-		"source": "https://github.com/your-handle/sonic-orbit"
-	}
+  "slug": "sonic-orbit",
+  "title": "Sonic Orbit",
+  "summary": "Audio-reactive particle system that translates soundscapes into orbital choreography.",
+  "tech": ["Three.js", "WebAudio API", "GPU Instancing"],
+  "status": "prototype",
+  "links": {
+    "demo": "https://mk1.dev/experiments/sonic-orbit",
+    "source": "https://github.com/your-handle/sonic-orbit"
+  }
 }

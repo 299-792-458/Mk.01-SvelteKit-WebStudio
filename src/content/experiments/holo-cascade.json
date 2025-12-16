@@ -1,11 +1,11 @@
 {
-	"slug": "holo-cascade",
-	"title": "Holo Cascade",
-	"summary": "Volumetric hero system combining shader-driven atmospherics with scroll choreography.",
-	"tech": ["SvelteKit", "GLSL", "GSAP"],
-	"status": "prototype",
-	"links": {
-		"demo": "https://mk1.dev/experiments/holo-cascade",
-		"source": "https://github.com/your-handle/holo-cascade"
-	}
+  "slug": "holo-cascade",
+  "title": "Holo Cascade",
+  "summary": "Volumetric hero system combining shader-driven atmospherics with scroll choreography.",
+  "tech": ["SvelteKit", "GLSL", "GSAP"],
+  "status": "prototype",
+  "links": {
+    "demo": "https://mk1.dev/experiments/holo-cascade",
+    "source": "https://github.com/your-handle/holo-cascade"
+  }
 }
