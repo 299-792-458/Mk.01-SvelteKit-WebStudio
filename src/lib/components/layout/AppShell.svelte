@@ -4,7 +4,6 @@
 	// import Navigation from '$components/composition/Navigation.svelte';
 	import GlobalNav from '$lib/components/layout/GlobalNav.svelte';
 	import CommandPalette from '$components/composition/CommandPalette.svelte';
-	import AmbientAudio from '$components/experience/AmbientAudio.svelte';
 	import { experienceStore } from '$services/experience';
 	import SiteFooter from './SiteFooter.svelte';
 
