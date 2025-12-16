@@ -1235,63 +1235,6 @@ let scrollObserver: IntersectionObserver | null = null;
 	</PageSection>
 </Reveal>
 
-<Reveal type="fade" delay={0.22}>
-	<PageSection id="holo-vault" tone="subtle">
-		<div class="holo-vault">
-			<div class="holo-head">
-				<div>
-					<span class="eyebrow text-primary/80">Holo vault</span>
-					<h2 class="text-3xl font-semibold sm:text-4xl">Hyper-stylized cards with depth-play.</h2>
-					<p class="text-base text-base-content/70 sm:text-lg">
-						Swap tracks to watch layered cards rotate, glow, and pulse with hover parallax. Built to
-						show cinematic instincts with GPU-safe fallbacks.
-					</p>
-				</div>
-				<div class="holo-badges">
-					<span>Parallax</span>
-					<span>Scanlines</span>
-					<span>Gradient masks</span>
-				</div>
-			</div>
-
-			<div class="holo-grid">
-				<div class="holo-stack">
-					{#each holoTracks as holo, index}
-						<button
-							type="button"
-							class={`holo-card ${activeHolo === index ? 'active' : ''}`}
-							on:click={() => (activeHolo = index)}
-							aria-pressed={activeHolo === index}
-						>
-							<div class="holo-top">
-								<p class="holo-title">{holo.title}</p>
-								<span class="holo-badge">{holo.badge}</span>
-							</div>
-							<p class="holo-copy">{holo.summary}</p>
-							<span class="holo-glow" aria-hidden="true"></span>
-						</button>
-					{/each}
-				</div>
-
-				<div class="holo-visual">
-					<div class="holo-plane plane-a"></div>
-					<div class="holo-plane plane-b"></div>
-					<div class="holo-plane plane-c"></div>
-					<div class="holo-scan"></div>
-					<div class="holo-orb orb-1"></div>
-					<div class="holo-orb orb-2"></div>
-					<div class="holo-orb orb-3"></div>
-					<div class="holo-caption">
-						<p class="eyebrow text-secondary/80">Active track</p>
-						<h3>{holoTracks[activeHolo].title}</h3>
-						<p>{holoTracks[activeHolo].summary}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</PageSection>
-</Reveal>
-
 <Reveal type="slide" delay={0.24}>
 	<PageSection id="arcade" tone="contrast">
 		<div class="arcade">
