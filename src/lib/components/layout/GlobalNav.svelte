@@ -90,7 +90,6 @@
 					/>
 				</svg>
 			</a>
-			<ThemeToggle {theme} on:toggle={(e) => dispatch('themeChange', e.detail)} />
 
 			<!-- Mobile Toggle -->
 	<button
