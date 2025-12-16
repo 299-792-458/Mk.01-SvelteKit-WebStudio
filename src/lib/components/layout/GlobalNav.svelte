@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
-	import ThemeToggle from './ThemeToggle.svelte';
 	import Magnetic from '$lib/components/motion/Magnetic.svelte';
 	import { page } from '$app/stores';
 	import { fly, fade } from 'svelte/transition';
