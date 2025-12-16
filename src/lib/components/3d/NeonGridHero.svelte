@@ -13,7 +13,11 @@
 	let clock: THREE.Clock;
 	let grid: THREE.Points | null = null;
 	let raf = 0;
-	let animationActive = true; // Control animation loop
+	let animationActive = true;
+
+	// Theme variables
+	let currentTheme: 'studio-light' | 'studio-dark' | 'studio-pro-dark' = 'studio-dark';
+	let isLightMode = false;
 
 	// Shader for glowing points
 	const vertexShader = `
@@ -63,9 +67,13 @@
 				const y = (Math.sin((x + z) * 0.05) * 0.6) / 2;
 				positions.push(x * spacing, y, z * spacing);
 				
-				// Color gradient based on height/position
+				// Color gradient based on height/position, now theme-aware
 				const t = (y + 0.3) / 0.6;
-				color.setHSL(0.6 + t * 0.1, 0.8, 0.6); // Blue/Purple/Cyan
+				if (isLightMode) {
+					color.setHSL(0.6 + t * 0.1, 0.5, 0.4 + t * 0.2); // Desaturated blues/purples for light mode
+				} else {
+					color.setHSL(0.6 + t * 0.1, 0.8, 0.6); // Blue/Purple/Cyan for dark mode
+				}
 				colors.push(color.r, color.g, color.b);
 
 				// Randomize sizes slightly
@@ -85,7 +93,7 @@
 			transparent: true,
 			vertexColors: true,
 			depthWrite: false,
-			blending: THREE.AdditiveBlending
+			blending: isLightMode ? THREE.NormalBlending : THREE.AdditiveBlending // Normal blending for light, additive for dark
 		});
 
 		grid = new THREE.Points(geometry, material);
@@ -101,8 +109,8 @@
 		container.appendChild(renderer.domElement);
 
 		scene = new THREE.Scene();
-		// Fog matches the dark blue/black background
-		scene.fog = new THREE.FogExp2('#05060f', 0.015);
+		// Fog color based on theme
+		scene.fog = new THREE.FogExp2(isLightMode ? '#F8FAFC' : '#05060f', isLightMode ? 0.008 : 0.015);
 
 		camera = new THREE.PerspectiveCamera(
 			60,
@@ -146,33 +154,41 @@
 	onMount(() => {
 		if (!browser) return;
 
-		// Initial check for performance mode
-		if (get(experienceStore).isPerformanceMode) {
-			animationActive = false;
-		} else {
+		const unsubExperience = experienceStore.subscribe(state => {
+			currentTheme = state.theme === 'day' ? 'studio-light' : (state.theme === 'night' ? 'studio-dark' : 'studio-pro-dark');
+			isLightMode = currentTheme === 'studio-light';
+			
+			if (state.isPerformanceMode) {
+				animationActive = false;
+				cancelAnimationFrame(raf);
+				renderer?.dispose();
+				grid?.geometry?.dispose();
+				(grid?.material as THREE.Material)?.dispose();
+				container?.replaceChildren();
+				scene = null as any; // Clear references
+				grid = null;
+			} else {
+				animationActive = true;
+				if (scene) { // If already initialized, rebuild grid and fog
+					scene.fog = new THREE.FogExp2(isLightMode ? '#F8FAFC' : '#05060f', isLightMode ? 0.008 : 0.015);
+					buildGrid(get(quality));
+				} else { // First time init
+					init();
+					animate();
+				}
+			}
+		});
+
+		// Initial setup if not in performance mode
+		if (!get(experienceStore).isPerformanceMode) {
+			currentTheme = get(experienceStore).theme === 'day' ? 'studio-light' : (get(experienceStore).theme === 'night' ? 'studio-dark' : 'studio-pro-dark');
+			isLightMode = currentTheme === 'studio-light';
 			init();
 			animate();
 		}
 
 		const unsubViewport = viewport.subscribe(() => resize());
 		const unsubQuality = quality.subscribe((value) => buildGrid(value));
-		const unsubExperience = experienceStore.subscribe(state => {
-			if (state.isPerformanceMode !== !animationActive) {
-				animationActive = !state.isPerformanceMode;
-				if (animationActive) {
-					init(); // Re-initialize if entering normal mode
-					animate();
-				} else {
-					cancelAnimationFrame(raf);
-					renderer?.dispose();
-					grid?.geometry?.dispose();
-					(grid?.material as THREE.Material)?.dispose();
-					container?.replaceChildren();
-					scene = null as any; // Clear references
-					grid = null;
-				}
-			}
-		});
 
 
 		return () => {
@@ -189,16 +205,21 @@
 </script>
 
 {#if animationActive}
-<div class="hero-canvas" bind:this={container} aria-hidden="true"></div>
+<div class="hero-canvas" class:is-light-mode={isLightMode} bind:this={container} aria-hidden="true"></div>
 {/if}
 
 <style>
 	.hero-canvas {
 		position: absolute;
 		inset: 0;
-		/* Fallback gradient */
+		/* Fallback gradient for dark mode */
 		background: radial-gradient(circle at 50% 0%, #1a2035 0%, #05060f 60%);
 		overflow: hidden;
 		z-index: 0;
+	}
+
+	.hero-canvas.is-light-mode {
+		/* Fallback gradient for light mode */
+		background: radial-gradient(circle at 50% 0%, #E2E8F0 0%, #F8FAFC 60%);
 	}
 </style>
