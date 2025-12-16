@@ -1832,20 +1832,6 @@ let scrollObserver: IntersectionObserver | null = null;
 </Reveal>
 
 <Reveal type="fade" delay={0.15}>
-<PageSection id="lab" tone="contrast">
-	<div class="space-y-4">
-		<span class="eyebrow text-secondary/80">Playground / Tech lab</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">Tweak parameters, watch the canvas morph.</h2>
-		<p class="max-w-3xl text-base text-base-content/70 sm:text-lg">
-			GLSL-powered sandbox for shader demos, particle fields, and audio-reactive visuals. Use it to show
-			engineering rigor and creative range in one viewport.
-		</p>
-	</div>
-	<LabPlayground />
-</PageSection>
-</Reveal>
-
-<Reveal type="fade" delay={0.15}>
 <PageSection id="writing" tone="subtle">
 	<div class="space-y-3">
 		<span class="eyebrow text-primary/80">Writing / Log</span>
