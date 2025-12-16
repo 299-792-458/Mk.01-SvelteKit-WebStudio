@@ -6,7 +6,11 @@
 	// In a real app, these would likely be small MP3/WAV files
 	// For this prototype, we'll use AudioContext oscillators for a "techy" feel
 
-	const audioCtx = typeof window !== 'undefined' ? new (window.AudioContext || (window as any).webkitAudioContext)() : null;
+	const audioCtx = (() => {
+		if (typeof window === 'undefined') return null;
+		const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+		return Ctx ? new Ctx() : null;
+	})();
 
 	function playTone(freq: number, type: OscillatorType = 'sine', duration = 0.1, vol = 0.1) {
 		if (!audioCtx || audioCtx.state === 'suspended') return;

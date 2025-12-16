@@ -108,6 +108,8 @@
 		}
 	`;
 
+	let geometry: THREE.PlaneGeometry;
+
 	onMount(() => {
 		if (!browser) return;
 
@@ -127,7 +129,7 @@
 			scene = new THREE.Scene();
 			camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-			const geometry = new THREE.PlaneGeometry(2, 2);
+			geometry = new THREE.PlaneGeometry(2, 2);
 			material = new THREE.ShaderMaterial({
 				vertexShader,
 				fragmentShader,
