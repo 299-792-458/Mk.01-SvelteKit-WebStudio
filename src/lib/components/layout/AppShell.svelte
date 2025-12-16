@@ -92,5 +92,4 @@
 	</div>
 
 	<CommandPalette />
-	<AmbientAudio />
 </div>
