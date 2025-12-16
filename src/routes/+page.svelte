@@ -1812,24 +1812,8 @@ let scrollObserver: IntersectionObserver | null = null;
 </PageSection>
 </Reveal>
 
-<Reveal type="slide" delay={0.2}>
-<PageSection id="featured-work">
-	<div class="mx-auto max-w-3xl text-center space-y-4 mb-12">
-		<span class="eyebrow">Featured Work</span>
-		<h2 class="text-3xl font-semibold sm:text-4xl">A selection of recent flagship builds.</h2>
-		<p class="text-base text-base-content/70 sm:text-lg">
-			From launch campaigns to product refactors, each project is engineered to perform and feel
-			memorable.
-		</p>
-	</div>
-
-	<ProjectCarousel projects={data.projects} />
-
-	<div class="mt-12 text-center">
-		<a href="/work" class="btn btn-primary btn-lg">View all work</a>
-	</div>
-</PageSection>
-</Reveal>
+<Reveal type="fade" delay={0.22}>
+<PageSection id="mission" tone="subtle">
 
 <Reveal type="fade" delay={0.15}>
 <PageSection id="writing" tone="subtle">
