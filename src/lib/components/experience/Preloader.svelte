@@ -21,12 +21,13 @@ let failSafeTimeout: ReturnType<typeof setTimeout> | null = null;
 let interval: ReturnType<typeof setInterval> | null = null;
 let lineInterval: ReturnType<typeof setInterval> | null = null;
 
-onMount(() => {
+	onMount(() => {
+		// Start progress immediately
 		interval = setInterval(() => {
 			progress += Math.random() * 5;
 			if (progress >= 100) {
 				progress = 100;
-				clearInterval(interval);
+				if (interval) clearInterval(interval);
 				setTimeout(() => {
 					loaded = true;
 				}, 800);
@@ -39,7 +40,7 @@ onMount(() => {
 			loaded = true;
 			if (interval) clearInterval(interval);
 			if (lineInterval) clearInterval(lineInterval);
-		}, 2500);
+		}, 3000); // Increased slightly to give normal load a chance
 
 		// Reveal boot lines
 		let lineIndex = 0;
@@ -48,7 +49,7 @@ onMount(() => {
 				visibleLines = [...visibleLines, bootLines[lineIndex]];
 				lineIndex++;
 			} else {
-				clearInterval(lineInterval);
+				if (lineInterval) clearInterval(lineInterval);
 			}
 		}, 400);
 
@@ -63,8 +64,7 @@ onMount(() => {
 			if (failSafeTimeout) clearTimeout(failSafeTimeout);
 			unsub();
 		};
-	});
-</script>
+	});</script>
 
 {#if !loaded}
 	<div class="preloader" out:fade={{ duration: 1000, easing: cubicOut }}>
