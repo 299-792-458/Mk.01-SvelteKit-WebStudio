@@ -212,14 +212,10 @@
 	.hero-canvas {
 		position: absolute;
 		inset: 0;
-		/* Fallback gradient for dark mode */
-		background: radial-gradient(circle at 50% 0%, #1a2035 0%, #05060f 60%);
+		/* Use theme-aware base color with a gradient overlay */
+		@apply bg-base-100;
+		background-image: radial-gradient(circle at 50% 0%, oklch(var(--b2) / 0.8) 0%, oklch(var(--b1)) 60%);
 		overflow: hidden;
 		z-index: 0;
-	}
-
-	.hero-canvas.is-light-mode {
-		/* Fallback gradient for light mode */
-		background: radial-gradient(circle at 50% 0%, #E2E8F0 0%, #F8FAFC 60%);
 	}
 </style>
