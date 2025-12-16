@@ -46,14 +46,7 @@
 	}
 
 	onMount(() => {
-		// Fallback to ensure the preloader never hangs due to a missed bind.
-		loadTimeout = setTimeout(() => {
-			isLoaded = true;
-		}, 2200);
-
-		return () => {
-			if (loadTimeout) clearTimeout(loadTimeout);
-		};
+		// Cleanup if needed
 	});
 
 	$: currentSeo = data?.seo ?? buildSeo({ path: $page.url.pathname });
