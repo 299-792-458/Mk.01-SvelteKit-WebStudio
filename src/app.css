@@ -59,7 +59,6 @@
 
   body {
     @apply font-sans text-base leading-relaxed;
-    color: rgba(226, 232, 255, 0.92);
     background-image:
       radial-gradient(
         120% 120% at 12% 18%,
