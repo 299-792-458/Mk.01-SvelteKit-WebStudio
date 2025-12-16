@@ -99,14 +99,14 @@
 					<span class="badge badge-primary border-none bg-primary/20 text-primary-content backdrop-blur">
 						{featuredPost.category}
 					</span>
-					<span class="badge badge-ghost backdrop-blur text-white/80">
+					<span class="badge badge-ghost backdrop-blur text-base-content/80">
 						{featuredPost.readingTime} min read
 					</span>
 				</div>
-				<h2 class="text-3xl md:text-5xl font-bold text-white leading-tight group-hover:text-primary transition-colors duration-300">
+				<h2 class="text-3xl md:text-5xl font-bold text-base-content leading-tight group-hover:text-primary transition-colors duration-300">
 					{featuredPost.title}
 				</h2>
-				<p class="text-lg md:text-xl text-white/80 line-clamp-2 max-w-2xl">
+				<p class="text-lg md:text-xl text-base-content/80 line-clamp-2 max-w-2xl">
 					{featuredPost.description}
 				</p>
 			</div>
