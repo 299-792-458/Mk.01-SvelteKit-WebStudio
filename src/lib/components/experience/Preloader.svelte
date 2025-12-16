@@ -58,11 +58,6 @@ let lineInterval: ReturnType<typeof setInterval> | null = null;
 			}
 		}, 400);
 
-		// Subscribe to performance mode changes
-		const unsub = experienceStore.subscribe(state => {
-			hasGlitch = !state.isPerformanceMode;
-		});
-
 		return () => {
 			if (interval) clearInterval(interval);
 			if (lineInterval) clearInterval(lineInterval);
