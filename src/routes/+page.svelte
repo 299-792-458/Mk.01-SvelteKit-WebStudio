@@ -827,7 +827,7 @@ let scrollObserver: IntersectionObserver | null = null;
 		<Reveal type="fade" delay={0.12}>
 			<div class="hero-grid">
 				<div class="hero-main">
-					<p class="eyebrow text-cyan-100/80">Mk.01 / Universal surface</p>
+					<p class="eyebrow text-base-content/70">Mk.01 / Universal surface</p>
 					<h1 class="hero-title">
 						<ScrambleText text="One flagship site for hiring, launches, and live products." />
 					</h1>
