@@ -66,9 +66,9 @@
 
 		mediaQuery.addEventListener('change', handlePreferenceChange);
 
-		onDestroy(() => {
+		return () => {
 			mediaQuery.removeEventListener('change', handlePreferenceChange);
-		});
+		};
 	});
 
 	$: currentExperience = $experienceStore;
