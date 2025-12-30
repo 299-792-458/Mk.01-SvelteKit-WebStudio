@@ -2,7 +2,8 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import Magnetic from '$lib/components/motion/Magnetic.svelte';
 	import { page } from '$app/stores';
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade, slide } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	export let theme: 'studio-light' | 'studio-dark' = 'studio-light';
 	const dispatch = createEventDispatcher<{ themeChange: 'studio-light' | 'studio-dark' }>();
@@ -16,6 +17,9 @@
 
 	let mobileOpen = false;
 	let navElement: HTMLElement;
+	let y = 0;
+
+	$: isScrolled = y > 20;
 
 	function closeMobileMenu() {
 		mobileOpen = false;
@@ -26,42 +30,55 @@
 			const { animate } = await import('motion');
 			animate(
 				navElement,
-				{ y: [-50, 0], opacity: [0, 1], scale: [0.9, 1] },
+				{ y: [-50, 0], opacity: [0, 1] },
 				{ duration: 0.8, easing: [0.16, 1, 0.3, 1] }
 			);
 		}
 	});
 </script>
 
-<div class="pointer-events-none fixed inset-x-0 top-6 z-50 flex justify-center px-4">
+<svelte:window bind:scrollY={y} />
+
+<div class="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-4 transition-all duration-500 ease-out"
+	class:pt-2={isScrolled}
+>
 	<nav
 		bind:this={navElement}
-		class="pointer-events-auto relative flex items-center gap-2 rounded-full border border-base-content/10 bg-base-100/60 p-2 shadow-glow backdrop-blur-surface transition-all duration-500 hover:scale-[1.01] hover:bg-base-100/80 supports-[backdrop-filter]:bg-base-100/40"
+		class="pointer-events-auto relative flex items-center gap-2 rounded-full border border-base-content/5 p-1.5 shadow-sm backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+		class:bg-base-100-80={!isScrolled}
+		class:bg-base-100-95={isScrolled}
+		class:shadow-glow={!isScrolled}
+		class:shadow-lg={isScrolled}
+		style:width={isScrolled ? 'auto' : '100%'}
+		style:max-width={isScrolled ? 'fit-content' : '42rem'}
+		style:padding-left={isScrolled ? '0.75rem' : '0.5rem'}
+		style:padding-right={isScrolled ? '0.75rem' : '0.5rem'}
 	>
 		<!-- Logo -->
 		<a
 			href="/"
-			class="group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-primary-content shadow-lg transition-transform duration-300 hover:rotate-12"
+			class="group flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-primary-content shadow-inner transition-transform duration-300 hover:rotate-12"
 		>
-			<span class="font-display font-bold">M</span>
+			<span class="font-display font-bold text-lg">M</span>
 		</a>
 
 		<!-- Desktop Links -->
-		<div class="hidden items-center gap-1 px-4 md:flex">
+		<div class="hidden items-center gap-1 px-2 md:flex">
 			{#each navLinks as link}
 				<Magnetic>
 					<a
 						href={link.href}
 						class="relative rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-base-content/5 hover:text-primary {$page
 							.url.pathname === link.href
-							? 'bg-primary/10 text-primary'
-							: 'text-base-content/80'}"
+							? 'text-primary'
+							: 'text-base-content/70'}"
 					>
 						{link.label}
 						{#if $page.url.pathname === link.href}
-							<span
-								class="absolute bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary"
-							></span>
+							<div
+								in:fade={{ duration: 200 }}
+								class="absolute inset-0 -z-10 rounded-full bg-base-content/5"
+							></div>
 						{/if}
 					</a>
 				</Magnetic>
@@ -69,10 +86,10 @@
 		</div>
 
 		<!-- Action & Theme -->
-		<div class="flex items-center gap-2 pl-2">
+		<div class="flex items-center gap-2 pl-2 border-l border-base-content/10 ml-1">
 			<a
 				href="/contact"
-				class="btn btn-ghost btn-circle btn-sm hidden sm:flex"
+				class="btn btn-circle btn-sm btn-ghost transition-all hover:bg-primary/10 hover:text-primary hidden sm:flex"
 				aria-label="Contact"
 			>
 				<svg
@@ -92,24 +109,16 @@
 			</a>
 
 			<!-- Mobile Toggle -->
-	<button
-		class="btn btn-ghost btn-circle btn-sm md:hidden"
-		aria-label="Toggle menu"
-		on:click={() => (mobileOpen = !mobileOpen)}
-	>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-5 w-5"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M4 6h16M4 12h16M4 18h16"
-					/></svg
-				>
+			<button
+				class="btn btn-circle btn-sm btn-ghost md:hidden"
+				aria-label="Toggle menu"
+				on:click={() => (mobileOpen = !mobileOpen)}
+			>
+				<div class="flex flex-col gap-1">
+					<span class="block h-0.5 w-5 bg-current transition-transform" class:rotate-45={mobileOpen} class:translate-y-1.5={mobileOpen}></span>
+					<span class="block h-0.5 w-5 bg-current transition-opacity" class:opacity-0={mobileOpen}></span>
+					<span class="block h-0.5 w-5 bg-current transition-transform" class:rotate-45={mobileOpen} class:-translate-y-1.5={mobileOpen} class:-rotate-45={mobileOpen}></span>
+				</div>
 			</button>
 		</div>
 	</nav>
@@ -118,18 +127,27 @@
 <!-- Mobile Menu Overlay -->
 {#if mobileOpen}
 	<div
-		class="fixed inset-0 z-40 flex flex-col gap-4 bg-base-100/95 px-6 pt-24 backdrop-blur-xl md:hidden"
-		transition:fly={{ y: -20, duration: 300 }}
+		class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 bg-base-100/95 backdrop-blur-2xl md:hidden"
+		transition:fade={{ duration: 200 }}
 	>
-		{#each navLinks as link}
-			<a
-				href={link.href}
-				class="font-display text-2xl font-bold text-base-content"
-				on:click={closeMobileMenu}
-			>
-				{link.label}
+		<nav class="flex flex-col items-center gap-6">
+			{#each navLinks as link, i}
+				<a
+					href={link.href}
+					class="font-display text-4xl font-bold text-base-content hover:text-primary transition-colors"
+					in:fly={{ y: 20, delay: 100 + i * 50, duration: 400, easing: cubicOut }}
+					on:click={closeMobileMenu}
+				>
+					{link.label}
+				</a>
+			{/each}
+		</nav>
+		
+		<div in:fly={{ y: 20, delay: 300, duration: 400 }} class="absolute bottom-12 flex flex-col items-center gap-4">
+			<a href="/contact" class="btn btn-primary btn-lg rounded-full px-12" on:click={closeMobileMenu}>
+				Start Project
 			</a>
-		{/each}
-		<button class="btn btn-primary mt-8" on:click={closeMobileMenu}>Close Menu</button>
+			<button class="btn btn-ghost btn-sm" on:click={closeMobileMenu}>Close</button>
+		</div>
 	</div>
 {/if}
