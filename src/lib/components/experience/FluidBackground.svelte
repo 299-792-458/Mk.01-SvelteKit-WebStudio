@@ -6,11 +6,11 @@
 	import { get } from 'svelte/store'; // Import get for initial state
 
 	let container: HTMLDivElement;
-	let renderer: THREE.WebGLRenderer;
-	let scene: THREE.Scene;
+	let renderer: THREE.WebGLRenderer | null = null;
+	let scene: THREE.Scene | null = null;
 	let camera: THREE.OrthographicCamera;
 	let material: THREE.ShaderMaterial;
-	let mesh: THREE.Mesh;
+	let mesh: THREE.Mesh | null = null;
 	let raf: number;
 	let animationActive = true; // Control animation loop
 
@@ -108,12 +108,42 @@
 		}
 	`;
 
-	let geometry: THREE.PlaneGeometry;
+	function cleanup() {
+		cancelAnimationFrame(raf);
+		
+		if (scene) {
+			scene.traverse((object) => {
+				if (object instanceof THREE.Mesh) {
+					if (object.geometry) object.geometry.dispose();
+					if (object.material) {
+						if (Array.isArray(object.material)) {
+							object.material.forEach((m) => m.dispose());
+						} else {
+							object.material.dispose();
+						}
+					}
+				}
+			});
+			scene = null;
+		}
+
+		if (renderer) {
+			renderer.dispose();
+			renderer.forceContextLoss();
+			renderer.domElement?.remove();
+			renderer = null;
+		}
+		
+		mesh = null;
+	}
 
 	onMount(() => {
 		if (!browser) return;
 
 		const init = () => {
+			if (!container) return;
+			cleanup();
+
 			const width = window.innerWidth;
 			const height = window.innerHeight;
 
@@ -129,7 +159,7 @@
 			scene = new THREE.Scene();
 			camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-			geometry = new THREE.PlaneGeometry(2, 2);
+			const geometry = new THREE.PlaneGeometry(2, 2);
 			material = new THREE.ShaderMaterial({
 				vertexShader,
 				fragmentShader,
@@ -151,6 +181,7 @@
 		};
 
 		const onResize = () => {
+			if (!renderer || !material) return;
 			const width = window.innerWidth;
 			const height = window.innerHeight;
 			renderer.setSize(width, height);
@@ -158,9 +189,9 @@
 		};
 
 		const onMouseMove = (e: MouseEvent) => {
+			if (!material) return;
 			const x = e.clientX / window.innerWidth;
 			const y = 1.0 - e.clientY / window.innerHeight;
-			// Smooth interpolation could be added here for even better feel
 			material.uniforms.uMouse.value.set(x, y);
 		};
 
@@ -170,14 +201,15 @@
 			if (material) {
 				material.uniforms.uTime.value = time * 0.001;
 			}
-			renderer.render(scene, camera);
+			if (renderer && scene && camera) {
+				renderer.render(scene, camera);
+			}
 		};
 
 		// Initial check for performance mode
 		if (get(experienceStore).isPerformanceMode) {
 			animationActive = false;
-			renderer?.dispose();
-			container.replaceChildren();
+			cleanup();
 		} else {
 			init();
 			animate(0);
@@ -185,12 +217,12 @@
 
 		// Subscribe to theme and performance mode store
 		const unsub = experienceStore.subscribe(state => {
-			if (!material) return;
-
-			// Handle theme change
-			if (state.theme === 'day') material.uniforms.uTheme.value = 0.0;
-			else if (state.theme === 'night') material.uniforms.uTheme.value = 1.0;
-			else if (state.theme === 'aurora') material.uniforms.uTheme.value = 2.0;
+			// Handle theme change if material exists
+			if (material) {
+				if (state.theme === 'day') material.uniforms.uTheme.value = 0.0;
+				else if (state.theme === 'night') material.uniforms.uTheme.value = 1.0;
+				else if (state.theme === 'aurora') material.uniforms.uTheme.value = 2.0;
+			}
 
 			// Handle performance mode change
 			if (state.isPerformanceMode !== !animationActive) {
@@ -201,25 +233,16 @@
 					animate(0);
 				} else {
 					// Stop animation and dispose resources if entering performance mode
-					cancelAnimationFrame(raf);
-					renderer?.dispose();
-					container.replaceChildren();
-					scene = null as any; // Clear references
-					mesh = null as any;
-					material = null as any;
+					cleanup();
 				}
 			}
 		});
 
 		return () => {
-			cancelAnimationFrame(raf);
 			window.removeEventListener('resize', onResize);
 			window.removeEventListener('mousemove', onMouseMove);
 			unsub();
-			renderer?.dispose();
-			geometry?.dispose();
-			material?.dispose();
-			container?.replaceChildren();
+			cleanup();
 		};
 	});
 </script>

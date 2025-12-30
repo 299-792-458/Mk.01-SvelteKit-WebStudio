@@ -7,11 +7,11 @@
 	import { experienceStore } from '$services/experience';
 
 	let container: HTMLDivElement | null = null;
-	let renderer: THREE.WebGLRenderer;
-	let scene: THREE.Scene;
+	let renderer: THREE.WebGLRenderer | null = null;
+	let scene: THREE.Scene | null = null;
 	let camera: THREE.PerspectiveCamera;
 	let clock: THREE.Clock;
-	let mesh: THREE.InstancedMesh;
+	let mesh: THREE.InstancedMesh | null = null;
 	let raf = 0;
 	let animationActive = true;
 
@@ -19,14 +19,49 @@
 	let isLightMode = false;
 
 	const dummy = new THREE.Object3D();
-	const color = new THREE.Color();
 	
 	// Configuration
 	const COUNT = 800;
 	const RANGE = 30;
 
+	function cleanup() {
+		cancelAnimationFrame(raf);
+		
+		if (scene) {
+			scene.traverse((object) => {
+				if (object instanceof THREE.Mesh) {
+					if (object.geometry) object.geometry.dispose();
+					if (object.material) {
+						if (Array.isArray(object.material)) {
+							object.material.forEach((m) => m.dispose());
+						} else {
+							object.material.dispose();
+						}
+					}
+				}
+			});
+			scene = null;
+		}
+
+		if (renderer) {
+			renderer.dispose();
+			renderer.forceContextLoss();
+			renderer.domElement?.remove();
+			renderer = null;
+		}
+		
+		if (mesh) {
+			mesh.geometry.dispose();
+			(mesh.material as THREE.Material).dispose();
+			mesh = null;
+		}
+	}
+
 	function init() {
 		if (!container) return;
+
+		// Cleanup previous instance if exists
+		cleanup();
 
 		// 1. Setup Renderer
 		renderer = new THREE.WebGLRenderer({ 
@@ -103,7 +138,7 @@
 	}
 
 	function animate() {
-		if (!mesh) return;
+		if (!mesh || !renderer || !scene || !camera) return;
 		
 		const time = clock.getElapsedTime();
 		const { normalized } = get(pointer); // Mouse position (-1 to 1)
@@ -158,7 +193,7 @@
 	}
 
 	function resize() {
-		if (!renderer || !container) return;
+		if (!renderer || !container || !camera) return;
 		const w = container.clientWidth;
 		const h = container.clientHeight;
 		renderer.setSize(w, h);
@@ -178,31 +213,24 @@
 				
 				if (state.isPerformanceMode) {
 					animationActive = false;
-					cancelAnimationFrame(raf);
-					renderer?.dispose();
-					container?.replaceChildren();
+					cleanup();
 				} else {
 					animationActive = true;
-					// Dispose old
-					if (renderer) {
-						cancelAnimationFrame(raf);
-						renderer.dispose();
-						container?.replaceChildren();
-					}
 					init();
 					animate();
 				}
 			}
 		});
 
+		// Initial start if not blocked by performance mode store (though store subscription handles it too)
+		// We rely on the subscription to trigger init() initially to avoid race conditions
+
 		const unsubViewport = viewport.subscribe(() => resize());
 
 		return () => {
-			cancelAnimationFrame(raf);
 			unsubViewport();
 			unsubExperience();
-			renderer?.dispose();
-			container?.replaceChildren();
+			cleanup();
 		};
 	});
 </script>
