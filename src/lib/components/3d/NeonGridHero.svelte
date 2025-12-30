@@ -4,139 +4,154 @@
 	import * as THREE from 'three';
 	import { pointer, viewport, quality } from '$lib/stores/interaction';
 	import { get } from 'svelte/store';
-	import { experienceStore } from '$services/experience'; // Import experienceStore
+	import { experienceStore } from '$services/experience';
 
 	let container: HTMLDivElement | null = null;
 	let renderer: THREE.WebGLRenderer;
 	let scene: THREE.Scene;
 	let camera: THREE.PerspectiveCamera;
 	let clock: THREE.Clock;
-	let grid: THREE.Points | null = null;
+	let mesh: THREE.InstancedMesh;
 	let raf = 0;
 	let animationActive = true;
 
 	// Theme variables
-	let currentTheme: 'studio-light' | 'studio-dark' | 'studio-pro-dark' = 'studio-dark';
 	let isLightMode = false;
 
-	// Shader for glowing points
-	const vertexShader = `
-		attribute float size;
-		varying vec3 vColor;
-		void main() {
-			vColor = color;
-			vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-			gl_PointSize = size * (300.0 / -mvPosition.z);
-			gl_Position = projectionMatrix * mvPosition;
-		}
-	`;
-
-	const fragmentShader = `
-		varying vec3 vColor;
-		void main() {
-			float r = distance(gl_PointCoord, vec2(0.5));
-			if (r > 0.5) discard;
-			float glow = 1.0 - (r * 2.0);
-			glow = pow(glow, 1.5);
-			gl_FragColor = vec4(vColor, glow);
-		}
-	`;
-
-	const params = {
-		gridSize: 220,
-		spacing: 0.8
-	};
-
-	function buildGrid(density: 'high' | 'medium' | 'low') {
-		if (grid && scene) {
-			scene.remove(grid);
-		}
-
-		const size = density === 'high' ? params.gridSize : density === 'medium' ? 160 : 120;
-		const spacing = density === 'high' ? params.spacing : density === 'medium' ? 1 : 1.2;
-		const positions = [];
-		const colors = [];
-		const sizes = [];
-		const color = new THREE.Color();
-
-		for (let x = -size; x < size; x++) {
-			for (let z = -size; z < size; z++) {
-				if ((x + z) % 4 !== 0) continue;
-				
-				// Terrain generation
-				const y = (Math.sin((x + z) * 0.05) * 0.6) / 2;
-				positions.push(x * spacing, y, z * spacing);
-				
-				// Color gradient based on height/position, now theme-aware
-				const t = (y + 0.3) / 0.6;
-				if (isLightMode) {
-					color.setHSL(0.6 + t * 0.1, 0.5, 0.4 + t * 0.2); // Desaturated blues/purples for light mode
-				} else {
-					color.setHSL(0.6 + t * 0.1, 0.8, 0.6); // Blue/Purple/Cyan for dark mode
-				}
-				colors.push(color.r, color.g, color.b);
-
-				// Randomize sizes slightly
-				sizes.push(Math.random() * 0.5 + 0.5);
-			}
-		}
-
-		const geometry = new THREE.BufferGeometry();
-		geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-		geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-		geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-
-		const material = new THREE.ShaderMaterial({
-			uniforms: {},
-			vertexShader,
-			fragmentShader,
-			transparent: true,
-			vertexColors: true,
-			depthWrite: false,
-			blending: isLightMode ? THREE.NormalBlending : THREE.AdditiveBlending // Normal blending for light, additive for dark
-		});
-
-		grid = new THREE.Points(geometry, material);
-		scene.add(grid);
-	}
+	const dummy = new THREE.Object3D();
+	const color = new THREE.Color();
+	
+	// Configuration
+	const COUNT = 800;
+	const RANGE = 30;
 
 	function init() {
 		if (!container) return;
 
-		renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+		// 1. Setup Renderer
+		renderer = new THREE.WebGLRenderer({ 
+			antialias: true, 
+			alpha: true,
+			powerPreference: "high-performance"
+		});
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 		renderer.setSize(container.clientWidth, container.clientHeight);
+		renderer.toneMapping = THREE.ACESFilmicToneMapping;
+		renderer.toneMappingExposure = 1.2;
 		container.appendChild(renderer.domElement);
 
+		// 2. Setup Scene
 		scene = new THREE.Scene();
-		// Fog color based on theme
-		scene.fog = new THREE.FogExp2(isLightMode ? '#F8FAFC' : '#05060f', isLightMode ? 0.008 : 0.015);
+		// Subtle fog for depth
+		scene.fog = new THREE.FogExp2(isLightMode ? '#F8FAFC' : '#0B1120', 0.02);
 
+		// 3. Setup Camera
 		camera = new THREE.PerspectiveCamera(
-			60,
+			50,
 			container.clientWidth / container.clientHeight,
 			0.1,
-			1000
+			100
 		);
-		camera.position.set(0, 15, 40);
+		camera.position.set(0, 0, 20);
 
+		// 4. Lights (Crucial for Glass/Metal look)
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+		scene.add(ambientLight);
+
+		const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+		dirLight.position.set(10, 20, 10);
+		scene.add(dirLight);
+
+		const pointLight1 = new THREE.PointLight(0x6366F1, 2, 50); // Primary Brand Color
+		pointLight1.position.set(-5, 5, 5);
+		scene.add(pointLight1);
+
+		const pointLight2 = new THREE.PointLight(0xF471B5, 2, 50); // Accent Pink
+		pointLight2.position.set(5, -5, 5);
+		scene.add(pointLight2);
+
+		// 5. Geometry & Material (Instanced)
+		// Using an Icosahedron for a "jewel" like look
+		const geometry = new THREE.IcosahedronGeometry(0.4, 0);
+		
+		const material = new THREE.MeshPhysicalMaterial({
+			color: isLightMode ? 0xffffff : 0x88ccff,
+			metalness: 0.1,
+			roughness: 0.1,
+			transmission: 0.6, // Glass-like
+			thickness: 1.0,
+			clearcoat: 1.0,
+			clearcoatRoughness: 0.1,
+		});
+
+		mesh = new THREE.InstancedMesh(geometry, material, COUNT);
+		
+		// Initialize positions randomly
+		for (let i = 0; i < COUNT; i++) {
+			dummy.position.set(
+				(Math.random() - 0.5) * RANGE,
+				(Math.random() - 0.5) * RANGE,
+				(Math.random() - 0.5) * RANGE
+			);
+			dummy.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+			dummy.updateMatrix();
+			mesh.setMatrixAt(i, dummy.matrix);
+		}
+		
+		scene.add(mesh);
 		clock = new THREE.Clock();
-		buildGrid(get(quality));
 	}
 
 	function animate() {
-		const elapsed = clock.getElapsedTime();
-		const { normalized } = get(pointer);
+		if (!mesh) return;
+		
+		const time = clock.getElapsedTime();
+		const { normalized } = get(pointer); // Mouse position (-1 to 1)
 
-		if (grid) {
-			// Flyover effect
-			grid.position.z = (elapsed * 2) % 4; 
-			// Subtle rotation based on mouse
-			grid.rotation.z = normalized.x * 0.05;
+		// Gently rotate the whole cluster
+		mesh.rotation.y = time * 0.05;
+		mesh.rotation.x = normalized.y * 0.1;
+		mesh.rotation.z = normalized.x * 0.1;
+
+		// Update individual instances for "breathing" effect
+		for (let i = 0; i < COUNT; i++) {
+			mesh.getMatrixAt(i, dummy.matrix);
+			dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
+
+			// Calculate a noise-like movement based on position and time
+			const t = time * 0.5;
+			const offset = i * 0.02; // distinct offset per particle
+			
+			// Gentle float
+			dummy.position.y += Math.sin(t + offset) * 0.005;
+			dummy.position.x += Math.cos(t + offset * 0.5) * 0.005;
+
+			// Mouse repulsion (simple version)
+			// Converting normalized mouse to world coords roughly at z=0
+			const mouseX = normalized.x * 10;
+			const mouseY = normalized.y * 10;
+			const dist = Math.sqrt((dummy.position.x - mouseX) ** 2 + (dummy.position.y - mouseY) ** 2);
+			
+			if (dist < 5) {
+				const angle = Math.atan2(dummy.position.y - mouseY, dummy.position.x - mouseX);
+				const force = (5 - dist) * 0.02;
+				dummy.position.x += Math.cos(angle) * force;
+				dummy.position.y += Math.sin(angle) * force;
+			}
+
+			// Constant slow rotation
+			dummy.rotation.x += 0.002;
+			dummy.rotation.y += 0.002;
+
+			dummy.updateMatrix();
+			mesh.setMatrixAt(i, dummy.matrix);
 		}
+		mesh.instanceMatrix.needsUpdate = true;
 
-		camera.position.y = 15 + normalized.y * 2;
-		camera.lookAt(0, 0, -20); // Look ahead into the horizon
+		// Camera drift
+		camera.position.x += (normalized.x * 2 - camera.position.x) * 0.05;
+		camera.position.y += (normalized.y * 2 - camera.position.y) * 0.05;
+		camera.lookAt(0, 0, 0);
 
 		renderer.render(scene, camera);
 		raf = requestAnimationFrame(animate);
@@ -155,67 +170,55 @@
 		if (!browser) return;
 
 		const unsubExperience = experienceStore.subscribe(state => {
-			currentTheme = state.theme === 'day' ? 'studio-light' : (state.theme === 'night' ? 'studio-dark' : 'studio-pro-dark');
-			isLightMode = currentTheme === 'studio-light';
+			const newIsLight = state.theme === 'day';
 			
-			if (state.isPerformanceMode) {
-				animationActive = false;
-				cancelAnimationFrame(raf);
-				renderer?.dispose();
-				grid?.geometry?.dispose();
-				(grid?.material as THREE.Material)?.dispose();
-				container?.replaceChildren();
-				scene = null as any; // Clear references
-				grid = null;
-			} else {
-				animationActive = true;
-				if (scene) { // If already initialized, rebuild grid and fog
-					scene.fog = new THREE.FogExp2(isLightMode ? '#F8FAFC' : '#05060f', isLightMode ? 0.008 : 0.015);
-					buildGrid(get(quality));
-				} else { // First time init
+			// Re-init if theme changed significantly or performance mode toggled
+			if (newIsLight !== isLightMode || state.isPerformanceMode !== !animationActive) {
+				isLightMode = newIsLight;
+				
+				if (state.isPerformanceMode) {
+					animationActive = false;
+					cancelAnimationFrame(raf);
+					renderer?.dispose();
+					container?.replaceChildren();
+				} else {
+					animationActive = true;
+					// Dispose old
+					if (renderer) {
+						cancelAnimationFrame(raf);
+						renderer.dispose();
+						container?.replaceChildren();
+					}
 					init();
 					animate();
 				}
 			}
 		});
 
-		// Initial setup if not in performance mode
-		if (!get(experienceStore).isPerformanceMode) {
-			currentTheme = get(experienceStore).theme === 'day' ? 'studio-light' : (get(experienceStore).theme === 'night' ? 'studio-dark' : 'studio-pro-dark');
-			isLightMode = currentTheme === 'studio-light';
-			init();
-			animate();
-		}
-
 		const unsubViewport = viewport.subscribe(() => resize());
-		const unsubQuality = quality.subscribe((value) => buildGrid(value));
-
 
 		return () => {
 			cancelAnimationFrame(raf);
 			unsubViewport();
-			unsubQuality();
 			unsubExperience();
 			renderer?.dispose();
-			grid?.geometry?.dispose();
-			(grid?.material as THREE.Material)?.dispose();
 			container?.replaceChildren();
 		};
 	});
 </script>
 
 {#if animationActive}
-<div class="hero-canvas" class:is-light-mode={isLightMode} bind:this={container} aria-hidden="true"></div>
+<div class="hero-canvas" bind:this={container} aria-hidden="true"></div>
 {/if}
 
 <style>
 	.hero-canvas {
 		position: absolute;
 		inset: 0;
-		/* Use theme-aware base color with a gradient overlay */
-		@apply bg-base-100;
-		background-image: radial-gradient(circle at 50% 0%, oklch(var(--b2) / 0.8) 0%, oklch(var(--b1)) 60%);
+		/* Background is transparent to layer over FluidBackground */
+		background: transparent;
 		overflow: hidden;
-		z-index: 0;
+		z-index: 0; 
+		pointer-events: none; /* Let clicks pass through to buttons */
 	}
 </style>

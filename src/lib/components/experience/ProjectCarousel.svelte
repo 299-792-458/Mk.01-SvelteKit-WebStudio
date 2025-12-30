@@ -2,6 +2,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
 	import { derived, writable } from 'svelte/store';
+	import { tilt } from '$lib/components/motion/tilt';
 
 	export let projects: { title: string; slug: string; image: string; category?: string }[] = [];
 
@@ -44,14 +45,16 @@
 				style={`--x:${node.x}px; --y:${node.y}px; --z:${node.z}px; --depth:${node.depth};`}
 				on:mouseenter={() => setActive(node.index)}
 			>
-				<div class="card-bg">
-					<img src={node.project.image} alt={node.project.title} loading="lazy" />
-					<div class="overlay"></div>
-				</div>
-				<div class="card-content">
-					<p class="eyebrow">{node.project.category ?? 'Project'}</p>
-					<h3>{node.project.title}</h3>
-					<span class="cta">Open case →</span>
+				<div class="tilt-wrapper" use:tilt={{ max: 12, scale: 1.02, glare: true }}>
+					<div class="card-bg">
+						<img src={node.project.image} alt={node.project.title} loading="lazy" />
+						<div class="overlay"></div>
+					</div>
+					<div class="card-content">
+						<p class="eyebrow">{node.project.category ?? 'Project'}</p>
+						<h3>{node.project.title}</h3>
+						<span class="cta">Open case →</span>
+					</div>
 				</div>
 			</a>
 		{/each}
@@ -101,9 +104,18 @@
 			filter 300ms ease,
 			box-shadow 300ms ease;
 		border-radius: 1.4rem;
-		overflow: hidden;
+		/* overflow: hidden; Removed to allow glare to spill if needed, but tilt-wrapper handles it */
 		filter: blur(calc((1 - var(--depth)) * 2px)) brightness(calc(0.6 + var(--depth) * 0.6));
 		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+	}
+	
+	.tilt-wrapper {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		border-radius: 1.4rem;
+		overflow: hidden;
+		transform-style: preserve-3d;
 	}
 
 	.card:hover,
@@ -118,6 +130,7 @@
 	.card-bg {
 		position: absolute;
 		inset: 0;
+		transform: translateZ(0); /* Fix Safari flicker */
 	}
 
 	.card-bg img {
@@ -143,6 +156,7 @@
 		padding: 1.4rem;
 		color: white;
 		text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+		transform: translateZ(20px); /* Parallax text pop */
 	}
 
 	.card-content h3 {

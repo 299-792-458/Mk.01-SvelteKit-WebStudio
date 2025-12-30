@@ -815,33 +815,42 @@ let scrollObserver: IntersectionObserver | null = null;
 </script>
 
 <PageSection id="hero" tone="default" padding="xl">
-	<div class="mx-auto max-w-4xl text-center space-y-8 py-12 md:py-20">
-		<Reveal type="fade" delay={0.1}>
-			<p class="eyebrow text-primary">Mk.01 / Universal Surface</p>
-		</Reveal>
-		
-		<Reveal type="slide" delay={0.2}>
-			<h1 class="font-display text-6xl md:text-8xl font-bold tracking-tight text-base-content leading-[0.95]">
-				Mk.01 Studio
-			</h1>
-		</Reveal>
+	<!-- Hero Wrapper for 3D Background -->
+	<div class="relative w-full h-full min-h-[60vh] flex flex-col items-center justify-center">
+		<!-- 3D Background Layer -->
+		<div class="absolute inset-0 z-0 overflow-hidden opacity-80 mix-blend-screen pointer-events-none">
+			<NeonGridHero />
+		</div>
 
-		<Reveal type="slide" delay={0.3}>
-			<div class="text-2xl md:text-3xl text-base-content/60 font-medium h-[1.5em]">
-				<ScrambleText text="Digital flagships that feel inevitable." speed={50} />
-			</div>
-		</Reveal>
+		<!-- Content Layer -->
+		<div class="relative z-10 mx-auto max-w-4xl text-center space-y-8 py-12 md:py-20">
+			<Reveal type="fade" delay={0.1}>
+				<p class="eyebrow text-primary">Mk.01 / Universal Surface</p>
+			</Reveal>
+			
+			<Reveal type="slide" delay={0.2}>
+				<h1 class="font-display text-6xl md:text-8xl font-bold tracking-tight text-base-content leading-[0.95] drop-shadow-2xl">
+					Mk.01 Studio
+				</h1>
+			</Reveal>
 
-		<Reveal type="fade" delay={0.4}>
-			<div class="flex flex-wrap justify-center gap-4 pt-4">
-				<Magnetic>
-					<a href="/work" class="btn btn-primary btn-lg rounded-full px-8">View Work</a>
-				</Magnetic>
-				<Magnetic>
-					<a href="#contact" class="btn btn-outline btn-lg rounded-full px-8">Start Project</a>
-				</Magnetic>
-			</div>
-		</Reveal>
+			<Reveal type="slide" delay={0.3}>
+				<div class="text-2xl md:text-3xl text-base-content/60 font-medium h-[1.5em]">
+					<ScrambleText text="Digital flagships that feel inevitable." speed={50} />
+				</div>
+			</Reveal>
+
+			<Reveal type="fade" delay={0.4}>
+				<div class="flex flex-wrap justify-center gap-4 pt-4">
+					<Magnetic>
+						<a href="/work" class="btn btn-primary btn-lg rounded-full px-8 shadow-glow hover:shadow-glow-lg transition-all duration-300">View Work</a>
+					</Magnetic>
+					<Magnetic>
+						<a href="#contact" class="btn btn-outline btn-lg rounded-full px-8 backdrop-blur-sm bg-base-100/10 border-base-content/20 hover:bg-base-100/30">Start Project</a>
+					</Magnetic>
+				</div>
+			</Reveal>
+		</div>
 	</div>
 </PageSection>
 
