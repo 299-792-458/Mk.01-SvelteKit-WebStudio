@@ -3,6 +3,8 @@
 	import Image from '$lib/components/ui/Image.svelte';
 	import ScrambleText from '$lib/components/motion/ScrambleText.svelte';
 	import { tilt } from '$lib/components/motion/tilt';
+	import { fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -80,15 +82,22 @@
 	{#if filteredProjects.length === 0}
 		<div
 			class="py-20 rounded-3xl border border-dashed border-base-content/20 bg-base-100/30 text-center"
+			in:fly={{ y: 20, duration: 400 }}
 		>
 			<span class="text-4xl block mb-4 opacity-50">∅</span>
 			<p class="text-lg text-base-content/70">No projects found in this sector.</p>
-			<button class="btn btn-link mt-2" on:click={() => { selectedIndustry = 'All'; selectedYear = 'All'; }}>Reset Filters</button>
+			<button class="btn btn-outline btn-primary mt-6" on:click={() => { selectedIndustry = 'All'; selectedYear = 'All'; }}>
+				Reset All Filters
+			</button>
 		</div>
 	{:else}
 		<div class="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-			{#each filteredProjects as project (project.slug)}
-				<article class="group" use:tilt={{ max: 8, scale: 1.02, glare: true }}>
+			{#each filteredProjects as project, i (project.slug)}
+				<article 
+					class="group" 
+					use:tilt={{ max: 8, scale: 1.02, glare: true }}
+					in:fly={{ y: 30, delay: i * 80, duration: 500, easing: cubicOut }}
+				>
 					<a href={`/work/${project.slug}`} class="block space-y-5">
 						<div class="rounded-2xl overflow-hidden shadow-2xl relative aspect-[4/3]">
 							<Image
@@ -129,8 +138,13 @@
 	</div>
 
 	<div class="grid gap-6 md:grid-cols-3">
-		{#each labs as experiment}
-			<a href={`/labs/${experiment.slug}`} class="p-6 rounded-2xl border border-base-content/10 bg-base-100/60 hover:border-primary/30 transition-colors group block" use:tilt={{ max: 3, scale: 1.01 }}>
+		{#each labs as experiment, i}
+			<a 
+				href={`/labs/${experiment.slug}`} 
+				class="p-6 rounded-2xl border border-base-content/10 bg-base-100/60 hover:border-primary/30 transition-colors group block" 
+				use:tilt={{ max: 3, scale: 1.01 }}
+				in:fly={{ y: 20, delay: (filteredProjects.length * 50) + (i * 50), duration: 500 }}
+			>
 				<h3 class="text-xl font-bold text-base-content group-hover:text-primary transition-colors">{experiment.title}</h3>
 				<p class="mt-2 text-sm text-base-content/70">{experiment.summary}</p>
 				<span class="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-base-content/50 group-hover:text-primary transition-colors">
